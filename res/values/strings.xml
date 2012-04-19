@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">My App List</string>
+
+    <string name="main_no_files">No XML files found</string>
+    <string name="main_select_files">Select files to load</string>
+    <string name="about_web_title">projectsexception.com</string>
+    <string name="about_twitter_title">\@ProException</string>
+    <string name="about_web_summary">Visit my web page</string>
+    <string name="about_email_title">info@projectsexception.com</string>
+    <string name="about_email_summary">Mail me!</string>
+    <string name="about_twitter_summary">Follow me!</string>
+    <string name="about_donate_title">Donate</string>
+    <string name="about_donate_summary">If you find this application useful, please consider to donate</string>
+    <string name="about_email">info@projectsexception.com</string>
+    <string name="about_subject">[My App List] - </string>
+    
+    <string name="web_url">http://projectsexception.com</string>
+    <string name="twitter_url">http://twitter.com/ProException</string>
+    <string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=YRKLPH5KWGVA2&amp;item_number=myapplist</string>
+    
+    <string name="load_list">Load List</string>    
+    <string name="new_list">New List</string>
+    <string name="fragment_list_empty">No applications</string>
+    
+    <string name="new_file_dialog_title">File name</string>
+    <string name="new_file_dialog_msg">Select file name. If a file with the same name existis, it will be overwritten!.</string>
+    <string name="new_file_dialog_name">myapplist-%s.xml</string>
+
+    <string name="empty_list_error">No selected elements</string>
+    <string name="empty_name_error">Name can\'t be empty</string>
+    <string name="empty_list_post_error">No applications selected</string>
+
+    <string name="export_init">Starting export</string>
+    <string name="export_successfully">File successfully created</string>
+    <string name="export_failed">Error creating file: %s</string>
+
+    <string name="menu_save">Save</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_select_all">Select all</string>
+    <string name="menu_unselect_all">Unselect all</string>
+    <string name="menu_about">About</string>
+    
+    <string name="ab_title_app_list">Installed</string>
+    <string name="ab_title_file_list">Applications</string>
+        
+    <string name="play_google">market://details?id=%s</string>    
+    
+    <string name="content_desc_application_icon">Application Icon</string>
+    <string name="content_desc_application_installed">Application Installed</string>
+    <string name="error_creating_dir">Can\'t create %s on sdcard</string>
+    <string name="error_creating_file">Can\'t create file %s</string>
+    <string name="content_desc_application_title">Application title</string>
+    <string name="problem_no_google_play">Google Play market not found</string>
+</resources>

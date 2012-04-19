@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="title"
+        android:title="@string/app_name" />
+
+    <PreferenceScreen
+        android:key="web"
+        android:summary="@string/about_web_summary"
+        android:title="@string/about_web_title" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/web_url" />
+    </PreferenceScreen>
+    <Preference
+        android:key="mail"
+        android:summary="@string/about_email_summary"
+        android:title="@string/about_email_title" />
+    <PreferenceScreen
+        android:key="twitter"
+        android:summary="@string/about_twitter_summary"
+        android:title="@string/about_twitter_title" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/twitter_url" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="donate"
+        android:summary="@string/about_donate_summary"
+        android:title="@string/about_donate_title" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="@string/donate_url" />
+    </PreferenceScreen>
+
+</PreferenceScreen>

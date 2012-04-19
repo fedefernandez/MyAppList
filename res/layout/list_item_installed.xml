@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.projectsexception.myapplist.view.CheckedRelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/list_selector_holo_dark">
+    
+    <ImageView
+        android:id="@+id/icon" 
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/content_desc_application_icon" />
+    
+    <TextView 
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/icon"/>
+
+</com.projectsexception.myapplist.view.CheckedRelativeLayout>

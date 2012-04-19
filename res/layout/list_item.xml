@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.projectsexception.myapplist.view.CheckedRelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/list_selector_holo_dark">
+    
+    <ImageView
+        android:id="@+id/icon" 
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_default_launcher"
+        android:contentDescription="@string/content_desc_application_icon"/>
+    
+    <ImageView
+        android:id="@+id/installed" 
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/app_installed"
+        android:contentDescription="@string/content_desc_application_installed" />
+    
+    <TextView 
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_toLeftOf="@+id/installed"
+        android:layout_centerVertical="true"
+        android:text="@string/app_name"/>
+
+</com.projectsexception.myapplist.view.CheckedRelativeLayout>
