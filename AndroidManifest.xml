@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projectsexception.myapplist"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="beta-1" >
 
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="15" />
     
