@@ -1,18 +1,20 @@
 package com.projectsexception.myapplist.xml;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.xmlpull.v1.XmlSerializer;
+
 import android.content.Context;
 import android.os.Environment;
+import android.util.Xml;
 
-import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.R;
+import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.util.CustomLog;
 
 public class FileUtil {
     
@@ -40,23 +42,31 @@ public class FileUtil {
         }
         
         File file = new File(dir, fileName);
+        
+        XmlSerializer serializer = Xml.newSerializer();
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(file));
-            out.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-            out.append("<app-list>\n");
+            FileWriter writer = new FileWriter(file);
+            serializer.setOutput(writer);
+            try {
+                serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+            } catch (Exception e) {
+                CustomLog.error("FileUtil", "Indent not supported", e);
+            }
+            serializer.startDocument("UTF-8", true);
+            serializer.startTag("", "app-list");
             if (appList != null) {
                 for (AppInfo appInfo : appList) {
-                    out.append("    <app name=\"");
-                    out.append(appInfo.getName());
-                    out.append("\" package=\"");
-                    out.append(appInfo.getPackageName());
-                    out.append("\"/>\n");
+                    serializer.startTag("", "app");
+                    serializer.attribute("", "name", appInfo.getName());
+                    serializer.attribute("", "package", appInfo.getPackageName());
+                    serializer.endTag("", "app");
                 }
             }
-            out.append("</app-list>");
-            out.close();
+            serializer.endTag("", "app-list");
+            serializer.endDocument();
+            writer.close();
             return null;
-        } catch (IOException e) {
+        } catch (Exception e) {
             return context.getString(R.string.error_creating_file, file.getAbsolutePath());
         }
     }

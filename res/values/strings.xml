@@ -15,10 +15,13 @@
     <string name="about_donate_summary">If you find this application useful, please consider to donate</string>
     <string name="about_email">info@projectsexception.com</string>
     <string name="about_subject">[My App List] - </string>
+    <string name="about_source_title">Source code</string>
+    <string name="about_source_summary">Please, help with the development</string>
     
     <string name="web_url">http://projectsexception.com</string>
     <string name="twitter_url">http://twitter.com/ProException</string>
     <string name="donate_url">https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=YRKLPH5KWGVA2&amp;item_number=myapplist</string>
+    <string name="source_url">https://github.com/projectsexception/MyAppList</string>
     
     <string name="load_list">Load List</string>    
     <string name="new_list">New List</string>
