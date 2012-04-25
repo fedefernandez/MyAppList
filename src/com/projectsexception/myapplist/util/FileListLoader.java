@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.xml.AppXMLHandler;
+import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.myapplist.xml.ParserException;
 import com.projectsexception.myapplist.xml.ParserUtil;
 
@@ -30,10 +31,19 @@ public class FileListLoader extends AbstractListLoader {
             AppXMLHandler xmlHandler = new AppXMLHandler();
             try {
                 ParserUtil.launchParser(file, xmlHandler);
+                fileAppList = xmlHandler.getAppInfoList();
             } catch (ParserException e) {
                 CustomLog.error("FileListLoader", "Error loading file", e);
+                if (e.getMessage() != null && e.getMessage().contains("invalid token")) {
+                    String filePath = file.getAbsolutePath();
+                    File backup = new File(filePath + "_backup");
+                    if (file.renameTo(backup)) {
+                        // Hemos renombrado, ahora corregimos
+                        File newFile = new File(filePath);
+                        fileAppList = FileUtil.fixFile(backup, newFile);                        
+                    }
+                }
             }
-            fileAppList = xmlHandler.getAppInfoList();
         }
         
         if (fileAppList != null) {
