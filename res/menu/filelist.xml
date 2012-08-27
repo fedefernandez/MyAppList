@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-    <item
-        android:id="@+id/menu_save"
-        android:title="@string/menu_save"
-        android:icon="@drawable/ic_menu_save"
-        android:showAsAction="ifRoom|withText"/>
-    
+
     <item
         android:id="@+id/menu_refresh"
-        android:title="@string/menu_refresh"
         android:icon="@drawable/ic_menu_refresh"
-        android:showAsAction="ifRoom|withText"/>
-    
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_refresh"/>
+    <item
+        android:id="@+id/menu_save"
+        android:icon="@drawable/ic_menu_save"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_save"/>
     <item
         android:id="@+id/menu_share"
-        android:title="@string/menu_share"
         android:icon="@drawable/ic_menu_share"
-        android:showAsAction="ifRoom|withText"/>
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_share"/>
 
 </menu>
