@@ -6,13 +6,17 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,28 +28,31 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.ListActivity;
 import com.projectsexception.myapplist.MainActivity;
+import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.util.AppSaveTask;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
-import com.projectsexception.myapplist.R;
 
 public class FileListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<List<AppInfo>> {
 
-    private static final String ARG_RELOAD = "reload";
+    private static final int MENU_APP_INFO = 0;
+    private static final int MENU_REMOVE = 2;
+    private static final int MENU_GOOGLE_PLAY = 1;
 
-    private static final int MENU_REFRESH = 1;
+    private static final String ARG_RELOAD = "reload";
     
     private AppListAdapter mAdapter;
     private MenuItem refreshItem;
     private File file;
+    private boolean actionPerformed;
     
     @Override 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Give some text to display if there is no data.  In a real
-        // application this would come from a resource.
+        // Give some text to display if there is no data.
         setEmptyText(getActivity().getString(R.string.fragment_list_empty));
         
         if (getArguments() != null) {
@@ -54,7 +61,7 @@ public class FileListFragment extends SherlockListFragment implements LoaderMana
                 // We are going to check
                 file = FileUtil.loadFile(fileName);
                 if (file == null || !file.exists() || !file.canRead()) {
-                    // If file not exists or can't red
+                    // If file not exists or can't read
                     return;
                 }
             }
@@ -69,6 +76,8 @@ public class FileListFragment extends SherlockListFragment implements LoaderMana
 
         // Start out with a progress indicator.
         setListShown(false);
+        
+        registerForContextMenu(getListView());
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
@@ -76,10 +85,20 @@ public class FileListFragment extends SherlockListFragment implements LoaderMana
     }
     
     @Override
+    public void onResume() {
+        super.onResume();
+        if (actionPerformed) {
+            actionPerformed = false;
+            Bundle args = new Bundle();
+            args.putBoolean(ARG_RELOAD, true);
+            getLoaderManager().restartLoader(0, args, this);
+        }
+    }
+    
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        refreshItem = menu.add(0, MENU_REFRESH, 0, R.string.menu_refresh);
-        refreshItem.setIcon(R.drawable.ic_menu_refresh);
-        refreshItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        inflater.inflate(R.menu.filelist, menu);
+        refreshItem = menu.findItem(R.id.menu_refresh);
     }
     
     @Override
@@ -88,18 +107,66 @@ public class FileListFragment extends SherlockListFragment implements LoaderMana
             Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        } else if (item.getItemId() == MENU_REFRESH) {
+        } else if (item.getItemId() == R.id.menu_refresh) {
             Bundle args = new Bundle();
             args.putBoolean(ARG_RELOAD, true);
             getLoaderManager().restartLoader(0, args, this);
+        } else if (item.getItemId() == R.id.menu_save) {
+            new AppSaveTask(getActivity(), file.getName(), mAdapter.getData()).execute(true);
+        } else if (item.getItemId() == R.id.menu_share) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_file_text, FileUtil.APPLICATION_DIR));
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_file_subject));
+            Uri uri = Uri.parse("file://" + file.getAbsolutePath());
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            try {
+                startActivity(Intent.createChooser(intent, "Share file..."));                
+            } catch (Exception e) {
+                // Something was wrong
+            }
         }
         return true;
+    }
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        menu.add(info.position, MENU_APP_INFO, 0, R.string.context_menu_application_information);
+        menu.add(info.position, MENU_GOOGLE_PLAY, 0, R.string.context_menu_application_play);
+        menu.add(info.position, MENU_REMOVE, 0, R.string.context_menu_remove_from_list);
+    }
+    
+    @Override
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        int position = item.getGroupId();
+        if (position < mAdapter.getData().size()) {
+            if (item.getItemId() == MENU_REMOVE) {
+                mAdapter.getData().remove(position);
+                mAdapter.notifyDataSetChanged();                
+            } else {                
+                AppInfo appInfo = mAdapter.getData().get(position);
+                if (!TextUtils.isEmpty(appInfo.getPackageName())) {
+                    actionPerformed = true;
+                    if (item.getItemId() == MENU_APP_INFO) {
+                        AppUtil.showInstalledAppDetails(getActivity(), appInfo.getPackageName());
+                    } else if (item.getItemId() == MENU_GOOGLE_PLAY) {
+                        AppUtil.showPlayGoogleApp(getActivity(), appInfo.getPackageName());
+                    }
+                }
+            }
+            return true;
+        } else {
+            return super.onContextItemSelected(item);
+        }
     }
     
     @Override 
     public void onListItemClick(ListView l, View v, int position, long id) {
         AppInfo appInfo = mAdapter.getData().get(position);
         if (!TextUtils.isEmpty(appInfo.getPackageName())) {
+            actionPerformed = true;
             if (appInfo.isInstalled()) {
                 AppUtil.showInstalledAppDetails(getActivity(), appInfo.getPackageName());
             } else {

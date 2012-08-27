@@ -34,12 +34,12 @@
             android:data="@string/source_url" />
     </PreferenceScreen>
     <PreferenceScreen
-        android:key="donate"
-        android:summary="@string/about_donate_summary"
-        android:title="@string/about_donate_title" >
+        android:key="translate"
+        android:summary="@string/about_translate_summary"
+        android:title="@string/about_translate_title" >
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="@string/donate_url" />
+            android:data="@string/translate_url" />
     </PreferenceScreen>
 
 </PreferenceScreen>

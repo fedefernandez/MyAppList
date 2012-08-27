@@ -26,7 +26,8 @@ public class FileUtil {
     
     private static final String PATTERN_PACKAGE_NAME = "<app\\s+package=\"([^\"]+)\"\\s+name=\"([^\"]+)\"\\s*\\/>";
     private static final String PATTERN_NAME_PACKAGE = "<app\\s+name=\"([^\"]+)\"\\s+package=\"([^\"]+)\"\\s*\\/>";
-    private static final String APPLICATION_DIR = "MyAppList";
+    
+    public static final String APPLICATION_DIR = "MyAppList";
 
     public static File prepareApplicationDir() {
         String state = Environment.getExternalStorageState();
