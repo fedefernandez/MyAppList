@@ -21,6 +21,10 @@ public class CustomLog {
     public static void verbose(String source, String msg, Throwable e) {
         log(Log.VERBOSE, source, msg, e);
     }
+    
+    public static void verbose(String source, Throwable e) {
+        log(Log.VERBOSE, source, null, e);
+    }
 
     public static void debug(String source, String msg) {
         debug(source, msg, null);     
@@ -30,12 +34,20 @@ public class CustomLog {
         log(Log.DEBUG, source, msg, e); 
     }
 
+    public static void debug(String source, Throwable e) {
+        log(Log.DEBUG, source, null, e); 
+    }
+
     public static void info(String source, String msg) {
         info(source, msg, null);
     }
     
     public static void info(String source, String msg, Throwable e) {
         log(Log.INFO, source, msg, e);
+    }
+    
+    public static void info(String source, Throwable e) {
+        log(Log.INFO, source, null, e);
     }
 
     public static void warn(String source, String msg) {
@@ -45,6 +57,10 @@ public class CustomLog {
     public static void warn(String source, String msg, Throwable e) {
         log(Log.WARN, source, msg, e);
     }
+    
+    public static void warn(String source, Throwable e) {
+        log(Log.WARN, source, null, e);
+    }
 
     public static void error(String source, String msg) {
         error(source, msg, null);
@@ -52,6 +68,10 @@ public class CustomLog {
     
     public static void error(String source, String msg, Throwable e) {
         log(Log.ERROR, source, msg, e);
+    }
+    
+    public static void error(String source, Throwable e) {
+        log(Log.ERROR, source, null, e);
     }
 
     public static void log(int level, String source, String msg) {
@@ -77,21 +97,38 @@ public class CustomLog {
             }
         } else if (level == Log.ERROR) {
             if (ERROR) {
-                Log.v(TAG, message(source, msg, e));
+                Log.e(TAG, message(source, msg, e));
             }
         }
     }
     
     private static String message(String source, String msg, Throwable e) {
         StringBuilder sb = new StringBuilder(source);
-        sb.append(": ");
-        sb.append(msg);
+        if (msg != null) {
+            sb.append(": ");
+            sb.append(msg);
+            sb.append(" ");
+        }
         if(e != null) {
             sb.append(" Caused by: ");
             sb.append(e.getClass().getName());
             if (e.getMessage() != null) {
                 sb.append(" ");
                 sb.append(e.getMessage());
+                StackTraceElement[] stack = e.getStackTrace();
+                if (stack != null) {
+                    for (int i = 0; i < stack.length; i++) {
+                        sb.append("\n at ");
+                        sb.append(stack[i].getClassName());
+                        sb.append(".");
+                        sb.append(stack[i].getMethodName());
+                        sb.append("(");
+                        sb.append(stack[i].getFileName());
+                        sb.append(":");
+                        sb.append(stack[i].getLineNumber());
+                        sb.append(")");
+                    }
+                }
             }
         }
         return sb.toString();

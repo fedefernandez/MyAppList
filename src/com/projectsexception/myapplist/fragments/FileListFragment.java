@@ -1,6 +1,8 @@
 package com.projectsexception.myapplist.fragments;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,7 @@ import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppSaveTask;
 import com.projectsexception.myapplist.util.AppUtil;
+import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.util.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
 
@@ -58,8 +61,15 @@ public class FileListFragment extends SherlockListFragment implements LoaderMana
         if (getArguments() != null) {
             String fileName = getArguments().getString(ListActivity.ARG_FILE);
             if (fileName != null) {
-                // We are going to check
-                file = FileUtil.loadFile(fileName);
+                if (fileName.startsWith("file://")) {
+                    try {
+                        file = new File(new URI(fileName));
+                    } catch (URISyntaxException e) {
+                        CustomLog.error("FileListFragment", e);
+                    }
+                } else {
+                    file = FileUtil.loadFile(fileName);
+                }
                 if (file == null || !file.exists() || !file.canRead()) {
                     // If file not exists or can't read
                     return;
@@ -115,7 +125,7 @@ public class FileListFragment extends SherlockListFragment implements LoaderMana
             new AppSaveTask(getActivity(), file.getName(), mAdapter.getData()).execute(true);
         } else if (item.getItemId() == R.id.menu_share) {
             Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
+            intent.setType("text/xml");
             intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_file_text, FileUtil.APPLICATION_DIR));
             intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_file_subject));
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());

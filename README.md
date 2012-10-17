@@ -10,6 +10,8 @@ Contributing
 
 If you want to contribute fork the repository, code and tell me about it
 
+Help me to translate: http://crowdin.net/project/my-app-list/invite
+
 License
 -------
 

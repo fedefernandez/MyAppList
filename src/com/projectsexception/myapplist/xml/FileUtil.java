@@ -2,10 +2,14 @@ package com.projectsexception.myapplist.xml;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +56,42 @@ public class FileUtil {
         
         File file = new File(dir, fileName);
         return writeFile(context, appList, file);
+    }
+    
+    public static String writeInputStreamFile(Context context, InputStream stream, String fileName) {
+        File dir = prepareApplicationDir();
+        if (dir == null && context != null) {
+            return context.getString(R.string.error_creating_dir, APPLICATION_DIR);
+        }
+        
+        File file = new File(dir, fileName);
+        OutputStream output = null;
+        try {
+            output = new FileOutputStream(file);
+            final byte[] buffer = new byte[1024];
+            int read;
+            while ((read = stream.read(buffer)) != -1) {
+                output.write(buffer, 0, read);
+            }
+            output.flush();
+            return null;
+        } catch (FileNotFoundException e) {
+            CustomLog.error("FileUtil", e);
+        } catch (IOException e) {
+            CustomLog.error("FileUtil", e);
+        } finally {
+            try {
+                if (stream != null) {
+                    stream.close();
+                }
+                if (output != null) {
+                    output.close();
+                }
+            } catch (IOException e) {
+                CustomLog.error("FileUtil", e);
+            }
+        }
+        return context.getString(R.string.error_creating_file, file.getAbsolutePath());
     }
     
     public static String writeFile(Context context, List<AppInfo> appList, File file) {

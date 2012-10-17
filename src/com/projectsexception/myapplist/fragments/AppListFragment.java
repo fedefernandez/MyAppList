@@ -3,22 +3,18 @@ package com.projectsexception.myapplist.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.text.format.Time;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +30,7 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppListLoader;
 import com.projectsexception.myapplist.util.AppSaveTask;
 import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.myapplist.util.NewFileDialog;
 
 public class AppListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<List<AppInfo>> {
     
@@ -162,35 +159,16 @@ public class AppListFragment extends SherlockListFragment implements LoaderManag
     
     private void createNewFileDialog(final List<AppInfo> appList) {
         final Context context = getActivity();
-        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert.setTitle(R.string.new_file_dialog_title);
-        alert.setMessage(R.string.new_file_dialog_msg);
-        // By default, the name is rmb-<date>.xml
-        Time time = new Time();
-        time.setToNow();
-        String fileName = getString(R.string.new_file_dialog_name, time.format("%Y%m%d"));
-        // Set an EditText view to get user input 
-        final EditText input = new EditText(context);
-        input.setText(fileName);
-        alert.setView(input);
-        alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                if (TextUtils.isEmpty(value)) {
+        NewFileDialog.showDialog(context, new NewFileDialog.Listener() {            
+            @Override
+            public void nameAccepted(String name) {
+                if (TextUtils.isEmpty(name)) {
                     Toast.makeText(context, R.string.empty_name_error, Toast.LENGTH_SHORT).show();
                 } else {
-                    new AppSaveTask(context, value, appList).execute(false);
+                    new AppSaveTask(context, name, appList).execute(false);
                 }
             }
         });
-
-        alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-
-        alert.show();
     }
     
     static class AppListAdapter extends BaseAdapter {

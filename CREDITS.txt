@@ -8,4 +8,6 @@ Apostrophic Laboratories for his Komika font used in main title (http://www.apos
 
 AnderWeb (http://jbthemes.com/anderweb/) and androcode.es for his selectable elements tutorial (http://androcode.es/2012/03/seleccion-individualmultiple-de-elementos-en-un-listview/)
 
+Thanks to grzegorz888 for his translation into Polish
+
 All android people on my timeline in twitter

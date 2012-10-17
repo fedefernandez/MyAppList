@@ -49,7 +49,7 @@
     <string name="menu_share">Share file</string>
     
     <string name="share_file_subject">Check this \'My App List\' file</string>
-    <string name="share_file_text">To load from \'My App List\' application you must to save the file in a directory called \'%s\' in your SD card.\nDownload the application from https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
+    <string name="share_file_text">Download the application from https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
     
     <string name="ab_title_app_list">Installed Applications</string>
     <string name="ab_title_file_list">File Applications</string>

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="MyAppListTheme" parent="Theme.Sherlock.ForceOverflow"/>
+    <style name="MyAppListTheme" parent="Theme.Sherlock"/>
 </resources>

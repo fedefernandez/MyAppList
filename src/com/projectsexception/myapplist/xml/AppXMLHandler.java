@@ -11,6 +11,10 @@ import com.projectsexception.myapplist.model.AppInfo;
 
 public class AppXMLHandler extends DefaultHandler {
     
+    private static final String PACKAGE_ELEMENT = "package";
+    private static final String NAME_ELEMENT = "name";
+    private static final String APP_ELEMENT = "app";
+    
     private List<AppInfo> appInfoList;
     
     @Override
@@ -20,12 +24,16 @@ public class AppXMLHandler extends DefaultHandler {
     
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if ("app".equals(getName(localName, qName))) {
-            // Aplicacion
-            AppInfo appInfo = new AppInfo();
-            appInfo.setName(getAttribute(attributes, "name"));
-            appInfo.setPackageName(getAttribute(attributes, "package"));
-            appInfoList.add(appInfo);
+        if (APP_ELEMENT.equals(getName(localName, qName))) {
+            // Aplication
+            String name = getAttribute(attributes, NAME_ELEMENT);
+            String packageName = getAttribute(attributes, PACKAGE_ELEMENT);
+            if (name != null && packageName != null) {
+                AppInfo appInfo = new AppInfo();
+                appInfo.setName(name);
+                appInfo.setPackageName(packageName);
+                appInfoList.add(appInfo);
+            }
         }
     }
     
