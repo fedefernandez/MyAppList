@@ -14,19 +14,22 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.projectsexception.myapplist.fragments.AppInfoFragment;
 import com.projectsexception.myapplist.fragments.AppListFragment;
 import com.projectsexception.myapplist.fragments.FileListFragment;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.util.NewFileDialog;
 import com.projectsexception.myapplist.xml.FileUtil;
 
-public class ListActivity extends SherlockFragmentActivity {
+public class ListActivity extends SherlockFragmentActivity implements AppInfoFragment.ActivityInterface {
 
     public static final String ARG_FILE = "fileName";
     
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
+        
+        setContentView(R.layout.list_activity);
         
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_HOME_AS_UP);
@@ -47,23 +50,32 @@ public class ListActivity extends SherlockFragmentActivity {
         }
         
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment;
+        Fragment fragment = null;
         if (fileName == null) {
             // Want installed applications
             ab.setTitle(R.string.ab_title_app_list);
             fragment = new AppListFragment();
-            if (fm.findFragmentById(android.R.id.content) == null) {
-                fm.beginTransaction().add(android.R.id.content, fragment).commit();
-            }
         } else if (!dialog) {
             ab.setTitle(R.string.ab_title_file_list);
             Bundle fragmentArgs = new Bundle();
             fragmentArgs.putString(ARG_FILE, fileName);
             fragment = new FileListFragment();
-            fragment.setArguments(fragmentArgs);
-            if (fm.findFragmentById(android.R.id.content) == null) {
-                fm.beginTransaction().add(android.R.id.content, fragment).commit();
+            fragment.setArguments(fragmentArgs);            
+        }
+        
+        if (fragment != null) {
+            if (fm.findFragmentById(R.id.app_list) == null) {
+                fm.beginTransaction().add(R.id.app_list, fragment).commit();
             }
+        }
+    }
+
+    @Override
+    public void removeAppInfoFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        AppInfoFragment infoFragment = (AppInfoFragment) fm.findFragmentById(R.id.app_info);
+        if (infoFragment != null) { 
+            fm.beginTransaction().remove(infoFragment).commit();
         }
     }
     

@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -43,16 +44,33 @@ public class AppUtil {
     }
     
     public static AppInfo loadAppInfo(PackageManager mPm, String packageName) {
+        ApplicationInfo applicationInfo = loadApplicationInfo(mPm, packageName);
+        AppInfo appInfo = null;
+        if (applicationInfo != null) {
+            appInfo = createAppInfo(mPm, applicationInfo);
+        }
+        return appInfo;
+    }
+    
+    public static ApplicationInfo loadApplicationInfo(PackageManager mPm, String packageName) {
         try {
-            ApplicationInfo applicationInfo = mPm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-            return createAppInfo(mPm, applicationInfo);
+            return mPm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);            
+        } catch (NameNotFoundException e) {
+            return null;
+        }
+    }
+    
+    public static PackageInfo loadPackageInfo(PackageManager mPm, String packageName) {
+        try {
+            return mPm.getPackageInfo(packageName, 
+                    PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS | PackageManager.GET_ACTIVITIES);            
         } catch (NameNotFoundException e) {
             return null;
         }
     }
     
     private static boolean isSystemPackage(ApplicationInfo pkgInfo) {
-        return ((pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) ? true : false;
+        return ((pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM) ? true : false;
     }
     
     private static AppInfo createAppInfo(PackageManager mPm, ApplicationInfo applicationInfo) {

@@ -75,7 +75,8 @@
                 <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.xml" />
             </intent-filter>
         </activity>
-        <activity android:name=".Preferences" />   
+        <activity android:name=".Preferences" />
+        <activity android:name="AppInfoActivity"/>   
     </application>
 
 </manifest>

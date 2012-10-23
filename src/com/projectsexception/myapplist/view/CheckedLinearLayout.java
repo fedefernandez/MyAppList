@@ -3,13 +3,13 @@ package com.projectsexception.myapplist.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Checkable;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 /**
  * RelativeLayout that implements Checkable interface
  * Taken from androcode.es
  */
-public class CheckedRelativeLayout extends RelativeLayout implements Checkable {
+public class CheckedLinearLayout extends LinearLayout implements Checkable {
  
     /**
      * Variable to store state
@@ -20,11 +20,11 @@ public class CheckedRelativeLayout extends RelativeLayout implements Checkable {
             android.R.attr.state_checked
     };
  
-    public CheckedRelativeLayout(Context context) {
+    public CheckedLinearLayout(Context context) {
         super(context);
     }
  
-    public CheckedRelativeLayout(Context context, AttributeSet attrs) {
+    public CheckedLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
  
