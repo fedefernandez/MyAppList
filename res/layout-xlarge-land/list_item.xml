@@ -7,6 +7,15 @@
     android:descendantFocusability="blocksDescendants"
     android:background="@drawable/list_selector_holo_dark">
     
+    <ImageButton 
+        android:id="@+id/list_item_details" 
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/list_selector_holo_dark"
+        android:src="@drawable/ic_ab_back_holo_dark"/>
+    
     <ImageView
         android:id="@+id/list_item_icon" 
         android:layout_width="32dp"
@@ -20,14 +29,5 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"/>
-    
-    <ImageButton 
-        android:id="@+id/list_item_details" 
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="@drawable/list_selector_holo_dark"
-        android:src="@drawable/ic_ab_back_holo_dark"/>
 
 </com.projectsexception.myapplist.view.CheckedLinearLayout>

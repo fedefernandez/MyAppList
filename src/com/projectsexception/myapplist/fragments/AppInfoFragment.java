@@ -3,6 +3,7 @@ package com.projectsexception.myapplist.fragments;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -67,8 +68,9 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         mPackage = getArguments().getString(PACKAGE_ARG);
         if (mPackage != null) {
             PackageManager pManager = getActivity().getPackageManager();
-            PackageInfo packageInfo = AppUtil.loadPackageInfo(pManager, mPackage);
-            populateView(pManager, packageInfo);
+            final PackageInfo packageInfo = AppUtil.loadPackageInfo(pManager, mPackage);
+            final boolean isFromGPlay = AppUtil.isFromGooglePlay(pManager, mPackage);
+            populateView(pManager, packageInfo, isFromGPlay);
         } else {
             getView().setVisibility(View.GONE);
         }
@@ -93,7 +95,8 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         }
     }
 
-    private void populateView(PackageManager pManager, PackageInfo packageInfo) {        
+    @TargetApi(9)
+    private void populateView(PackageManager pManager, PackageInfo packageInfo, boolean isFromGPlay) {        
         TextView textView = (TextView) getView().findViewById(R.id.status);        
         if (packageInfo == null) {
             // Not installed
@@ -114,6 +117,12 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                 textView.setText(R.string.app_info_sd_installed);                
             } else {
                 textView.setText(R.string.app_info_local_installed);
+            }
+            
+            if (isFromGPlay) {
+                ((TextView) getView().findViewById(R.id.play_linked)).setText(R.string.app_info_play_linked);
+            } else {
+                ((TextView) getView().findViewById(R.id.play_linked)).setText(R.string.app_info_play_not_linked);                
             }
             
             textView = (TextView) getView().findViewById(R.id.app_date);

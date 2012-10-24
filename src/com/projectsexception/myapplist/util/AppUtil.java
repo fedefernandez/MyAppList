@@ -69,6 +69,18 @@ public class AppUtil {
         }
     }
     
+    public static boolean isFromGooglePlay(PackageManager mPm, String packageName) {
+        String installPM = mPm.getInstallerPackageName(packageName);
+        if ( installPM == null ) {
+            // Definitely not from Google Play
+            return false;
+        } else if (installPM.equals("com.google.android.feedback") || installPM.equals("com.android.vending")) {
+            // Installed from the Google Play
+            return true;
+        }
+        return false;
+    }
+    
     private static boolean isSystemPackage(ApplicationInfo pkgInfo) {
         return ((pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM) ? true : false;
     }
