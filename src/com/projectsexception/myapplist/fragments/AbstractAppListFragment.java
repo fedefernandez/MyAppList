@@ -86,6 +86,12 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         showAppInfo(appInfo.getName(), appInfo.getPackageName());
     }
     
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ApplicationsReceiver.unregisterListener(getSherlockActivity());
+    }
+    
     public abstract boolean isInfoButtonAvailable();
 
     @Override 

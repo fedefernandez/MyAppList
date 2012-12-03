@@ -21,7 +21,7 @@
   <string name="source_url">https://github.com/projectsexception/MyAppList</string>
   <string name="translate_url">http://crowdin.net/project/my-app-list/invite</string>
   <string name="load_list">Załaduj listę</string>
-  <string name="new_list">Nowa lista</string>
+  <string name="new_list">Applications</string>
   <string name="fragment_list_empty">Brak aplikacji</string>
   <string name="new_file_dialog_title">Nazwa pliku</string>
   <string name="new_file_dialog_msg">Wybierz nazwę pliku. Jeśli plik z tą samą nazwą istnieje, zostanie on zastąpiony.</string>
@@ -48,10 +48,21 @@
   <string name="error_creating_dir">Nie można uzyskać dostępu do %s na karcie SD</string>
   <string name="error_creating_file">Nie można zapisać w pliku %s</string>
   <string name="problem_no_google_play">Nie znaleziono sklepu Google Play</string>
-  <string name="context_menu_application_information">Informacje o aplikacji</string>
-  <string name="context_menu_application_play">Pokaż w Google Play</string>
+  <string name="context_menu_application_information">Application system information</string>
+  <string name="context_menu_application_play">See on Google Play</string>
   <string name="context_menu_remove_from_list">Usuń z listy</string>
   <string name="content_desc_application_icon">﻿Ikona aplikacji</string>
   <string name="content_desc_application_installed">Aplikacja zainstalowana</string>
   <string name="content_desc_application_title">Nazwa aplikacji</string>
+  <string name="start_application">Start application</string>
+  <string name="stop_application">Stop application</string>
+  <string name="app_info_not_installed">Application not installed</string>
+  <string name="app_info_local_installed">Application installed</string>
+  <string name="app_info_sd_installed">Application installed on external storage</string>
+  <string name="app_info_play_linked">This application was installed from Google Play</string>
+  <string name="app_info_play_not_linked">This application wasn\'t installed from Google Play</string>
+  <string name="app_info_permissions">Permissions</string>
+  <string name="app_info_no_permissions">No declared permissions</string>
+  <string name="app_info_version">Version %1$s (%2$d)</string>
+  <string name="app_info_date">Installed on %1$s. Updated on %2$s</string>
 </resources>

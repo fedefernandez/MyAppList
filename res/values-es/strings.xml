@@ -21,7 +21,7 @@
   <string name="source_url">https://github.com/projectsexception/MyAppList</string>
   <string name="translate_url">Mira este fichero de \'My App List\'</string>
   <string name="load_list">Cargar lista</string>
-  <string name="new_list">Nueva Lista</string>
+  <string name="new_list">Aplicaciones</string>
   <string name="fragment_list_empty">No hay aplicaciones</string>
   <string name="new_file_dialog_title">Nombre del fichero</string>
   <string name="new_file_dialog_msg">Seleccione el nombre del fichero. ¡Si ya existe uno con el mismo nombre, éste será sobrescrito!.</string>
@@ -48,10 +48,21 @@
   <string name="error_creating_dir">Imposible acceder a %s en la tarjeta SD</string>
   <string name="error_creating_file">Imposible escribir en el fichero %s</string>
   <string name="problem_no_google_play">Google Play no encontrado</string>
-  <string name="context_menu_application_information">Información de Aplicación</string>
+  <string name="context_menu_application_information">Información del sistema</string>
   <string name="context_menu_application_play">Ver en Google Play</string>
   <string name="context_menu_remove_from_list">Eliminar de la lista</string>
   <string name="content_desc_application_icon">Icono de la aplicación</string>
   <string name="content_desc_application_installed">Aplicación Instalada</string>
   <string name="content_desc_application_title">Título de la Aplicación</string>
+  <string name="start_application">Iniciar aplicación</string>
+  <string name="stop_application">Detener la aplicación</string>
+  <string name="app_info_not_installed">Aplicación no instalada</string>
+  <string name="app_info_local_installed">Aplicación Instalada</string>
+  <string name="app_info_sd_installed">Aplicación instalada en almacenamiento externo</string>
+  <string name="app_info_play_linked">Esta aplicación se instaló desde Google Play</string>
+  <string name="app_info_play_not_linked">Esta aplicación no se instaló desde Google Play</string>
+  <string name="app_info_permissions">Permisos</string>
+  <string name="app_info_no_permissions">No hay permisos declarados</string>
+  <string name="app_info_version">Versión %1$s (%2$d)</string>
+  <string name="app_info_date">Instalada el %1$s. actualizada el %2$s</string>
 </resources>

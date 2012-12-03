@@ -3,12 +3,15 @@ package com.projectsexception.myapplist.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -63,7 +66,7 @@ public class AppUtil {
     public static PackageInfo loadPackageInfo(PackageManager mPm, String packageName) {
         try {
             return mPm.getPackageInfo(packageName, 
-                    PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS | PackageManager.GET_ACTIVITIES);            
+                    PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
         } catch (NameNotFoundException e) {
             return null;
         }
@@ -79,6 +82,61 @@ public class AppUtil {
             return true;
         }
         return false;
+    }
+    
+    public static boolean isRunning(Context context, String packageName) {
+        boolean running = false;
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);        
+        List<RunningAppProcessInfo> procInfos = am.getRunningAppProcesses();
+        for(int i = 0; i < procInfos.size(); i++){
+            if (procInfos.get(i).processName.equals(packageName)) {
+                running = true;
+                break;
+            }
+        }
+        return running;
+    }
+    
+    public static Intent getApplicationIntent(PackageManager pm, PackageInfo packageInfo) {
+        Intent intent = null;
+        intent = pm.getLaunchIntentForPackage(packageInfo.packageName);
+        if (intent != null) {
+            intent = intent.cloneFilter();
+            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            return intent;
+        }
+        if (packageInfo.activities.length == 1) {
+            intent = new Intent(Intent.ACTION_MAIN);
+            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            intent.setClassName(packageInfo.packageName, packageInfo.activities[0].name);
+            return intent;
+        }
+        intent = getIntent(packageInfo.packageName, pm);
+        if (intent != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            return intent;
+        }
+        return null;
+    }
+    
+    private static Intent getIntent(String packageName, PackageManager pm) {
+        List<ResolveInfo> list = getRunableList(pm, false);
+        for (ResolveInfo info : list) {
+            // System.out.println(packageName + " == " + info.activityInfo.packageName);
+            if (packageName.equals(info.activityInfo.packageName)) {
+                Intent i = new Intent(Intent.ACTION_MAIN);
+                i.addCategory(Intent.CATEGORY_LAUNCHER);
+                i.setClassName(packageName, info.activityInfo.name);
+                return i;
+            }
+        }
+        return null;
+    }
+    
+    private static synchronized List<ResolveInfo> getRunableList(PackageManager pm, boolean reload) {
+        Intent baseIntent = new Intent(Intent.ACTION_MAIN);
+        baseIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        return pm.queryIntentActivities(baseIntent, 0);
     }
     
     private static boolean isSystemPackage(ApplicationInfo pkgInfo) {

@@ -48,7 +48,7 @@
         android:background="#C2C2C2" />
 
     <ScrollView
-        android:layout_width="match_parent"        
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/buttons_separador" >
 
@@ -70,9 +70,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/icon"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/icon"
                 android:singleLine="true"
                 android:text="@string/app_name"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -82,8 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
-                android:layout_toRightOf="@+id/icon"
                 android:layout_marginBottom="10dp"
+                android:layout_toRightOf="@+id/icon"
                 android:singleLine="true"
                 android:text="@string/app_info_version" />
 
@@ -101,10 +101,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title_separador"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:singleLine="true"
                 android:text="@string/app_info_not_installed" />
 
@@ -113,37 +113,62 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/status"
-                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:text="@string/app_info_play_linked" />
+            
+            <LinearLayout
+                android:id="@+id/action_buttons" 
+                android:layout_below="@+id/play_linked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                
+                <Button 
+                    android:id="@+id/start_application"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:text="@string/start_application"/>
+                
+                <Button 
+                    android:id="@+id/stop_application"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:text="@string/stop_application"/>
+                
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/app_data"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/buttons_separador"
-                android:layout_below="@+id/play_linked"
+                android:layout_below="@+id/action_buttons"
                 android:orientation="vertical" >
 
                 <View
                     android:id="@+id/app_date_sep"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="#C2C2C2" />
 
                 <TextView
                     android:id="@+id/app_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
                     android:text="@string/app_info_date" />
 
                 <View
@@ -166,36 +191,10 @@
                     android:id="@+id/permissions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    
-                android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="@string/app_info_no_permissions" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="#C2C2C2" />
-
-                <TextView
-                    android:id="@+id/activities_title"
-                    style="@android:style/TextAppearance.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:padding="10dp"
-                    android:text="@string/app_info_activities" />
-
-                <TextView
-                    android:id="@+id/activities"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="@string/app_info_no_activities" />
+                    android:text="@string/app_info_no_permissions" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

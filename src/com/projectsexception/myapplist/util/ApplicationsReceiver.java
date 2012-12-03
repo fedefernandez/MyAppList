@@ -24,6 +24,13 @@ public class ApplicationsReceiver extends BroadcastReceiver {
         return instance;
     }
     
+    public static void unregisterListener(Context context) {
+        if (instance != null) {
+            context.unregisterReceiver(instance);
+            instance = null;
+        }
+    }
+    
     private Map<String, Boolean> mContextChangedMap;
     
     public ApplicationsReceiver() {

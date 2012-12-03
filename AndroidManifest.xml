@@ -7,6 +7,8 @@
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="15" />
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <application
         android:icon="@drawable/ic_launcher"
