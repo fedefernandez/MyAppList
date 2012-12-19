@@ -7,7 +7,7 @@ import com.projectsexception.myapplist.fragments.AppInfoFragment;
 
 public class AppInfoActivity extends SherlockFragmentActivity implements AppInfoFragment.ActivityInterface {
     
-    public static final String NAME_EXTRA = "packageNameExtra";
+    public static final String NAME_EXTRA = "nameExtra";
     public static final String PACKAGE_EXTRA = "packageNameExtra";
 
     @Override

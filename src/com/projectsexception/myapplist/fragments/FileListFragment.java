@@ -24,6 +24,7 @@ import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppSaveTask;
+import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.util.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
@@ -82,13 +83,31 @@ public class FileListFragment extends AbstractAppListFragment {
             getLoaderManager().restartLoader(0, args, this);
         } else if (item.getItemId() == R.id.menu_save) {
             new AppSaveTask(getActivity(), file.getName(), mAdapter.getData()).execute(true);
-        } else if (item.getItemId() == R.id.menu_share) {
+        } else if (item.getItemId() == R.id.menu_share_file || item.getItemId() == R.id.menu_share_text) {
             Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/xml");
-            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_file_text, FileUtil.APPLICATION_DIR));
-            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_file_subject));
-            Uri uri = Uri.parse("file://" + file.getAbsolutePath());
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            if (item.getItemId() == R.id.menu_share_file) {
+                intent.setType("text/xml");
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_file_subject));
+                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_file_text));
+                Uri uri = Uri.parse("file://" + file.getAbsolutePath());
+                intent.putExtra(Intent.EXTRA_STREAM, uri);                
+            } else {
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
+                final StringBuilder sb = new StringBuilder();
+                List<AppInfo> lst = mAdapter.getData();
+                if (lst != null) {
+                    for (AppInfo appInfo : lst) {
+                        sb.append(appInfo.getName());
+                        sb.append(": ");
+                        sb.append(getString(R.string.play_google_web, appInfo.getPackageName()));
+                        sb.append("\n");
+                    }
+                }
+                sb.append(getString(R.string.share_file_text));
+                intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+                
+            }
             try {
                 startActivity(Intent.createChooser(intent, "Share file..."));                
             } catch (Exception e) {
@@ -122,7 +141,11 @@ public class FileListFragment extends AbstractAppListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         AppInfo appInfo = mAdapter.getData().get(position);
         if (!TextUtils.isEmpty(appInfo.getPackageName())) {
-            showAppInfo(appInfo.getName(), appInfo.getPackageName());
+            if (appInfo.isInstalled()) {
+                showAppInfo(appInfo.getName(), appInfo.getPackageName());
+            } else {
+                AppUtil.showPlayGoogleApp(getActivity(), appInfo.getPackageName());
+            }
         }
     }
     

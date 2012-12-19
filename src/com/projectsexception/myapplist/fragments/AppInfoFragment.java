@@ -111,8 +111,11 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             ((TextView) getView().findViewById(R.id.title)).setText(mName);
             getView().findViewById(R.id.info).setEnabled(false);
             textView.setText(R.string.app_info_not_installed);
-            getView().findViewById(R.id.version).setVisibility(View.GONE);
+            getView().findViewById(R.id.version).setVisibility(View.INVISIBLE);
             getView().findViewById(R.id.app_data).setVisibility(View.GONE);
+            getView().findViewById(R.id.play_linked).setVisibility(View.GONE);
+            getView().findViewById(R.id.stop_application).setEnabled(false);            
+            getView().findViewById(R.id.start_application).setEnabled(false);            
         } else {
             final ApplicationInfo applicationInfo = packageInfo.applicationInfo;
             

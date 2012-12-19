@@ -39,12 +39,16 @@
   <string name="menu_select_all">Seleccionar todas</string>
   <string name="menu_unselect_all">Deseleccionar todas</string>
   <string name="menu_about">Acerca de</string>
-  <string name="menu_share">Compartir fichero</string>
+  <string name="menu_share">Compartir</string>
+  <string name="menu_share_file">Compartir fichero</string>
+  <string name="menu_share_text">Compartir texto</string>
   <string name="share_file_subject">Mira este fichero de \'My App List\'</string>
   <string name="share_file_text">Descargar la aplicación desde https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
+  <string name="share_text_subject">Mira estas aplicaciones</string>
   <string name="ab_title_app_list">Aplicaciones instaladas</string>
   <string name="ab_title_file_list">Aplicaciones en el fichero</string>
   <string name="play_google">market://details?id=%s</string>
+  <string name="play_google_web">https://play.google.com/store/apps/details?id=%s</string>
   <string name="error_creating_dir">Imposible acceder a %s en la tarjeta SD</string>
   <string name="error_creating_file">Imposible escribir en el fichero %s</string>
   <string name="problem_no_google_play">Google Play no encontrado</string>
