@@ -20,7 +20,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.ListActivity;
-import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppSaveTask;
@@ -72,51 +71,32 @@ public class FileListFragment extends AbstractAppListFragment {
     }
     
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {        
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.menu_refresh) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_refresh) {
             Bundle args = new Bundle();
             args.putBoolean(ARG_RELOAD, true);
             getLoaderManager().restartLoader(0, args, this);
+            return true;
         } else if (item.getItemId() == R.id.menu_save) {
             new AppSaveTask(getActivity(), file.getName(), mAdapter.getData()).execute(true);
-        } else if (item.getItemId() == R.id.menu_share_file || item.getItemId() == R.id.menu_share_text) {
+            return true;
+        } else if (item.getItemId() == R.id.menu_share_file) {
             Intent intent = new Intent(Intent.ACTION_SEND);
-            if (item.getItemId() == R.id.menu_share_file) {
-                intent.setType("text/xml");
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_file_subject));
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_file_text));
-                Uri uri = Uri.parse("file://" + file.getAbsolutePath());
-                intent.putExtra(Intent.EXTRA_STREAM, uri);                
-            } else {
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
-                final StringBuilder sb = new StringBuilder();
-                List<AppInfo> lst = mAdapter.getData();
-                if (lst != null) {
-                    for (AppInfo appInfo : lst) {
-                        sb.append(appInfo.getName());
-                        sb.append(": ");
-                        sb.append(getString(R.string.play_google_web, appInfo.getPackageName()));
-                        sb.append("\n");
-                    }
-                }
-                sb.append(getString(R.string.share_file_text));
-                intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-                
-            }
+            intent.setType("text/xml");
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_file_subject));
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_file_text));
+            Uri uri = Uri.parse("file://" + file.getAbsolutePath());
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
             try {
-                startActivity(Intent.createChooser(intent, "Share file..."));                
+                startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
             } catch (Exception e) {
                 // Something was wrong
             }
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);

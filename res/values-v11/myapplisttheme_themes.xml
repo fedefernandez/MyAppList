@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="MyAppListTheme" parent="Theme.Sherlock">
+
+    <item name="android:buttonStyle">@style/ButtonMyAppListTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonMyAppListTheme</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
+
+  </style>
+
+</resources>

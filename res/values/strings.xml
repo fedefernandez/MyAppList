@@ -48,10 +48,13 @@
     <string name="menu_about">About</string>
     <string name="menu_share">Share</string>   
     <string name="menu_share_file">Share file</string>    
-    <string name="menu_share_text">Share text</string> 
+    <string name="menu_share_text">Share text</string>    
+    <string name="menu_share_html">Share html</string>
     
+    <string name="share_chooser">Share with...</string>
     <string name="share_file_subject">Check this \'My App List\' file</string>
     <string name="share_file_text">Download the application from https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
+    <string name="share_file_html">&lt;a href="https://play.google.com/store/apps/details?id=com.projectsexception.myapplist"&gt;Download the application from here&lt;/a&gt;</string>
     <string name="share_text_subject">Check this applications</string>
     
     <string name="ab_title_app_list">Installed Applications</string>

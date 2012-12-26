@@ -15,6 +15,9 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.widget.Toast;
 
 import com.projectsexception.myapplist.model.AppInfo;
@@ -175,6 +178,35 @@ public class AppUtil {
 		} catch (Exception e) {
 			Toast.makeText(context, R.string.problem_no_google_play, Toast.LENGTH_SHORT).show();
 		}
+    }
+    
+    public static Spanned appInfoToSpanned(Context ctx, List<AppInfo> lst, boolean html) {
+        final StringBuilder sb = new StringBuilder();
+        if (lst != null) {
+            for (AppInfo appInfo : lst) {
+                if (html) {
+                    sb.append("<a href=\"");
+                    sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
+                    sb.append("\">");            
+                    sb.append(appInfo.getName());
+                    sb.append("</a><br/>\n");            
+                } else {
+                    sb.append(appInfo.getName());
+                    sb.append(": ");
+                    sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
+                    sb.append("\n"); 
+                }
+            }
+        }
+        if (html) {
+            sb.append("<br/>\n"); 
+            sb.append(ctx.getString(R.string.share_file_html));
+            return Html.fromHtml(sb.toString());
+        } else {
+            sb.append("\n"); 
+            sb.append(ctx.getString(R.string.share_file_text));
+            return new SpannableString(sb);
+        }        
     }
 
 }

@@ -7,13 +7,17 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.AppInfoActivity;
+import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.AppListAdapter;
 
@@ -90,6 +94,41 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     public void onDestroy() {
         super.onDestroy();
         ApplicationsReceiver.unregisterListener(getSherlockActivity());
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean consume = false;
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            consume = true;
+        } else if (item.getItemId() == R.id.menu_share_text 
+                || item.getItemId() == R.id.menu_share_html) {
+            SparseBooleanArray sp = getListView().getCheckedItemPositions();
+            if (sp == null || sp.size() == 0) {
+                Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(Intent.ACTION_SEND);            
+                List<AppInfo> lst = mAdapter.getData();
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
+                if (item.getItemId() == R.id.menu_share_text) {
+                    intent.setType("text/plain");                    
+                    intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToSpanned(getActivity(), lst, false));
+                } else {
+                    intent.setType("text/html");
+                    intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToSpanned(getActivity(), lst, true));
+                }
+                try {
+                    startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
+                } catch (Exception e) {
+                    // Something was wrong
+                }
+            }
+            consume = true;
+        }
+        return consume;
     }
     
     public abstract boolean isInfoButtonAvailable();

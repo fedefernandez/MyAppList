@@ -8,12 +8,12 @@
         android:id="@+id/app_list"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="0.8" />
 
     <FrameLayout
         android:id="@+id/app_info"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1.2" />
 
 </LinearLayout>

@@ -42,8 +42,11 @@
   <string name="menu_share">Compartir</string>
   <string name="menu_share_file">Compartir fichero</string>
   <string name="menu_share_text">Compartir texto</string>
+  <string name="menu_share_html">Compartir html</string>
+  <string name="share_chooser">Compartir con...</string>
   <string name="share_file_subject">Mira este fichero de \'My App List\'</string>
   <string name="share_file_text">Descargar la aplicación desde https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
+  <string name="share_file_html">&lt;a href="https://play.google.com/store/apps/details?id=com.projectsexception.myapplist"&gt;Descargar la aplicación desde aquí&lt;/a&gt;</string>
   <string name="share_text_subject">Mira estas aplicaciones</string>
   <string name="ab_title_app_list">Aplicaciones instaladas</string>
   <string name="ab_title_file_list">Aplicaciones en el fichero</string>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="ButtonMyAppListTheme" parent="android:Widget.Button">
+	  <item name="android:background">@drawable/btn_default_holo_dark</item>
+	  <item name="android:minHeight">48dip</item>
+	  <item name="android:minWidth">64dip</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="ImageButtonMyAppListTheme" parent="android:Widget.ImageButton">
+	  <item name="android:background">@drawable/btn_default_holo_dark</item>
+  </style>
+
+  <style name="ListViewMyAppListTheme" parent="android:Widget.ListView">
+      <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+  </style>
+
+  <style name="ListViewMyAppListTheme.White" parent="android:Widget.ListView.White">
+      <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+  </style>
+
+  <style name="SpinnerItemMyAppListTheme" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+      <item name="android:textColor">#ffffff</item>
+  </style>
+
+</resources>

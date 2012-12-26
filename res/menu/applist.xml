@@ -16,5 +16,19 @@
         android:icon="@drawable/ic_menu_selectall"
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_select_all"/>
+    <item
+        android:id="@+id/menu_share"        
+        android:icon="@drawable/ic_menu_share"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_share">
+        <menu>
+            <item
+                android:id="@+id/menu_share_text"
+                android:title="@string/menu_share_text"/>
+            <item
+                android:id="@+id/menu_share_html"
+                android:title="@string/menu_share_html"/>
+        </menu>
+    </item>
 
 </menu>

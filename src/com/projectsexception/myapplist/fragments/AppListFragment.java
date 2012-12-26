@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppListLoader;
@@ -48,17 +46,15 @@ public class AppListFragment extends AbstractAppListFragment {
     }
     
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {        
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.menu_refresh) {
+    public boolean onOptionsItemSelected(MenuItem item) { 
+        if (item.getItemId() == R.id.menu_refresh) {
             Bundle args = new Bundle();
             args.putBoolean(ARG_RELOAD, true);
             getLoaderManager().restartLoader(0, args, this);
+            return true;
         } else if (item.getItemId() == R.id.menu_select_all) {
             checkAllItems();
+            return true;
         } else if (item.getItemId() == R.id.menu_save) {            
             SparseBooleanArray sp = getListView().getCheckedItemPositions();
             if (sp == null || sp.size() == 0) {
@@ -76,8 +72,9 @@ public class AppListFragment extends AbstractAppListFragment {
                 }
                 createNewFileDialog(selectedApps);
             }
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override 
