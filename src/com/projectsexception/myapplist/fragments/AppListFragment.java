@@ -55,40 +55,12 @@ public class AppListFragment extends AbstractAppListFragment {
         } else if (item.getItemId() == R.id.menu_select_all) {
             checkAllItems();
             return true;
-        } else if (item.getItemId() == R.id.menu_save) {            
-            SparseBooleanArray sp = getListView().getCheckedItemPositions();
-            if (sp == null || sp.size() == 0) {
-                Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
-            } else {
-                List<AppInfo> allApps = mAdapter.getData();
-                List<AppInfo> selectedApps = new ArrayList<AppInfo>();
-                int size = sp.size();
-                int index;
-                for (int i = 0 ; i < size ; i++) {
-                    index = sp.keyAt(i);
-                    if (index < allApps.size()) {
-                        selectedApps.add(allApps.get(index));
-                    }
-                }
-                createNewFileDialog(selectedApps);
-            }
+        } else if (item.getItemId() == R.id.menu_save) {
+            createNewFileDialog(getSelectedItems());
             return true;
         } else if (item.getItemId() == R.id.menu_share_text 
                 || item.getItemId() == R.id.menu_share_html) {
-            List<AppInfo> selectedApps = new ArrayList<AppInfo>();
-            SparseBooleanArray sp = getListView().getCheckedItemPositions();
-            if (sp != null) {
-                List<AppInfo> allApps = mAdapter.getData();
-                int size = sp.size();
-                int index;
-                for (int i = 0 ; i < size ; i++) {
-                    index = sp.keyAt(i);
-                    if (index < allApps.size()) {
-                        selectedApps.add(allApps.get(index));
-                    }
-                }                
-            }
-            shareAppList(selectedApps, item.getItemId() == R.id.menu_share_html);
+            shareAppList(getSelectedItems(), item.getItemId() == R.id.menu_share_html);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -116,16 +88,37 @@ public class AppListFragment extends AbstractAppListFragment {
     
     private void createNewFileDialog(final List<AppInfo> appList) {
         final Context context = getActivity();
-        NewFileDialog.showDialog(context, new NewFileDialog.Listener() {            
-            @Override
-            public void nameAccepted(String name) {
-                if (TextUtils.isEmpty(name)) {
-                    Toast.makeText(context, R.string.empty_name_error, Toast.LENGTH_SHORT).show();
-                } else {
-                    new AppSaveTask(context, name, appList).execute(false);
+        if (appList == null || appList.isEmpty()) {
+            Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
+        } else {
+            NewFileDialog.showDialog(context, new NewFileDialog.Listener() {            
+                @Override
+                public void nameAccepted(String name) {
+                    if (TextUtils.isEmpty(name)) {
+                        Toast.makeText(context, R.string.empty_name_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        new AppSaveTask(context, name, appList).execute(false);
+                    }
                 }
-            }
-        });
+            });
+        }
+    }
+    
+    private List<AppInfo> getSelectedItems() {
+        List<AppInfo> selectedApps = new ArrayList<AppInfo>();
+        SparseBooleanArray sp = getListView().getCheckedItemPositions();
+        if (sp != null) {
+            List<AppInfo> allApps = mAdapter.getData();
+            int size = sp.size();
+            int index;
+            for (int i = 0 ; i < size ; i++) {
+                index = sp.keyAt(i);
+                if (index < allApps.size() && sp.valueAt(i)) {
+                    selectedApps.add(allApps.get(index));
+                }
+            }                
+        }
+        return selectedApps;
     }
 
     @Override
