@@ -73,6 +73,23 @@ public class AppListFragment extends AbstractAppListFragment {
                 createNewFileDialog(selectedApps);
             }
             return true;
+        } else if (item.getItemId() == R.id.menu_share_text 
+                || item.getItemId() == R.id.menu_share_html) {
+            List<AppInfo> selectedApps = new ArrayList<AppInfo>();
+            SparseBooleanArray sp = getListView().getCheckedItemPositions();
+            if (sp != null) {
+                List<AppInfo> allApps = mAdapter.getData();
+                int size = sp.size();
+                int index;
+                for (int i = 0 ; i < size ; i++) {
+                    index = sp.keyAt(i);
+                    if (index < allApps.size()) {
+                        selectedApps.add(allApps.get(index));
+                    }
+                }                
+            }
+            shareAppList(selectedApps, item.getItemId() == R.id.menu_share_html);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

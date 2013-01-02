@@ -19,11 +19,15 @@ public class AppListAdapter extends BaseAdapter {
     
     private final LayoutInflater mInflater;
     private View.OnClickListener mListener;
-    private List<AppInfo> appList;
+    private List<AppInfo> mAppList;
+    private int mInstalledColor;
+    private int mNotInstalledColor;
 
     public AppListAdapter(Context context) {
         this.mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.appList = new ArrayList<AppInfo>();
+        this.mAppList = new ArrayList<AppInfo>();
+        this.mInstalledColor = context.getResources().getColor(R.color.app_installed);
+        this.mNotInstalledColor = context.getResources().getColor(R.color.app_not_installed);
     }
     
     public void setListener(View.OnClickListener listener) {
@@ -31,12 +35,12 @@ public class AppListAdapter extends BaseAdapter {
     }
 
     public void setData(List<AppInfo> data) {
-        this.appList = data;
+        this.mAppList = data;
         notifyDataSetChanged();
     }
     
     public List<AppInfo> getData() {
-        return appList;
+        return mAppList;
     }
 
     /**
@@ -63,8 +67,10 @@ public class AppListAdapter extends BaseAdapter {
         textView.setText(item.getName());
         if (item.isInstalled()) {
             textView.setTypeface(Typeface.DEFAULT_BOLD);
+            textView.setTextColor(mInstalledColor);
         } else {
             textView.setTypeface(Typeface.DEFAULT);
+            textView.setTextColor(mNotInstalledColor);
         }
         View button = view.findViewById(R.id.list_item_details);
         if (mListener == null) {
@@ -79,19 +85,19 @@ public class AppListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (appList == null) {
+        if (mAppList == null) {
             return 0;
         } else {
-            return appList.size();
+            return mAppList.size();
         }
     }
 
     @Override
     public Object getItem(int position) {
-        if (appList == null || position >= appList.size()) {
+        if (mAppList == null || position >= mAppList.size()) {
             return null;
         } else {
-            return appList.get(position);
+            return mAppList.get(position);
         }
     }
 

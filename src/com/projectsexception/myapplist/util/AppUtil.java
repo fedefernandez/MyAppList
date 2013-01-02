@@ -16,12 +16,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.Spanned;
 import android.widget.Toast;
 
-import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.R;
+import com.projectsexception.myapplist.model.AppInfo;
 
 public class AppUtil {
     
@@ -180,33 +179,35 @@ public class AppUtil {
 		}
     }
     
-    public static Spanned appInfoToSpanned(Context ctx, List<AppInfo> lst, boolean html) {
+    public static Spanned appInfoToHTML(Context ctx, List<AppInfo> lst, boolean html) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
             for (AppInfo appInfo : lst) {
-                if (html) {
-                    sb.append("<a href=\"");
-                    sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
-                    sb.append("\">");            
-                    sb.append(appInfo.getName());
-                    sb.append("</a><br/>\n");            
-                } else {
-                    sb.append(appInfo.getName());
-                    sb.append(": ");
-                    sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
-                    sb.append("\n"); 
-                }
+                sb.append("<a href=\"");
+                sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
+                sb.append("\">");            
+                sb.append(appInfo.getName());
+                sb.append("</a><br/>\n");
             }
         }
-        if (html) {
-            sb.append("<br/>\n"); 
-            sb.append(ctx.getString(R.string.share_file_html));
-            return Html.fromHtml(sb.toString());
-        } else {
-            sb.append("\n"); 
-            sb.append(ctx.getString(R.string.share_file_text));
-            return new SpannableString(sb);
-        }        
+        sb.append("<br/>\n"); 
+        sb.append(ctx.getString(R.string.share_file_html));
+        return Html.fromHtml(sb.toString());
+    }
+    
+    public static String appInfoToText(Context ctx, List<AppInfo> lst, boolean html) {
+        final StringBuilder sb = new StringBuilder();
+        if (lst != null) {
+            for (AppInfo appInfo : lst) {
+                sb.append(appInfo.getName());
+                sb.append(": ");
+                sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
+                sb.append("\n"); 
+            }
+        }
+        sb.append("\n"); 
+        sb.append(ctx.getString(R.string.share_file_text));
+        return sb.toString();
     }
 
 }

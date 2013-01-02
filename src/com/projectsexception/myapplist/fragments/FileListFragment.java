@@ -93,6 +93,11 @@ public class FileListFragment extends AbstractAppListFragment {
                 // Something was wrong
             }
             return true;
+        } else if (item.getItemId() == R.id.menu_share_text 
+                || item.getItemId() == R.id.menu_share_html) {
+            List<AppInfo> allApps = mAdapter.getData();
+            shareAppList(allApps, item.getItemId() == R.id.menu_share_html);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
