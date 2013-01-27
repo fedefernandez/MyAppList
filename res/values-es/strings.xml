@@ -4,6 +4,10 @@
   <string name="app_name">My App List</string>
   <string name="main_no_files">No se encontraron ficheros XML</string>
   <string name="main_select_files">Selecciona los ficheros a cargar</string>
+  <string name="configuration_title">Configuración</string>
+    <string name="configuration_system_apps">Aplicaciones del sistema</string>
+    <string name="configuration_system_apps_msg">Active para ocultar las aplicaciones del sistema</string>
+    <string name="about_title">Acerca</string>
   <string name="about_web_title">projectsexception.com</string>
   <string name="about_web_summary">Visita mi página web</string>
   <string name="about_email_title">info@projectsexception.com</string>
@@ -19,7 +23,7 @@
   <string name="web_url">http://projectsexception.com</string>
   <string name="twitter_url">http://twitter.com/ProException</string>
   <string name="source_url">https://github.com/projectsexception/MyAppList</string>
-  <string name="translate_url">Mira este fichero de \'My App List\'</string>
+  <string name="translate_url">http://crowdin.net/project/my-app-list/invite</string>
   <string name="load_list">Cargar lista</string>
   <string name="new_list">Aplicaciones</string>
   <string name="fragment_list_empty">No hay aplicaciones</string>
@@ -38,12 +42,12 @@
   <string name="menu_refresh">Actualizar</string>
   <string name="menu_select_all">Seleccionar todas</string>
   <string name="menu_unselect_all">Deseleccionar todas</string>
-  <string name="menu_about">Acerca de</string>
+  <string name="menu_settings">Ajustes</string>
   <string name="menu_share">Compartir</string>
   <string name="menu_share_file">Compartir fichero</string>
   <string name="menu_share_text">Compartir texto</string>
   <string name="menu_share_html">Compartir en html</string>
-  <string name="share_chooser">Compartir con...</string>
+  <string name="share_chooser">Compartir con&#8230;</string>
   <string name="share_file_subject">Mira este fichero de \'My App List\'</string>
   <string name="share_file_text">Descargar la aplicación desde https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=com.projectsexception.myapplist\"&gt; Descargar la aplicación desde aquí&lt;/a&gt;</string>

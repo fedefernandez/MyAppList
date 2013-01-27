@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:unified="http://schemas.android.com/apk/res-auto" >
+
+    <header
+        unified:fragment="com.projectsexception.myapplist.PreferenceActivity$ConfigurationFragment"
+        unified:title="@string/configuration_title"
+        unified:preferenceRes="@xml/configuration" />
+
+    <header
+        unified:fragment="com.projectsexception.myapplist.PreferenceActivity$AboutFragment"
+        unified:title="@string/about_title"
+        unified:preferenceRes="@xml/about" />
+
+</preference-headers>

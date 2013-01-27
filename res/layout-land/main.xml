@@ -37,10 +37,10 @@
         android:paddingTop="10dp" >
 
         <ImageView
+            style="?attr/frontImageStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/content_desc_application_title"
-            android:src="@drawable/titulo" />
+            android:contentDescription="@string/content_desc_application_title" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -2,7 +2,9 @@ package com.projectsexception.myapplist.fragments;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -140,16 +142,20 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             
             checkStopButton();
             
-            getView().findViewById(R.id.start_application).setOnClickListener(new View.OnClickListener() { 
-                @Override
-                public void onClick(View v) {
-                    startActivity(launchIntent);
-                }
-            });
+            if (launchIntent == null) {
+                getView().findViewById(R.id.start_application).setEnabled(false);
+            } else {
+                getView().findViewById(R.id.start_application).setOnClickListener(new View.OnClickListener() { 
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(launchIntent);
+                    }
+                });
+            }
             
             textView = (TextView) getView().findViewById(R.id.app_date);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-                final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault());
                 textView.setText(getString(R.string.app_info_date, 
                         dateFormat.format(new Date(packageInfo.firstInstallTime)), 
                         dateFormat.format(new Date(packageInfo.lastUpdateTime))));                
@@ -185,6 +191,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             button.setEnabled(isRunning);
             if (isRunning) {
                 button.setOnClickListener(new View.OnClickListener() {                    
+                    @SuppressLint("NewApi")
                     @SuppressWarnings("deprecation")
                     @Override
                     public void onClick(View v) {

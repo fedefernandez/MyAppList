@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projectsexception.myapplist"
-    android:versionCode="6"
-    android:versionName="0.2" >
+    android:versionCode="7"
+    android:versionName="0.3" >
 
-    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17" />
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
@@ -13,7 +13,8 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyAppListTheme" >
+        android:theme="@style/MyAppListTheme" 
+        android:allowBackup="true">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -77,7 +78,7 @@
                 <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.xml" />
             </intent-filter>
         </activity>
-        <activity android:name=".Preferences" />
+        <activity android:name="com.projectsexception.myapplist.PreferenceActivity" />
         <activity android:name="AppInfoActivity"/>   
     </application>
 

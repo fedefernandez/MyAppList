@@ -12,6 +12,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -30,8 +31,8 @@ public class AppUtil {
     private static final String APP_DETAILS_PACKAGE_NAME = "com.android.settings";
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
     
-    public static List<AppInfo> loadAppInfoList(PackageManager mPm) {
-        List<ApplicationInfo> apps = mPm.getInstalledApplications(PackageManager.GET_META_DATA);
+    public static List<AppInfo> loadAppInfoList(PackageManager packageManager, boolean hideSystemApps) {
+        List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
         if (apps == null) {
             apps = new ArrayList<ApplicationInfo>();
         }
@@ -40,8 +41,8 @@ public class AppUtil {
         List<AppInfo> entries = new ArrayList<AppInfo>();
         AppInfo entry;
         for (ApplicationInfo applicationInfo : apps) {
-            if (!isSystemPackage(applicationInfo)) {
-                entry = createAppInfo(mPm, applicationInfo);
+            if (!hideSystemApps || !isSystemPackage(applicationInfo)) {
+                entry = createAppInfo(packageManager, applicationInfo);
                 entries.add(entry);
             }
         }
@@ -61,6 +62,15 @@ public class AppUtil {
         try {
             return mPm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);            
         } catch (NameNotFoundException e) {
+            return null;
+        }
+    }
+    
+    public static Drawable loadApplicationIcon(PackageManager mPm, String packageName) {
+        ApplicationInfo applicationInfo = loadApplicationInfo(mPm, packageName);
+        if (applicationInfo != null) {
+            return applicationInfo.loadIcon(mPm);
+        } else {
             return null;
         }
     }
@@ -149,7 +159,6 @@ public class AppUtil {
         AppInfo entry = new AppInfo();
         entry.setPackageName(applicationInfo.packageName);
         entry.setName(applicationInfo.loadLabel(mPm).toString());
-        entry.setIcon(applicationInfo.loadIcon(mPm));
         entry.setInstalled(true);
         return entry;
     }

@@ -26,7 +26,11 @@ public class ApplicationsReceiver extends BroadcastReceiver {
     
     public static void unregisterListener(Context context) {
         if (instance != null) {
-            context.unregisterReceiver(instance);
+            try {
+                context.unregisterReceiver(instance);                
+            } catch (IllegalArgumentException e) {
+                CustomLog.error("ApplicationsReceiver", e);
+            }
             instance = null;
         }
     }

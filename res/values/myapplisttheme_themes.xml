@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="MyAppListTheme" parent="Theme.Sherlock">
+    <style name="MyAppListBaseTheme" parent="Theme.Sherlock">
+        <item name="frontImageStyle">@style/FrontImageMyAppListTheme</item>
+        <item name="itemDetailsStyle">@style/ItemDetailsMyAppListTheme</item>
+        <item name="itemStyle">@style/ItemMyAppListTheme</item>
+    </style>
 
-    <item name="android:buttonStyle">@style/ButtonMyAppListTheme</item>
+    <style name="MyAppListBaseThemeLight" parent="Theme.Sherlock.Light">
+        <item name="itemDetailsStyle">@style/ItemDetailsMyAppListThemeLight</item>
+        <item name="itemStyle">@style/ItemMyAppListThemeLight</item>
+        <item name="frontImageStyle">@style/FrontImageMyAppListThemeLight</item>
+    </style>
 
-    <item name="android:imageButtonStyle">@style/ImageButtonMyAppListTheme</item>
+    <style name="MyAppListTheme" parent="MyAppListBaseTheme">
+        <item name="android:buttonStyle">@style/ButtonMyAppListTheme</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonMyAppListTheme</item>
+        <item name="android:listViewStyle">@style/ListViewMyAppListTheme</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewMyAppListTheme.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListTheme</item>
+    </style>
 
-    <item name="android:listViewStyle">@style/ListViewMyAppListTheme</item>
-
-    <item name="android:listViewWhiteStyle">@style/ListViewMyAppListTheme.White</item>
-
-    <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListTheme</item>
-
-  </style>
+    <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
+        <item name="android:buttonStyle">@style/ButtonMyAppListThemeLight</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonMyAppListThemeLight</item>
+        <item name="android:listViewStyle">@style/ListViewMyAppListThemeLight</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewMyAppListThemeLight.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListThemeLight</item>
+    </style>
 
 </resources>

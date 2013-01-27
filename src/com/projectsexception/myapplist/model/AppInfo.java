@@ -2,15 +2,12 @@ package com.projectsexception.myapplist.model;
 
 import java.text.Collator;
 
-import android.graphics.drawable.Drawable;
-
 public class AppInfo implements Comparable<AppInfo> {
     
     private final Collator sCollator = Collator.getInstance();
     
     private String packageName;
     private String name;
-    private Drawable icon;
     private boolean installed;
 
     public String getPackageName() {
@@ -27,14 +24,6 @@ public class AppInfo implements Comparable<AppInfo> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Drawable getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
     }
 
     public boolean isInstalled() {

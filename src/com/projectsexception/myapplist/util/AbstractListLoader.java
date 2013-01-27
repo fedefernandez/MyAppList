@@ -30,7 +30,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      */
     @Override
     public List<AppInfo> loadInBackground() {
-        CustomLog.debug("AbstractListLoader", "loadInBackground");
         // Retrieve all known applications.
         List<AppInfo> entries = loadAppInfoList();
         
@@ -50,7 +49,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      */
     @Override
     public void deliverResult(List<AppInfo> apps) {
-        CustomLog.debug("AbstractListLoader", "deliverResult");
         if (isReset()) {
             // An async query came in while the loader is stopped. We
             // don't need the result.
@@ -80,7 +78,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      */
     @Override
     protected void onStartLoading() {
-        CustomLog.debug("AbstractListLoader", "onStartLoading");
         if (mApps != null) {
             // If we currently have a result available, deliver it
             // immediately.
@@ -104,7 +101,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      */
     @Override
     protected void onStopLoading() {
-        CustomLog.debug("AbstractListLoader", "onStopLoading");
         // Attempt to cancel the current load task if possible.
         cancelLoad();
     }
@@ -114,7 +110,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      */
     @Override
     public void onCanceled(List<AppInfo> apps) {
-        CustomLog.debug("AbstractListLoader", "onCanceled");
         super.onCanceled(apps);
 
         // At this point we can release the resources associated with 'apps'
@@ -127,7 +122,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      */
     @Override
     protected void onReset() {
-        CustomLog.debug("AbstractListLoader", "onReset");
         super.onReset();
 
         // Ensure the loader is stopped

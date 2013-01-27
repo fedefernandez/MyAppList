@@ -35,14 +35,15 @@
         android:drawable="@drawable/list_selector_background_transition_holo_dark" 
         android:state_focused="true" 
         android:state_pressed="true"/>
-    <item android:drawable="@drawable/list_selector_background_transition_holo_dark" 
+    <item 
+        android:drawable="@drawable/list_selector_background_transition_holo_dark" 
         android:state_focused="false" 
         android:state_pressed="true"/>
     <item 
         android:drawable="@drawable/list_focused_holo" 
         android:state_focused="true"/>
     <item 
-        android:drawable="@drawable/list_checked" 
+        android:drawable="@drawable/list_pressed_holo_light" 
         android:state_checked="true"/>
 
 </selector>

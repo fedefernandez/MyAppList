@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:descendantFocusability="blocksDescendants"
+    style="?attr/itemStyle"
     android:background="@drawable/list_selector_holo_dark">
     
     <ImageView
@@ -27,7 +28,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:background="@drawable/list_selector_holo_dark"
-        android:src="@drawable/ic_ab_back_holo_dark"/>
+        style="?attr/itemDetailsStyle"
+        android:contentDescription="@string/content_desc_item_details"/>
 
 </com.projectsexception.myapplist.view.CheckedLinearLayout>

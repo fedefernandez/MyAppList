@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -41,16 +40,17 @@
     <View
         android:id="@+id/buttons_separador"
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="@dimen/separator_height"
         android:layout_above="@+id/buttons"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="#C2C2C2" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buttons_separador" >
+        android:layout_above="@+id/buttons_separador"
+        android:padding="10dp" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -63,7 +63,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_default_launcher" />
+                android:src="@drawable/ic_default_launcher"
+                android:contentDescription="@string/content_desc_application_icon" />
 
             <TextView
                 android:id="@+id/title"
@@ -90,7 +91,7 @@
             <View
                 android:id="@+id/title_separador"
                 android:layout_width="match_parent"
-                android:layout_height="1px"
+                android:layout_height="@dimen/separator_height"
                 android:layout_below="@+id/version"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -155,7 +156,7 @@
                 <View
                     android:id="@+id/app_date_sep"
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                    android:layout_height="@dimen/separator_height"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -173,7 +174,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                    android:layout_height="@dimen/separator_height"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="#C2C2C2" />

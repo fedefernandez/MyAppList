@@ -6,7 +6,7 @@ public class CustomLog {
     
     private static final String TAG = "MyAppList";
     
-    private static final int LOG_LEVEL = Log.INFO;
+    private static final int LOG_LEVEL = Log.DEBUG;
     
     private static final boolean VERBOSE = LOG_LEVEL <= Log.VERBOSE;
     private static final boolean DEBUG = LOG_LEVEL <= Log.DEBUG;
@@ -80,56 +80,54 @@ public class CustomLog {
 
     public static void log(int level, String source, String msg, Throwable e) {
         if (level == Log.VERBOSE) {
-            if (VERBOSE) {                
-                Log.v(TAG, message(source, msg, e));
+            if (VERBOSE) {
+                if (e == null) {
+                    Log.v(TAG, message(source, msg));                    
+                } else {
+                    Log.v(TAG, message(source, msg), e);
+                }
             }
         } else if (level == Log.DEBUG) {
             if (DEBUG) {
-                Log.d(TAG, message(source, msg, e));
+                if (e == null) {
+                    Log.d(TAG, message(source, msg));                    
+                } else {
+                    Log.d(TAG, message(source, msg), e);
+                }
             }
         } else if (level == Log.INFO) {
             if (INFO) {
-                Log.i(TAG, message(source, msg, e));
+                if (e == null) {
+                    Log.i(TAG, message(source, msg));                    
+                } else {
+                    Log.i(TAG, message(source, msg), e);
+                }
             }
         } else if (level == Log.WARN) {
             if (WARN) {
-                Log.w(TAG, message(source, msg, e));
+                if (e == null) {
+                    Log.w(TAG, message(source, msg));                    
+                } else {
+                    Log.w(TAG, message(source, msg), e);
+                }
             }
         } else if (level == Log.ERROR) {
             if (ERROR) {
-                Log.e(TAG, message(source, msg, e));
+                if (e == null) {
+                    Log.e(TAG, message(source, msg));                    
+                } else {
+                    Log.e(TAG, message(source, msg), e);
+                }
             }
         }
     }
     
-    private static String message(String source, String msg, Throwable e) {
+    private static String message(String source, String msg) {
         StringBuilder sb = new StringBuilder(source);
         if (msg != null) {
             sb.append(": ");
             sb.append(msg);
             sb.append(" ");
-        }
-        if(e != null) {
-            sb.append(" Caused by: ");
-            sb.append(e.getClass().getName());
-            if (e.getMessage() != null) {
-                sb.append(" ");
-                sb.append(e.getMessage());
-                StackTraceElement[] stack = e.getStackTrace();
-                if (stack != null) {
-                    for (int i = 0; i < stack.length; i++) {
-                        sb.append("\n at ");
-                        sb.append(stack[i].getClassName());
-                        sb.append(".");
-                        sb.append(stack[i].getMethodName());
-                        sb.append("(");
-                        sb.append(stack[i].getFileName());
-                        sb.append(":");
-                        sb.append(stack[i].getLineNumber());
-                        sb.append(")");
-                    }
-                }
-            }
         }
         return sb.toString();
     }

@@ -12,28 +12,41 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.myapplist.R;
 
 public class MainActivity extends SherlockActivity {
+    
+    private int mTheme;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mTheme = ThemeManager.getTheme(this);
+        setTheme(mTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
     
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mTheme != ThemeManager.getTheme(this)) {
+            ThemeManager.restartActivity(this);
+        }
+    }
+    
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item = menu.add(R.string.menu_about);
-        item.setIcon(R.drawable.ic_menu_info_details);
+        MenuItem item = menu.add(R.string.menu_settings);
+        item.setIcon(R.drawable.ic_menu_manage);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         return super.onCreateOptionsMenu(menu);
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(this, Preferences.class));
+        startActivity(new Intent(this, PreferenceActivity.class));
         return true;
     }
     

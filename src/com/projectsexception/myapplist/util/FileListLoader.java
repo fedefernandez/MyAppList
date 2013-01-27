@@ -51,10 +51,8 @@ public class FileListLoader extends AbstractListLoader {
             for (AppInfo appInfo : fileAppList) {
                 installed = AppUtil.loadAppInfo(mPm, appInfo.getPackageName());
                 if (installed == null) {
-                    appInfo.setIcon(null);
                     appInfo.setInstalled(false);
                 } else {
-                    appInfo.setIcon(installed.getIcon());
                     appInfo.setInstalled(true);
                 }
             }

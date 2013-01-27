@@ -38,7 +38,7 @@
   <string name="menu_refresh">Odśwież</string>
   <string name="menu_select_all">Wybierz wszystko</string>
   <string name="menu_unselect_all">Odznacz wszystko</string>
-  <string name="menu_about">O aplikacji</string>
+  <string name="menu_settings">Settings</string>
   <string name="menu_share">Podziel się plikiem</string>
   <string name="share_file_subject">﻿Sprawdź ten plik \"Moje listy aplikacji\"</string>
   <string name="share_file_text">Pobierz aplikację z https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
