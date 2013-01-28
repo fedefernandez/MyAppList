@@ -4,20 +4,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.myapplist.R;
 
-public class MainActivity extends SherlockActivity {
+public class MainActivity extends SherlockActivity implements DialogInterface.OnClickListener {
     
+    private static final String NUM_EXECUTIONS = "num_executions";
+    private static final int MAX_EXECUTIONS = 20;
     private int mTheme;
 
     @Override
@@ -26,8 +32,42 @@ public class MainActivity extends SherlockActivity {
         setTheme(mTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        checkRateApp();
     }
     
+    private void checkRateApp() {
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        int numExecutions = sp.getInt(NUM_EXECUTIONS, 0);
+        if (numExecutions >= MAX_EXECUTIONS) {
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle(R.string.rate_dialog_title);
+            dialog.setMessage(R.string.rate_dialog_msg);
+            dialog.setCancelable(false);
+            dialog.setNegativeButton(R.string.rate_dialog_negative, this);
+            dialog.setNeutralButton(R.string.rate_dialog_neutral, this);
+            dialog.setPositiveButton(R.string.rate_dialog_positive, this);
+            dialog.show();
+        } else if (numExecutions >= 0) {
+            sp.edit().putInt(NUM_EXECUTIONS, numExecutions + 1).commit();
+        }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        int newValue = -1;
+        if (DialogInterface.BUTTON_NEUTRAL == which) {
+            newValue = 0;
+        } else if (DialogInterface.BUTTON_POSITIVE == which) {
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+            } catch (Exception e) {
+                CustomLog.error("MainActivity.Dialog", e);
+            }
+        }        
+        editor.putInt(NUM_EXECUTIONS, newValue).commit();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
