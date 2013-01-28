@@ -4,6 +4,8 @@ Thanks to:
 
 Jake Wharton for his wonderful library ActionBarSherlock (http://actionbarsherlock.com)
 
+Joel Pedraz for his Unified Preference Library (https://github.com/saik0/UnifiedPreference)
+
 Apostrophic Laboratories for his Komika font used in main title (http://moorstation.org/typoasis/designers/lab/index.htm)
 
 AnderWeb (http://jbthemes.com/anderweb/) and androcode.es for his selectable elements tutorial (http://androcode.es/2012/03/seleccion-individualmultiple-de-elementos-en-un-listview/)
