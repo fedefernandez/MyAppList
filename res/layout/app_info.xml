@@ -15,12 +15,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/list_selector_holo_dark"
             android:drawableLeft="@drawable/ic_menu_info_details"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:singleLine="true"
+            style="?appInfoButtonStyle"
             android:text="@string/context_menu_application_information" />
 
         <TextView
@@ -28,12 +24,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/list_selector_holo_dark"
             android:drawableLeft="@drawable/play_icon"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:singleLine="true"
+            style="?appInfoButtonStyle"
             android:text="@string/context_menu_application_play" />
     </LinearLayout>
 

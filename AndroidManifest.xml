@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.projectsexception.myapplist"
-    android:versionCode="7"
-    android:versionName="0.3" >
+    android:versionCode="8"
+    android:versionName="0.4" >
 
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17" />
     
@@ -79,7 +79,9 @@
             </intent-filter>
         </activity>
         <activity android:name="com.projectsexception.myapplist.PreferenceActivity" />
-        <activity android:name="AppInfoActivity"/>   
+        <activity android:name=".AppInfoActivity"/>   
+        <activity android:name=".ListIgnoredActivity"/>
+        <service android:name=".work.SaveListService"/>   
     </application>
 
 </manifest>

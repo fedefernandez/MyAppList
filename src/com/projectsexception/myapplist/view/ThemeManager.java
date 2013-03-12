@@ -30,6 +30,15 @@ public class ThemeManager {
         }
     }
     
+    public static int chooseDrawable(Context context, int darkDrawable, int lightDrawable) {
+        int theme = getTheme(context);
+        if (theme == R.style.MyAppListTheme) {
+            return darkDrawable;
+        } else {
+            return lightDrawable;
+        }
+    }
+    
     public static void restartActivity(Activity activity) {
         activity.finish();
         Intent intent = new Intent(activity, activity.getClass());

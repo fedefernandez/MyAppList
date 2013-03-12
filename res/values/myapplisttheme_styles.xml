@@ -1,78 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Dark Theme -->
 
-  <style name="ButtonMyAppListTheme" parent="android:Widget.Button">
-	  <item name="android:background">@drawable/btn_default_holo_dark</item>
-	  <item name="android:minHeight">48dip</item>
-	  <item name="android:minWidth">64dip</item>
-	  <item name="android:textColor">#ffffff</item>
-  </style>
+    <style name="ButtonMyAppListTheme" parent="android:Widget.Button">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 
-  <style name="ImageButtonMyAppListTheme" parent="android:Widget.ImageButton">
-	  <item name="android:background">@drawable/btn_default_holo_dark</item>
-  </style>
+    <style name="ImageButtonMyAppListTheme" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
+    </style>
 
-  <style name="ItemDetailsMyAppListTheme" parent="ImageButtonMyAppListTheme">
-      <item name="android:background">@drawable/list_selector_holo_dark</item>
-      <item name="android:src">@drawable/ic_ab_back_holo_dark</item>
-  </style>
+    <style name="ItemDetailsMyAppListTheme" parent="ImageButtonMyAppListTheme">
+        <item name="android:background">@drawable/list_selector_holo_dark</item>
+        <item name="android:src">@drawable/ic_ab_back_holo_dark</item>
+    </style>
 
-  <style name="ListViewMyAppListTheme" parent="android:Widget.ListView">
-      <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
-  </style>
+    <style name="ListViewMyAppListTheme" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+    </style>
 
-  <style name="ListViewMyAppListTheme.White" parent="android:Widget.ListView.White">
-      <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
-  </style>
+    <style name="ListViewMyAppListTheme.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+    </style>
 
-  <style name="SpinnerItemMyAppListTheme" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-      <item name="android:textColor">#ffffff</item>
-  </style>
+    <style name="SpinnerItemMyAppListTheme" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">#ffffff</item>
+    </style>
 
-  <style name="ItemMyAppListTheme">
-      <item name="android:background">@drawable/list_selector_holo_dark</item>
-  </style>
+    <style name="ItemMyAppListTheme">
+        <item name="android:background">@drawable/list_selector_holo_dark</item>
+    </style>
 
-  <style name="FrontImageMyAppListTheme">
-      <item name="android:src">@drawable/title_dark</item>
-  </style>
+    <style name="AppInfoButtonMyAppListTheme" parent="appInfoButton">
+        <item name="android:background">@drawable/list_selector_holo_dark</item>
+    </style>
 
-  <style name="ButtonMyAppListThemeLight" parent="android:Widget.Button">
-	  <item name="android:background">@drawable/btn_default_holo_light</item>
-	  <item name="android:minHeight">48dip</item>
-	  <item name="android:minWidth">64dip</item>
-	  <item name="android:textColor">#000000</item>
-  </style>
+    <style name="FrontImageMyAppListTheme">
+        <item name="android:src">@drawable/title_dark</item>
+    </style>
+    
+    <!-- Light Theme -->
 
-  <style name="ImageButtonMyAppListThemeLight" parent="android:Widget.ImageButton">
-	  <item name="android:background">@drawable/btn_default_holo_light</item>
-  </style>
+    <style name="ButtonMyAppListThemeLight" parent="android:Widget.Button">
+        <item name="android:background">@drawable/btn_default_holo_light</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+        <item name="android:textColor">#000000</item>
+    </style>
 
-  <style name="ItemDetailsMyAppListThemeLight" parent="ImageButtonMyAppListThemeLight">
-      <item name="android:background">@drawable/list_selector_holo_light</item>
-      <item name="android:src">@drawable/ic_ab_back_holo_light</item>
-  </style>
+    <style name="ImageButtonMyAppListThemeLight" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/btn_default_holo_light</item>
+    </style>
 
-  <style name="ItemMyAppListThemeLight">
-      <item name="android:background">@drawable/list_selector_holo_light</item>
-  </style>
+    <style name="ItemDetailsMyAppListThemeLight" parent="ImageButtonMyAppListThemeLight">
+        <item name="android:background">@drawable/list_selector_holo_light</item>
+        <item name="android:src">@drawable/ic_ab_back_holo_light</item>
+    </style>
 
-  <style name="ListViewMyAppListThemeLight" parent="android:Widget.ListView">
-      <item name="android:listSelector">@drawable/list_selector_holo_light</item>
-  </style>
+    <style name="ListViewMyAppListThemeLight" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+    </style>
 
-  <style name="ListViewMyAppListThemeLight.White" parent="android:Widget.ListView.White">
-      <item name="android:listSelector">@drawable/list_selector_holo_light</item>
-  </style>
+    <style name="ListViewMyAppListThemeLight.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+    </style>
 
-  <style name="SpinnerItemMyAppListThemeLight" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-      <item name="android:textColor">#000000</item>
-  </style>
+    <style name="SpinnerItemMyAppListThemeLight" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">#000000</item>
+    </style>
 
-  <style name="FrontImageMyAppListThemeLight">
-      <item name="android:src">@drawable/title_light</item>
-  </style>
+    <style name="ItemMyAppListThemeLight">
+        <item name="android:background">@drawable/list_selector_holo_light</item>
+    </style>
+
+    <style name="AppInfoButtonMyAppListThemeLight" parent="appInfoButton">
+        <item name="android:background">@drawable/list_selector_holo_light</item>
+    </style>
+
+    <style name="FrontImageMyAppListThemeLight">
+        <item name="android:src">@drawable/title_light</item>
+    </style>
+
+    <!-- Custom Base Styles -->
+    <style name="appInfoButton" parent="android:Widget.Holo.TextView">
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
 
 </resources>

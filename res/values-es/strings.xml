@@ -7,6 +7,7 @@
   <string name="configuration_title">Ajustes</string>
   <string name="configuration_system_apps">Aplicaciones del sistema</string>
   <string name="configuration_system_apps_msg">¿Ocultar aplicaciones del sistema?</string>
+  <string name="backup_title">Copia de seguridad</string>
   <string name="about_title">Acerca de</string>
   <string name="about_web_title">projectsexception.com</string>
   <string name="about_web_summary">Visita mi página web</string>

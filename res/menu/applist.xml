@@ -13,7 +13,7 @@
         android:title="@string/menu_save"/>
     <item
         android:id="@+id/menu_select_all"
-        android:icon="@drawable/ic_menu_selectall"
+        android:icon="@drawable/ic_menu_select_all"
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_select_all"/>
     <item

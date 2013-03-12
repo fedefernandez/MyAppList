@@ -1,15 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:unified="http://schemas.android.com/apk/res-auto" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <header
-        unified:fragment="com.projectsexception.myapplist.PreferenceActivity$ConfigurationFragment"
-        unified:title="@string/configuration_title"
-        unified:preferenceRes="@xml/configuration" />
+    <PreferenceCategory android:title="@string/configuration_title" >
+        <CheckBoxPreference
+            android:key="hide_system_apps"
+            android:defaultValue="true"
+            android:summary="@string/configuration_system_apps_msg"
+            android:title="@string/configuration_system_apps" />
 
-    <header
-        unified:fragment="com.projectsexception.myapplist.PreferenceActivity$AboutFragment"
-        unified:title="@string/about_title"
-        unified:preferenceRes="@xml/about" />
+        <ListPreference
+            android:key="theme"
+            android:defaultValue="0"
+            android:entries="@array/themes"
+            android:entryValues="@array/themes_values"
+            android:title="@string/configuration_theme" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/backup_title" >
+        <CheckBoxPreference
+            android:key="backup_check"
+            android:summary="@string/backup_check_summary"
+            android:title="@string/backup_check_title" />
 
-</preference-headers>
+        <ListPreference
+            android:key="backup_period"
+            android:defaultValue="12"
+            android:entries="@array/backup"
+            android:entryValues="@array/backup_values"
+            android:title="@string/backup_period_title"
+            android:summary="@string/backup_period_summary" />
+
+        <Preference
+            android:key="backup_ignored"
+            android:summary="@string/backup_ignored_apps_summary"
+            android:title="@string/backup_ignored_apps_title" />
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/about_title" >
+        <PreferenceScreen
+            android:key="web"
+            android:summary="@string/about_web_summary"
+            android:title="@string/about_web_title" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/web_url" />
+        </PreferenceScreen>
+
+        <Preference
+            android:key="mail"
+            android:summary="@string/about_email_summary"
+            android:title="@string/about_email_title" />
+
+        <PreferenceScreen
+            android:key="twitter"
+            android:summary="@string/about_twitter_summary"
+            android:title="@string/about_twitter_title" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/twitter_url" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="source"
+            android:summary="@string/about_source_summary"
+            android:title="@string/about_source_title" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/source_url" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="translate"
+            android:summary="@string/about_translate_summary"
+            android:title="@string/about_translate_title" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/translate_url" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+</PreferenceScreen>

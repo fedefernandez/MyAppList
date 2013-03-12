@@ -25,7 +25,7 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppSaveTask;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
-import com.projectsexception.myapplist.util.FileListLoader;
+import com.projectsexception.myapplist.work.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
 
 public class FileListFragment extends AbstractAppListFragment {

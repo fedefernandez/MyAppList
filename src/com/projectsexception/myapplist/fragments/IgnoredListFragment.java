@@ -3,28 +3,42 @@ package com.projectsexception.myapplist.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.AppSaveTask;
-import com.projectsexception.myapplist.util.NewFileDialog;
+import com.projectsexception.myapplist.model.MyAppListDbHelper;
+import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.work.AppListLoader;
 
-public class AppListFragment extends AbstractAppListFragment {
+public class IgnoredListFragment extends AbstractAppListFragment {
     
+    public static interface CallBack {
+        MyAppListDbHelper getHelper();
+    }
+    
+    private CallBack mCallBack;
+    private MenuItem mAcceptItem;
     private MenuItem mSelectAllItem;
     private boolean mCheckAll;
+    
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof CallBack) {
+            mCallBack = (CallBack) activity;
+        } else {
+            throw new IllegalStateException(activity.getClass().getName() + " must implement " + CallBack.class.getName());
+        }
+    }
     
     @Override 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -40,9 +54,19 @@ public class AppListFragment extends AbstractAppListFragment {
     
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.applist, menu);
+        inflater.inflate(R.menu.ignoredlist, menu);
         mRefreshItem = menu.findItem(R.id.menu_refresh);
+        mAcceptItem = menu.findItem(R.id.menu_accept);
         mSelectAllItem = menu.findItem(R.id.menu_select_all);
+    }
+    
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        mAcceptItem.setIcon(ThemeManager.chooseDrawable(
+                getSherlockActivity(), 
+                R.drawable.ic_action_accept_dark, 
+                R.drawable.ic_action_accept_light));
     }
     
     @Override
@@ -55,12 +79,9 @@ public class AppListFragment extends AbstractAppListFragment {
         } else if (item.getItemId() == R.id.menu_select_all) {
             checkAllItems();
             return true;
-        } else if (item.getItemId() == R.id.menu_save) {
-            createNewFileDialog(getSelectedItems());
-            return true;
-        } else if (item.getItemId() == R.id.menu_share_text 
-                || item.getItemId() == R.id.menu_share_html) {
-            shareAppList(getSelectedItems(), item.getItemId() == R.id.menu_share_html);
+        } else if (item.getItemId() == R.id.menu_accept) {
+            saveSelectedItems(getSelectedItems());
+            getSherlockActivity().finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -70,6 +91,22 @@ public class AppListFragment extends AbstractAppListFragment {
     public Loader<List<AppInfo>> onCreateLoader(int id, Bundle args) {
         loading(true);
         return new AppListLoader(getActivity());
+    }
+    
+    @Override 
+    public void onLoadFinished(Loader<List<AppInfo>> loader, List<AppInfo> data) {
+        super.onLoadFinished(loader, data);
+        if (data != null) {
+            // Check ignored items
+            final List<String> ignored = mCallBack.getHelper().getPackages();
+            final ListView list = getListView();
+            final int count = getListAdapter().getCount();
+            for ( int i = 0 ; i < count ; i++ ) {
+                if (ignored.contains(data.get(i).getPackageName())) {
+                    list.setItemChecked(i, true);
+                }
+            }
+        }
     }
     
     private void checkAllItems() {
@@ -83,24 +120,6 @@ public class AppListFragment extends AbstractAppListFragment {
         	mSelectAllItem.setTitle(R.string.menu_unselect_all);
         } else {
         	mSelectAllItem.setTitle(R.string.menu_select_all);
-        }
-    }
-    
-    private void createNewFileDialog(final List<AppInfo> appList) {
-        final Context context = getActivity();
-        if (appList == null || appList.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
-        } else {
-            NewFileDialog.showDialog(context, new NewFileDialog.Listener() {            
-                @Override
-                public void nameAccepted(String name) {
-                    if (TextUtils.isEmpty(name)) {
-                        Toast.makeText(context, R.string.empty_name_error, Toast.LENGTH_SHORT).show();
-                    } else {
-                        new AppSaveTask(context, name, appList).execute(false);
-                    }
-                }
-            });
         }
     }
     
@@ -120,10 +139,20 @@ public class AppListFragment extends AbstractAppListFragment {
         }
         return selectedApps;
     }
+    
+    private void saveSelectedItems(List<AppInfo> selectedItems) {
+        if (selectedItems != null && !selectedItems.isEmpty()) {
+            List<String> packages = new ArrayList<String>();
+            for (AppInfo appInfo : selectedItems) {
+                packages.add(appInfo.getPackageName());
+            }
+            mCallBack.getHelper().savePackages(packages);
+        }
+    }
 
     @Override
     public boolean isInfoButtonAvailable() {
-        return true;
+        return false;
     }
 
 }

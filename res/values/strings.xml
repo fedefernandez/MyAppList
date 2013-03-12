@@ -7,6 +7,9 @@
   <string name="configuration_title">Settings</string>
   <string name="configuration_system_apps">System apps</string>
   <string name="configuration_system_apps_msg">Hide system apps?</string>
+  <string name="backup_title">Backup</string>
+  <string name="backup_ignored_apps_title">Ignored apps</string>
+  <string name="backup_ignored_apps_summary">Select ignored apps</string>
   <string name="about_title">About</string>
   <string name="about_web_title">projectsexception.com</string>
   <string name="about_web_summary">Visit my web page</string>
@@ -30,6 +33,7 @@
   <string name="new_file_dialog_title">File name</string>
   <string name="new_file_dialog_msg">Select file name. If a file with the same name existis, it will be overwritten!.</string>
   <string name="new_file_dialog_name">myapplist-%s.xml</string>
+  <string name="backup_filename">myapplist-backup.xml</string>
   <string name="empty_list_error">No selected elements</string>
   <string name="empty_name_error">Name can\'t be empty</string>
   <string name="empty_list_post_error">No applications selected</string>
@@ -52,6 +56,7 @@
   <string name="share_file_text">Download the application from https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=com.projectsexception.myapplist\"&gt;Download the application from here&lt;/a&gt;</string>
   <string name="share_text_subject">Check this applications</string>
+  <string name="ab_title_ignored_list">Ignored Applications</string>
   <string name="ab_title_app_list">Installed Applications</string>
   <string name="ab_title_file_list">File Applications</string>
   <string name="play_google">market://details?id=%s</string>
@@ -78,6 +83,10 @@
   <string name="app_info_date">Installed on %1$s. Updated on %2$s</string>
   <string name="content_desc_item_details">See app details</string>
   <string name="configuration_theme">Theme</string>
+  <string name="backup_period_title">Backup period</string>
+  <string name="backup_period_summary">Set the period for backup service</string>
+  <string name="backup_check_title">Backup active</string>
+  <string name="backup_check_summary">Active for automating backup</string>
   <string name="rate_dialog_title">Rate My App List</string>
   <string name="rate_dialog_msg">My App List is a free application with no ads. If you enjoy using it, please take a moment to rate it. Thanks for your support!</string>
   <string name="rate_dialog_negative">No thanks</string>

@@ -1,4 +1,4 @@
-package com.projectsexception.myapplist.util;
+package com.projectsexception.myapplist.work;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.util.AppUtil;
 
 public class AppListLoader extends AbstractListLoader {
     

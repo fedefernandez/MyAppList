@@ -1,4 +1,4 @@
-package com.projectsexception.myapplist.util;
+package com.projectsexception.myapplist.work;
 
 import java.io.File;
 import java.util.List;
@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.util.AppUtil;
+import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.xml.AppXMLHandler;
 import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.myapplist.xml.ParserException;
