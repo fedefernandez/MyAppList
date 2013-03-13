@@ -16,8 +16,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.text.Html;
-import android.text.Spanned;
 import android.widget.Toast;
 
 import com.projectsexception.myapplist.R;
@@ -188,7 +186,7 @@ public class AppUtil {
 		}
     }
     
-    public static Spanned appInfoToHTML(Context ctx, List<AppInfo> lst, boolean html) {
+    public static String appInfoToHTML(Context ctx, List<AppInfo> lst) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
             for (AppInfo appInfo : lst) {
@@ -201,10 +199,10 @@ public class AppUtil {
         }
         sb.append("<br/>\n"); 
         sb.append(ctx.getString(R.string.share_file_html));
-        return Html.fromHtml(sb.toString());
+        return sb.toString();
     }
     
-    public static String appInfoToText(Context ctx, List<AppInfo> lst, boolean html) {
+    public static String appInfoToText(Context ctx, List<AppInfo> lst) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
             for (AppInfo appInfo : lst) {

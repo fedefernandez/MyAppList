@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.Html;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.AppListAdapter;
+import com.projectsexception.myapplist.work.ShareAppSaveTask;
+import com.projectsexception.myapplist.xml.FileUtil;
 
 public abstract class AbstractAppListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<List<AppInfo>>, View.OnClickListener {
 
@@ -179,25 +182,37 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         }
     }
     
-    protected void shareAppList(List<AppInfo> selectedApps, boolean html) {
+    protected void shareAppList(final List<AppInfo> selectedApps, int format, boolean file) {
         if (selectedApps == null || selectedApps.isEmpty()) {
             Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
         } else {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
-            if (html) {
-                intent.setType("text/html");
-                intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToHTML(getActivity(), selectedApps, true));
+            if (file) {
+                shareAppListFile(selectedApps, format);
             } else {
-                intent.setType("text/plain");                    
-                intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToText(getActivity(), selectedApps, false));
-            }
-            try {
-                startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
-            } catch (Exception e) {
-                // Something was wrong
+                shareAppListText(selectedApps, format);
             }
         }
+    }
+    
+    protected void shareAppListText(List<AppInfo> selectedApps, int format) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
+        if (format == FileUtil.FILE_HTML) {
+            intent.setType("text/html");
+            intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(AppUtil.appInfoToHTML(getActivity(), selectedApps)));
+        } else {
+            intent.setType("text/plain");                    
+            intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToText(getActivity(), selectedApps));
+        }
+        try {
+            startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
+        } catch (Exception e) {
+            // Something was wrong
+        }
+    }
+    
+    protected void shareAppListFile(List<AppInfo> selectedApps, int format) {        
+        new ShareAppSaveTask(getSherlockActivity(), selectedApps, format).execute(new Void[0]);
     }
 
 }

@@ -20,11 +20,18 @@ import com.projectsexception.myapplist.util.AppUtil;
 
 public class AppListAdapter extends BaseAdapter {
     
+    static class AppInfoView {
+        TextView title;
+        ImageView icon;
+        View button;
+    }
+    
     private final LayoutInflater mInflater;
     private final PackageManager mPm;
     private View.OnClickListener mListener;
     private List<AppInfo> mAppList;
     private int mNotInstalledColor;
+    private int mInstalledColor;
 
     public AppListAdapter(Context context) {
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,39 +56,44 @@ public class AppListAdapter extends BaseAdapter {
     @Override 
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
+        AppInfoView appInfoView;
         if (convertView == null) {
             view = mInflater.inflate(R.layout.list_item, parent, false);
+            appInfoView = new AppInfoView();
+            appInfoView.title = (TextView) view.findViewById(R.id.list_item_text);
+            mInstalledColor = appInfoView.title.getCurrentTextColor();
+            appInfoView.icon = (ImageView) view.findViewById(R.id.list_item_icon);
+            appInfoView.button = view.findViewById(R.id.list_item_details);
+            view.setTag(appInfoView);
         } else {
             view = convertView;
+            appInfoView = (AppInfoView) view.getTag();
         }
 
-        TextView textView = (TextView) view.findViewById(R.id.list_item_text);
         AppInfo item = (AppInfo) getItem(position);
-        textView = (TextView) view.findViewById(R.id.list_item_text);
-        textView.setText(item.getName());
+        appInfoView.title.setText(item.getName());
         Drawable icon = null;
         if (item.isInstalled()) {
-            textView.setTypeface(Typeface.DEFAULT_BOLD);
-            textView.setTextAppearance(textView.getContext(), android.R.attr.textAppearance);
+            appInfoView.title.setTypeface(Typeface.DEFAULT_BOLD);
+            appInfoView.title.setTextColor(mInstalledColor);
             icon = AppUtil.loadApplicationIcon(mPm, item.getPackageName());
         } else {
-            textView.setTypeface(Typeface.DEFAULT);
-            textView.setTextColor(mNotInstalledColor);
+            appInfoView.title.setTypeface(Typeface.DEFAULT);
+            appInfoView.title.setTextColor(mNotInstalledColor);
         }
         
-        ImageView imageView = (ImageView) view.findViewById(R.id.list_item_icon);
         if (icon == null) {
-            imageView.setImageResource(R.drawable.ic_default_launcher);
+            appInfoView.icon.setImageResource(R.drawable.ic_default_launcher);
         } else {
-            imageView.setImageDrawable(icon);
+            appInfoView.icon.setImageDrawable(icon);
         }
         
-        View button = view.findViewById(R.id.list_item_details);
         if (mListener == null) {
-            button.setVisibility(View.GONE);
+            appInfoView.button.setVisibility(View.GONE);
         } else {
-            button.setTag(item);
-            button.setOnClickListener(mListener);
+            appInfoView.button.setVisibility(View.VISIBLE);
+            appInfoView.button.setTag(item);
+            appInfoView.button.setOnClickListener(mListener);
         }
         return view;
     }

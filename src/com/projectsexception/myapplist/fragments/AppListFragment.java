@@ -17,9 +17,10 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.AppSaveTask;
 import com.projectsexception.myapplist.util.NewFileDialog;
 import com.projectsexception.myapplist.work.AppListLoader;
+import com.projectsexception.myapplist.work.AppSaveTask;
+import com.projectsexception.myapplist.xml.FileUtil;
 
 public class AppListFragment extends AbstractAppListFragment {
     
@@ -58,9 +59,16 @@ public class AppListFragment extends AbstractAppListFragment {
         } else if (item.getItemId() == R.id.menu_save) {
             createNewFileDialog(getSelectedItems());
             return true;
-        } else if (item.getItemId() == R.id.menu_share_text 
-                || item.getItemId() == R.id.menu_share_html) {
-            shareAppList(getSelectedItems(), item.getItemId() == R.id.menu_share_html);
+        } else if (item.getGroupId() == R.id.menu_share) {
+            int format = FileUtil.FILE_TEXT;
+            boolean file = false;
+            if (item.getItemId() == R.id.menu_share_html || item.getItemId() == R.id.menu_share_html_file) {
+                format = FileUtil.FILE_HTML;
+            }
+            if (item.getItemId() == R.id.menu_share_text_file || item.getItemId() == R.id.menu_share_html_file) {
+                file = true;
+            }
+            shareAppList(getSelectedItems(), format, file);
             return true;
         }
         return super.onOptionsItemSelected(item);

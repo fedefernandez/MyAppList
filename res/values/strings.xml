@@ -34,6 +34,8 @@
   <string name="new_file_dialog_msg">Select file name. If a file with the same name existis, it will be overwritten!.</string>
   <string name="new_file_dialog_name">myapplist-%s.xml</string>
   <string name="backup_filename">myapplist-backup.xml</string>
+  <string name="share_html_filename">myapplist-backup.html</string>
+  <string name="share_text_filename">myapplist-backup.txt</string>
   <string name="empty_list_error">No selected elements</string>
   <string name="empty_name_error">Name can\'t be empty</string>
   <string name="empty_list_post_error">No applications selected</string>
@@ -48,14 +50,18 @@
   <string name="menu_unselect_all">Unselect all</string>
   <string name="menu_settings">Settings</string>
   <string name="menu_share">Share</string>
-  <string name="menu_share_file">Share file</string>
-  <string name="menu_share_text">Share text</string>
-  <string name="menu_share_html">Share html</string>
+  <string name="menu_share_file">Share XML file</string>
+  <string name="menu_share_text">Share inline text</string>
+  <string name="menu_share_text_file">Share text file</string>
+  <string name="menu_share_html">Share inline HTML</string>
+  <string name="menu_share_html_file">Share HTML file</string>
   <string name="share_chooser">Share with…</string>
   <string name="share_file_subject">Check this \'My App List\' file</string>
   <string name="share_file_text">Download the application from https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=com.projectsexception.myapplist\"&gt;Download the application from here&lt;/a&gt;</string>
-  <string name="share_text_subject">Check this applications</string>
+  <string name="share_text_subject">Check this applications</string>  
+  <string name="share_file_failed">Error creating file</string>
+  <string name="share_file_send_failed">No activity can open this file. Check it at: %s</string>
   <string name="ab_title_ignored_list">Ignored Applications</string>
   <string name="ab_title_app_list">Installed Applications</string>
   <string name="ab_title_file_list">File Applications</string>
