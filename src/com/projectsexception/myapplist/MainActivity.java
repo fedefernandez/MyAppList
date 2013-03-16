@@ -12,26 +12,20 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.util.CustomLog;
-import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.xml.FileUtil;
-import com.projectsexception.myapplist.R;
 
-public class MainActivity extends SherlockActivity implements DialogInterface.OnClickListener {
+public class MainActivity extends BaseActivity implements DialogInterface.OnClickListener {
     
     private static final String NUM_EXECUTIONS = "num_executions";
     private static final int MAX_EXECUTIONS = 20;
-    private int mTheme;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        mTheme = ThemeManager.getTheme(this);
-        setTheme(mTheme);
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
         checkRateApp();
     }
     
@@ -66,14 +60,6 @@ public class MainActivity extends SherlockActivity implements DialogInterface.On
             }
         }        
         editor.putInt(NUM_EXECUTIONS, newValue).commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mTheme != ThemeManager.getTheme(this)) {
-            ThemeManager.restartActivity(this);
-        }
     }
     
     @Override

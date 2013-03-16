@@ -2,7 +2,10 @@ package com.projectsexception.myapplist.model;
 
 import java.text.Collator;
 
-public class AppInfo implements Comparable<AppInfo> {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class AppInfo implements Comparable<AppInfo>, Parcelable {
     
     private final Collator sCollator = Collator.getInstance();
     
@@ -43,6 +46,37 @@ public class AppInfo implements Comparable<AppInfo> {
         }
         return sCollator.compare(getName(), another.getName());
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(packageName);
+        dest.writeString(Boolean.toString(installed));
+    }
+    
+    public static final Parcelable.Creator<AppInfo> CREATOR = new Parcelable.Creator<AppInfo>() {
+
+        @Override
+        public AppInfo createFromParcel(Parcel source) {
+            AppInfo appInfo = new AppInfo();
+            appInfo.setName(source.readString());
+            appInfo.setPackageName(source.readString());
+            appInfo.setInstalled(Boolean.parseBoolean(source.readString()));
+            return appInfo;
+        }
+
+        @Override
+        public AppInfo[] newArray(int size) {
+            return new AppInfo[size];
+        }
+        
+        
+    };
     
 
 }

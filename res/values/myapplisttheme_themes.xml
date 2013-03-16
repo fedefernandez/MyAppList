@@ -22,6 +22,7 @@
         <item name="android:listViewStyle">@style/ListViewMyAppListTheme</item>
         <item name="android:listViewWhiteStyle">@style/ListViewMyAppListTheme.White</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListTheme</item>
+        <item name="android:buttonStyleToggle">@style/ToggleMyAppListTheme</item>
     </style>
 
     <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
@@ -30,6 +31,7 @@
         <item name="android:listViewStyle">@style/ListViewMyAppListThemeLight</item>
         <item name="android:listViewWhiteStyle">@style/ListViewMyAppListThemeLight.White</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListThemeLight</item>
+        <item name="android:buttonStyleToggle">@style/ToggleMyAppListThemeLight</item>
     </style>
 
 </resources>

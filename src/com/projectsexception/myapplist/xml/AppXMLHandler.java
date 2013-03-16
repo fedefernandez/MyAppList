@@ -1,7 +1,6 @@
 package com.projectsexception.myapplist.xml;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -15,7 +14,7 @@ public class AppXMLHandler extends DefaultHandler {
     private static final String NAME_ELEMENT = "name";
     private static final String APP_ELEMENT = "app";
     
-    private List<AppInfo> appInfoList;
+    private ArrayList<AppInfo> appInfoList;
     
     @Override
     public void startDocument() throws SAXException {
@@ -37,7 +36,7 @@ public class AppXMLHandler extends DefaultHandler {
         }
     }
     
-    public List<AppInfo> getAppInfoList() {
+    public ArrayList<AppInfo> getAppInfoList() {
         return appInfoList;
     }
 

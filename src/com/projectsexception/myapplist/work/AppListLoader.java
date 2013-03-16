@@ -1,6 +1,6 @@
 package com.projectsexception.myapplist.work;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,7 +27,7 @@ public class AppListLoader extends AbstractListLoader {
     }
 
     @Override
-    public List<AppInfo> loadAppInfoList() {
+    public ArrayList<AppInfo> loadAppInfoList() {
         return AppUtil.loadAppInfoList(mPm, mHideSystemApps);
     }
 

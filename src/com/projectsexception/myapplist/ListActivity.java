@@ -13,28 +13,22 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.fragments.AppInfoFragment;
 import com.projectsexception.myapplist.fragments.AppListFragment;
 import com.projectsexception.myapplist.fragments.FileListFragment;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.util.NewFileDialog;
-import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.xml.FileUtil;
 
-public class ListActivity extends SherlockFragmentActivity implements AppInfoFragment.ActivityInterface {
+public class ListActivity extends BaseActivity implements AppInfoFragment.ActivityInterface {
 
     public static final String ARG_FILE = "fileName";
     
-    private int mTheme;
-    
     @Override
     protected void onCreate(Bundle args) {
-        mTheme = ThemeManager.getTheme(this);
-        setTheme(mTheme);
         super.onCreate(args);
         
-        setContentView(R.layout.list_activity);
+        setContentView(R.layout.activity_list);
         
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_HOME_AS_UP);
@@ -72,14 +66,6 @@ public class ListActivity extends SherlockFragmentActivity implements AppInfoFra
             if (fm.findFragmentById(R.id.app_list) == null) {
                 fm.beginTransaction().add(R.id.app_list, fragment).commit();
             }
-        }
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mTheme != ThemeManager.getTheme(this)) {
-            ThemeManager.restartActivity(this);
         }
     }
 

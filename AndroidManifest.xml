@@ -81,6 +81,7 @@
         <activity android:name="com.projectsexception.myapplist.PreferenceActivity" />
         <activity android:name=".AppInfoActivity"/>   
         <activity android:name=".ListIgnoredActivity"/>
+        <activity android:name=".ShareActivity"/>
         <service android:name=".work.SaveListService"/>   
     </application>
 

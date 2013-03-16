@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="share_title">
+        <item quantity="one">Check this application</item>
+        <item quantity="other">Check this applications</item>
+    </plurals>
+</resources>

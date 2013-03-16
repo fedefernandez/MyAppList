@@ -1,7 +1,7 @@
 package com.projectsexception.myapplist.work;
 
 import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -17,10 +17,10 @@ import com.projectsexception.myapplist.xml.ParserUtil;
 public class FileListLoader extends AbstractListLoader {
     
     private final File file;
-    private List<AppInfo> fileAppList;
+    private ArrayList<AppInfo> fileAppList;
     private final PackageManager mPm;
 
-    public FileListLoader(Context context, File file, List<AppInfo> fileAppList) {
+    public FileListLoader(Context context, File file, ArrayList<AppInfo> fileAppList) {
         super(context);
         this.file = file;
         this.fileAppList = fileAppList;
@@ -28,7 +28,7 @@ public class FileListLoader extends AbstractListLoader {
     }
 
     @Override
-    public List<AppInfo> loadAppInfoList() {
+    public ArrayList<AppInfo> loadAppInfoList() {
         if (fileAppList == null || fileAppList.isEmpty()) {
             AppXMLHandler xmlHandler = new AppXMLHandler();
             try {

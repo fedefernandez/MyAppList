@@ -1,7 +1,6 @@
 package com.projectsexception.myapplist.view;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -29,7 +28,7 @@ public class AppListAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
     private final PackageManager mPm;
     private View.OnClickListener mListener;
-    private List<AppInfo> mAppList;
+    private ArrayList<AppInfo> mAppList;
     private int mNotInstalledColor;
     private int mInstalledColor;
 
@@ -44,12 +43,12 @@ public class AppListAdapter extends BaseAdapter {
         this.mListener = listener;
     }
 
-    public void setData(List<AppInfo> data) {
+    public void setData(ArrayList<AppInfo> data) {
         this.mAppList = data;
         notifyDataSetChanged();
     }
     
-    public List<AppInfo> getData() {
+    public ArrayList<AppInfo> getData() {
         return mAppList;
     }
 

@@ -3,10 +3,9 @@ package com.projectsexception.myapplist.fragments;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
@@ -21,6 +20,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.ListActivity;
 import com.projectsexception.myapplist.R;
+import com.projectsexception.myapplist.ShareActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
@@ -32,7 +32,7 @@ public class FileListFragment extends AbstractAppListFragment {
     
     private static final int MENU_REMOVE = 3;
     
-    private File file;
+    private File mFile;
     
     @Override 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -45,14 +45,14 @@ public class FileListFragment extends AbstractAppListFragment {
             if (fileName != null) {
                 if (fileName.startsWith("file://")) {
                     try {
-                        file = new File(new URI(fileName));
+                        mFile = new File(new URI(fileName));
                     } catch (URISyntaxException e) {
                         CustomLog.error("FileListFragment", e);
                     }
                 } else {
-                    file = FileUtil.loadFile(fileName);
+                    mFile = FileUtil.loadFile(fileName);
                 }
-                if (file == null || !file.exists() || !file.canRead()) {
+                if (mFile == null || !mFile.exists() || !mFile.canRead()) {
                     // If file not exists or can't read
                     return;
                 }
@@ -78,31 +78,14 @@ public class FileListFragment extends AbstractAppListFragment {
             getLoaderManager().restartLoader(0, args, this);
             return true;
         } else if (item.getItemId() == R.id.menu_save) {
-            new AppSaveTask(getActivity(), file.getName(), mAdapter.getData()).execute(true);
+            new AppSaveTask(getActivity(), mFile.getName(), mAdapter.getData()).execute(true);
             return true;
-        } else if (item.getItemId() == R.id.menu_share_file) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/xml");
-            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_file_subject));
-            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_file_text));
-            Uri uri = Uri.parse("file://" + file.getAbsolutePath());
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
-            try {
-                startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
-            } catch (Exception e) {
-                // Something was wrong
-            }
-            return true;
-        } else if (item.getGroupId() == R.id.menu_share) {
-            int format = FileUtil.FILE_TEXT;
-            boolean file = false;
-            if (item.getItemId() == R.id.menu_share_html || item.getItemId() == R.id.menu_share_html_file) {
-                format = FileUtil.FILE_HTML;
-            }
-            if (item.getItemId() == R.id.menu_share_text_file || item.getItemId() == R.id.menu_share_html_file) {
-                file = true;
-            }
-            shareAppList(mAdapter.getData(), format, file);
+        } else if (item.getItemId() == R.id.menu_share) {
+            Intent intent = new Intent(getSherlockActivity(), ShareActivity.class);
+            intent.putExtra(ShareActivity.FILE_PATH, mFile.getAbsolutePath());
+            ArrayList<AppInfo> appInfoList = mAdapter.getData();
+            intent.putParcelableArrayListExtra(ShareActivity.APP_LIST, appInfoList);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -141,15 +124,15 @@ public class FileListFragment extends AbstractAppListFragment {
     }
     
     @Override 
-    public Loader<List<AppInfo>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
         loading(true);
-        List<AppInfo> lst;
+        ArrayList<AppInfo> lst;
         if (args == null || args.getBoolean(ARG_RELOAD, false)) {
             lst = null;
         } else {
             lst = mAdapter.getData();
         }
-        return new FileListLoader(getActivity(), file, lst);
+        return new FileListLoader(getActivity(), mFile, lst);
     }
 
     @Override

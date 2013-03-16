@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:id="@+id/buttons" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ToggleButton
+            android:id="@+id/button_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textOn="@string/share_button_type_text"
+            android:textOff="@string/share_button_type_text"
+            android:checked="true" />
+
+        <ToggleButton
+            android:id="@+id/button_file"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textOn="@string/share_button_type_file"
+            android:textOff="@string/share_button_type_file" />        
+    </LinearLayout>
+    
+    <CheckBox 
+        android:id="@+id/footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/share_check_footer"/>
+    
+    <TextView 
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:textSize="16sp"/>
+    
+    <Button 
+        android:id="@+id/button_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:text="@string/share_button_export"/>
+
+</LinearLayout>

@@ -10,6 +10,10 @@
   <style name="ImageButtonMyAppListTheme" parent="android:Widget.Holo.ImageButton">
 	  <item name="android:background">@drawable/btn_default_holo_dark</item>
   </style>
+  
+  <style name="ToggleMyAppListTheme" parent="android:Widget.Holo.Button.Toggle">
+      <item name="android:background">@drawable/btn_toggle_holo_dark</item>
+  </style>
 
   <style name="ButtonMyAppListThemeLight" parent="android:Widget.Holo.Light.Button">
 	  <item name="android:background">@drawable/btn_default_holo_light</item>
@@ -17,6 +21,10 @@
 
   <style name="ImageButtonMyAppListThemeLight" parent="android:Widget.Holo.Light.ImageButton">
 	  <item name="android:background">@drawable/btn_default_holo_light</item>
+  </style>
+  
+  <style name="ToggleMyAppListThemeLight" parent="android:Widget.Holo.Light.Button.Toggle">
+      <item name="android:background">@drawable/btn_toggle_holo_light</item>
   </style>
 
 </resources>

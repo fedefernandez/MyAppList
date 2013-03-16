@@ -150,15 +150,15 @@ public class FileUtil {
         }
     }
     
-    public static boolean writeShareFile(Context context, List<AppInfo> appList, File file, int formatFile) {
+    private static boolean writeShareFile(Context context, List<AppInfo> appList, File file, int formatFile) {
         boolean success = false;
         try {
             FileWriter writer = new FileWriter(file);
             String content;
             if (formatFile == FILE_HTML) {
-                content = "<html><body>" + AppUtil.appInfoToHTML(context, appList) + "</body></html>";
+                content = "<html><body>" + AppUtil.appInfoToHTML(context, appList, true) + "</body></html>";
             } else {
-                content = AppUtil.appInfoToText(context, appList);
+                content = AppUtil.appInfoToText(context, appList, true);
             }
             writer.write(content);
             writer.close();
@@ -188,7 +188,7 @@ public class FileUtil {
         return null;
     }
     
-    public static List<AppInfo> fixFile(File from, File to) {
+    public static ArrayList<AppInfo> fixFile(File from, File to) {
         BufferedReader br = null;
         try {
             // Read file
@@ -200,7 +200,7 @@ public class FileUtil {
             }
             
             // Extract appinfo
-            List<AppInfo> lst = new ArrayList<AppInfo>();
+            ArrayList<AppInfo> lst = new ArrayList<AppInfo>();
             readAppInfo(lst, PATTERN_NAME_PACKAGE, buffer);
             readAppInfo(lst, PATTERN_PACKAGE_NAME, buffer);
             

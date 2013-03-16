@@ -1,15 +1,13 @@
 package com.projectsexception.myapplist.fragments;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.Html;
 import android.view.View;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
@@ -17,13 +15,10 @@ import com.projectsexception.myapplist.AppInfoActivity;
 import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.AppListAdapter;
-import com.projectsexception.myapplist.work.ShareAppSaveTask;
-import com.projectsexception.myapplist.xml.FileUtil;
 
-public abstract class AbstractAppListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<List<AppInfo>>, View.OnClickListener {
+public abstract class AbstractAppListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>, View.OnClickListener {
 
     private static final String CUR_NAME = "curName";
     private static final String CUR_PACKAGE = "curPackage";
@@ -112,10 +107,10 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     public abstract boolean isInfoButtonAvailable();
 
     @Override 
-    public abstract Loader<List<AppInfo>> onCreateLoader(int id, Bundle args);
+    public abstract Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args);
 
     @Override 
-    public void onLoadFinished(Loader<List<AppInfo>> loader, List<AppInfo> data) {
+    public void onLoadFinished(Loader<ArrayList<AppInfo>> loader, ArrayList<AppInfo> data) {
         loading(false);
         
         ApplicationsReceiver.getInstance(getSherlockActivity()).registerListener(getClass().getName());
@@ -132,7 +127,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     }
 
     @Override 
-    public void onLoaderReset(Loader<List<AppInfo>> loader) {
+    public void onLoaderReset(Loader<ArrayList<AppInfo>> loader) {
         loading(false);
         // Clear the data in the adapter.
         mAdapter.setData(null);
@@ -182,37 +177,37 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         }
     }
     
-    protected void shareAppList(final List<AppInfo> selectedApps, int format, boolean file) {
-        if (selectedApps == null || selectedApps.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
-        } else {
-            if (file) {
-                shareAppListFile(selectedApps, format);
-            } else {
-                shareAppListText(selectedApps, format);
-            }
-        }
-    }
+//    protected void shareAppList(final List<AppInfo> selectedApps, int format, boolean file) {
+//        if (selectedApps == null || selectedApps.isEmpty()) {
+//            Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
+//        } else {
+//            if (file) {
+//                shareAppListFile(selectedApps, format);
+//            } else {
+//                shareAppListText(selectedApps, format);
+//            }
+//        }
+//    }
     
-    protected void shareAppListText(List<AppInfo> selectedApps, int format) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
-        if (format == FileUtil.FILE_HTML) {
-            intent.setType("text/html");
-            intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(AppUtil.appInfoToHTML(getActivity(), selectedApps)));
-        } else {
-            intent.setType("text/plain");                    
-            intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToText(getActivity(), selectedApps));
-        }
-        try {
-            startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
-        } catch (Exception e) {
-            // Something was wrong
-        }
-    }
+//    protected void shareAppListText(List<AppInfo> selectedApps, int format) {
+//        Intent intent = new Intent(Intent.ACTION_SEND);
+//        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
+//        if (format == FileUtil.FILE_HTML) {
+//            intent.setType("text/html");
+//            intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(AppUtil.appInfoToHTML(getActivity(), selectedApps)));
+//        } else {
+//            intent.setType("text/plain");                    
+//            intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToText(getActivity(), selectedApps));
+//        }
+//        try {
+//            startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
+//        } catch (Exception e) {
+//            // Something was wrong
+//        }
+//    }
     
-    protected void shareAppListFile(List<AppInfo> selectedApps, int format) {        
-        new ShareAppSaveTask(getSherlockActivity(), selectedApps, format).execute(new Void[0]);
-    }
+//    protected void shareAppListFile(List<AppInfo> selectedApps, int format) {        
+//        new ShareAppSaveTask(getSherlockActivity(), selectedApps, format).execute(new Void[0]);
+//    }
 
 }

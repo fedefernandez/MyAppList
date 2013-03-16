@@ -14,7 +14,8 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:background="@drawable/list_selector_holo_dark"
-        android:src="@drawable/ic_ab_back_holo_dark"/>
+        android:src="@drawable/ic_ab_back_holo_dark"
+        android:contentDescription="@string/content_desc_button_details"/>
     
     <ImageView
         android:id="@+id/list_item_icon" 

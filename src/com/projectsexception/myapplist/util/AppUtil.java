@@ -29,14 +29,14 @@ public class AppUtil {
     private static final String APP_DETAILS_PACKAGE_NAME = "com.android.settings";
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
     
-    public static List<AppInfo> loadAppInfoList(PackageManager packageManager, boolean hideSystemApps) {
+    public static ArrayList<AppInfo> loadAppInfoList(PackageManager packageManager, boolean hideSystemApps) {
         List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
         if (apps == null) {
             apps = new ArrayList<ApplicationInfo>();
         }
 
         // Create corresponding array of entries and load their labels.
-        List<AppInfo> entries = new ArrayList<AppInfo>();
+        ArrayList<AppInfo> entries = new ArrayList<AppInfo>();
         AppInfo entry;
         for (ApplicationInfo applicationInfo : apps) {
             if (!hideSystemApps || !isSystemPackage(applicationInfo)) {
@@ -186,7 +186,7 @@ public class AppUtil {
 		}
     }
     
-    public static String appInfoToHTML(Context ctx, List<AppInfo> lst) {
+    public static String appInfoToHTML(Context ctx, List<AppInfo> lst, boolean footer) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
             for (AppInfo appInfo : lst) {
@@ -197,12 +197,14 @@ public class AppUtil {
                 sb.append("</a><br/>\n");
             }
         }
-        sb.append("<br/>\n"); 
-        sb.append(ctx.getString(R.string.share_file_html));
+        if (footer) {
+            sb.append("<br/>\n"); 
+            sb.append(ctx.getString(R.string.share_file_html));
+        }
         return sb.toString();
     }
     
-    public static String appInfoToText(Context ctx, List<AppInfo> lst) {
+    public static String appInfoToText(Context ctx, List<AppInfo> lst, boolean footer) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
             for (AppInfo appInfo : lst) {
@@ -212,8 +214,10 @@ public class AppUtil {
                 sb.append("\n"); 
             }
         }
-        sb.append("\n"); 
-        sb.append(ctx.getString(R.string.share_file_text));
+        if (footer) {
+            sb.append("\n"); 
+            sb.append(ctx.getString(R.string.share_file_text, ctx.getPackageName()));
+        }
         return sb.toString();
     }
 

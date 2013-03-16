@@ -29,7 +29,6 @@
   <string name="translate_url">http://crowdin.net/project/my-app-list/invite</string>
   <string name="load_list">Load List</string>
   <string name="new_list">Applications</string>
-  <string name="fragment_list_empty">No applications</string>
   <string name="new_file_dialog_title">File name</string>
   <string name="new_file_dialog_msg">Select file name. If a file with the same name existis, it will be overwritten!.</string>
   <string name="new_file_dialog_name">myapplist-%s.xml</string>
@@ -49,22 +48,29 @@
   <string name="menu_select_all">Select all</string>
   <string name="menu_unselect_all">Unselect all</string>
   <string name="menu_settings">Settings</string>
-  <string name="menu_share">Share</string>
-  <string name="menu_share_file">Share XML file</string>
-  <string name="menu_share_text">Share inline text</string>
-  <string name="menu_share_text_file">Share text file</string>
-  <string name="menu_share_html">Share inline HTML</string>
-  <string name="menu_share_html_file">Share HTML file</string>
+  <string name="menu_share">Share</string>  
   <string name="share_chooser">Share with…</string>
-  <string name="share_file_subject">Check this \'My App List\' file</string>
-  <string name="share_file_text">Download the application from https://play.google.com/store/apps/details?id=com.projectsexception.myapplist</string>
-  <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=com.projectsexception.myapplist\"&gt;Download the application from here&lt;/a&gt;</string>
-  <string name="share_text_subject">Check this applications</string>  
+  <string name="share_file_text">\n\nDownload the application from https://play.google.com/store/apps/details?id=%s</string>
+  <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Download the application from here&lt;/a&gt;</string>
+  <string name="share_text_send_failed">No activity was found to share the content</string>  
   <string name="share_file_failed">Error creating file</string>
-  <string name="share_file_send_failed">No activity can open this file. Check it at: %s</string>
+  <string name="share_file_send_failed">No activity can open this file. Check it at: %s</string>  
+  <string name="share_xml_message">The XML file can be opened by \'My App List\'. You can send this file to your contacts or save it for a later use. Remember, the XML only stores the name and the identification of the application, not the application himself.</string>  
+  <string name="share_text_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.</string>  
+  <string name="share_text_file_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store. This text file can be saved in anywhere or sent by email. Remember that \'My App List\' can read the XML file but not the text file.</string>  
+  <string name="share_html_message">Sharing the applications in HTML format allows you to send the list in a email with clickeable links to Google Play Store.</string>  
+  <string name="share_html_file_message">Sharing the applications in HTML format allows you to send the list in a email with clickeable links to Google Play Store. This HTML file can be saved in anywhere or sent by email. Remember that \'My App List\' can read the XML file but not the HTML file, however you can open this file in a browser to see the links.</string>  
   <string name="ab_title_ignored_list">Ignored Applications</string>
   <string name="ab_title_app_list">Installed Applications</string>
   <string name="ab_title_file_list">File Applications</string>
+  <string name="ab_title_share">Share Applications</string>
+  <string name="share_check_footer">Add footer to text?</string>  
+  <string name="share_tab_xml">XML</string>  
+  <string name="share_tab_html">HTML</string>  
+  <string name="share_tab_text">Text</string>  
+  <string name="share_button_type_text">Inline Text</string>  
+  <string name="share_button_type_file">File</string>  
+  <string name="share_button_export">Share</string>  
   <string name="play_google">market://details?id=%s</string>
   <string name="play_google_web">https://play.google.com/store/apps/details?id=%s</string>
   <string name="error_creating_dir">Can\'t access to %s on sdcard</string>
@@ -74,8 +80,8 @@
   <string name="context_menu_application_play">See on Google Play</string>
   <string name="context_menu_remove_from_list">Remove from list</string>
   <string name="content_desc_application_icon">Application Icon</string>
-  <string name="content_desc_application_installed">Application Installed</string>
   <string name="content_desc_application_title">Application title</string>
+  <string name="content_desc_button_details">Button to see application details</string>
   <string name="start_application">Start application</string>
   <string name="stop_application">Stop application</string>
   <string name="app_info_not_installed">Application not installed</string>
@@ -97,5 +103,6 @@
   <string name="rate_dialog_msg">My App List is a free application with no ads. If you enjoy using it, please take a moment to rate it. Thanks for your support!</string>
   <string name="rate_dialog_negative">No thanks</string>
   <string name="rate_dialog_neutral">Remind me later</string>
-  <string name="rate_dialog_positive">Rate it!</string>
+  <string name="rate_dialog_positive">Rate it!</string>  
+  <string name="fragment_list_empty">Empty list</string>
 </resources>

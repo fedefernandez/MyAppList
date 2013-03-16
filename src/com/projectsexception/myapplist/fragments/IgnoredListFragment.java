@@ -88,13 +88,13 @@ public class IgnoredListFragment extends AbstractAppListFragment {
     }
 
     @Override 
-    public Loader<List<AppInfo>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
         loading(true);
         return new AppListLoader(getActivity());
     }
     
     @Override 
-    public void onLoadFinished(Loader<List<AppInfo>> loader, List<AppInfo> data) {
+    public void onLoadFinished(Loader<ArrayList<AppInfo>> loader, ArrayList<AppInfo> data) {
         super.onLoadFinished(loader, data);
         if (data != null) {
             // Check ignored items

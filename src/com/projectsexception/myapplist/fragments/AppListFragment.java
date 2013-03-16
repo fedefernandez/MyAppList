@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
@@ -16,11 +17,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.R;
+import com.projectsexception.myapplist.ShareActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.NewFileDialog;
 import com.projectsexception.myapplist.work.AppListLoader;
 import com.projectsexception.myapplist.work.AppSaveTask;
-import com.projectsexception.myapplist.xml.FileUtil;
 
 public class AppListFragment extends AbstractAppListFragment {
     
@@ -59,23 +60,32 @@ public class AppListFragment extends AbstractAppListFragment {
         } else if (item.getItemId() == R.id.menu_save) {
             createNewFileDialog(getSelectedItems());
             return true;
-        } else if (item.getGroupId() == R.id.menu_share) {
-            int format = FileUtil.FILE_TEXT;
-            boolean file = false;
-            if (item.getItemId() == R.id.menu_share_html || item.getItemId() == R.id.menu_share_html_file) {
-                format = FileUtil.FILE_HTML;
+        } else if (item.getItemId() == R.id.menu_share) {
+            ArrayList<AppInfo> appInfoList = getSelectedItems();
+            if (appInfoList.isEmpty()) {
+                Toast.makeText(getSherlockActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getSherlockActivity(), ShareActivity.class);
+                intent.putParcelableArrayListExtra(ShareActivity.APP_LIST, appInfoList);
+                startActivity(intent);
             }
-            if (item.getItemId() == R.id.menu_share_text_file || item.getItemId() == R.id.menu_share_html_file) {
-                file = true;
-            }
-            shareAppList(getSelectedItems(), format, file);
+            
+//            int format = FileUtil.FILE_TEXT;
+//            boolean file = false;
+//            if (item.getItemId() == R.id.menu_share_html || item.getItemId() == R.id.menu_share_html_file) {
+//                format = FileUtil.FILE_HTML;
+//            }
+//            if (item.getItemId() == R.id.menu_share_text_file || item.getItemId() == R.id.menu_share_html_file) {
+//                file = true;
+//            }
+//            shareAppList(getSelectedItems(), format, file);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override 
-    public Loader<List<AppInfo>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
         loading(true);
         return new AppListLoader(getActivity());
     }
@@ -112,8 +122,8 @@ public class AppListFragment extends AbstractAppListFragment {
         }
     }
     
-    private List<AppInfo> getSelectedItems() {
-        List<AppInfo> selectedApps = new ArrayList<AppInfo>();
+    private ArrayList<AppInfo> getSelectedItems() {
+        ArrayList<AppInfo> selectedApps = new ArrayList<AppInfo>();
         SparseBooleanArray sp = getListView().getCheckedItemPositions();
         if (sp != null) {
             List<AppInfo> allApps = mAdapter.getData();

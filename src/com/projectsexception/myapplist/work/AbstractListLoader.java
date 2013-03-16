@@ -1,5 +1,6 @@
 package com.projectsexception.myapplist.work;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,16 +12,16 @@ import android.support.v4.content.AsyncTaskLoader;
 
 import com.projectsexception.myapplist.model.AppInfo;
 
-public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> {
+public abstract class AbstractListLoader extends AsyncTaskLoader<ArrayList<AppInfo>> {
     
-    private List<AppInfo> mApps;
+    private ArrayList<AppInfo> mApps;
     private PackageIntentReceiver mPackageObserver;
 
     public AbstractListLoader(Context context) {
         super(context);
     }
     
-    public abstract List<AppInfo> loadAppInfoList();
+    public abstract ArrayList<AppInfo> loadAppInfoList();
     public abstract boolean isPackageIntentReceiver();
 
     /**
@@ -29,9 +30,9 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      * by the loader.
      */
     @Override
-    public List<AppInfo> loadInBackground() {
+    public ArrayList<AppInfo> loadInBackground() {
         // Retrieve all known applications.
-        List<AppInfo> entries = loadAppInfoList();
+        ArrayList<AppInfo> entries = loadAppInfoList();
         
         if (entries != null) {
             // Sort the list.
@@ -48,7 +49,7 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      * little more logic.
      */
     @Override
-    public void deliverResult(List<AppInfo> apps) {
+    public void deliverResult(ArrayList<AppInfo> apps) {
         if (isReset()) {
             // An async query came in while the loader is stopped. We
             // don't need the result.
@@ -109,7 +110,7 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<List<AppInfo>> 
      * Handles a request to cancel a load.
      */
     @Override
-    public void onCanceled(List<AppInfo> apps) {
+    public void onCanceled(ArrayList<AppInfo> apps) {
         super.onCanceled(apps);
 
         // At this point we can release the resources associated with 'apps'

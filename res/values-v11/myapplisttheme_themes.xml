@@ -7,6 +7,7 @@
         <item name="android:imageButtonStyle">@style/ImageButtonMyAppListTheme</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
+        <item name="android:buttonStyleToggle">@style/ToggleMyAppListTheme</item>
     </style>
 
     <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
@@ -14,6 +15,7 @@
         <item name="android:imageButtonStyle">@style/ImageButtonMyAppListThemeLight</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
+        <item name="android:buttonStyleToggle">@style/ToggleMyAppListThemeLight</item>
     </style>
 
 </resources>

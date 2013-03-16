@@ -15,26 +15,6 @@
         android:id="@+id/menu_share"        
         android:icon="@drawable/ic_menu_share"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_share">
-        <menu>
-            <group android:id="@+id/menu_share" >
-                <item
-                    android:id="@+id/menu_share_file"
-                    android:title="@string/menu_share_file"/>
-                <item
-                    android:id="@+id/menu_share_text"
-                    android:title="@string/menu_share_text"/>
-                <item
-                    android:id="@+id/menu_share_text_file"
-                    android:title="@string/menu_share_text_file"/>
-                <item
-                    android:id="@+id/menu_share_html"
-                    android:title="@string/menu_share_html"/>
-                <item
-                    android:id="@+id/menu_share_html_file"
-                    android:title="@string/menu_share_html_file"/>
-            </group>
-        </menu>
-    </item>
+        android:title="@string/menu_share"/>
 
 </menu>
