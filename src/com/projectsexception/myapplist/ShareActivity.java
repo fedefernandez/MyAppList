@@ -12,9 +12,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.SparseArray;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.fragments.ShareFragment;
 import com.projectsexception.myapplist.fragments.ShareTaskFragment;
 import com.projectsexception.myapplist.model.AppInfo;
@@ -48,6 +51,11 @@ public class ShareActivity extends BaseActivity implements
      * Store the selected apps to share
      */
     ArrayList<AppInfo> mAppList;
+    
+    /**
+     * Store the attached fragments
+     */
+    SparseArray<ShareFragment> mFragments = new SparseArray<ShareFragment>(3);
     
     
     @Override
@@ -100,6 +108,43 @@ public class ShareActivity extends BaseActivity implements
             frg.checkPending();
         }
     }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFragments.clear();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.share, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_share) {
+            int section = mSectionsPagerAdapter.getSection(mViewPager.getCurrentItem());
+            ShareFragment frg = mFragments.get(section);
+            if (frg != null) {
+                if (frg.isFile()) {
+                    if (section == SECTION_XML) {
+                        saveFinished(section, mFile);
+                    } else {
+                        FragmentManager fm = getSupportFragmentManager();
+                        ShareTaskFragment taskFragment = (ShareTaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
+                        if (taskFragment != null) {
+                            taskFragment.startTask(section, mAppList);
+                        }
+                    }
+                } else {
+                    shareAppListText(section, frg.isFooter());
+                }
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -131,15 +176,7 @@ public class ShareActivity extends BaseActivity implements
 
         @Override
         public Fragment getItem(int position) {
-            int realPosition = xmlAvailable ? position : position + 1;
-            int section;
-            if (realPosition == 0) {
-                section = SECTION_XML;
-            } else if (realPosition == 1) {
-                section = SECTION_HTML;
-            } else {
-                section = SECTION_TEXT;
-            }
+            int section = getSection(position);
             return ShareFragment.newInstance(section);
         }
 
@@ -164,22 +201,18 @@ public class ShareActivity extends BaseActivity implements
             }
             return null;
         }
-    }
-
-    @Override
-    public void shareAppList(int section, boolean file, boolean footer) {
-        if (file) {
-            if (section == SECTION_XML) {
-                saveFinished(section, mFile);
+        
+        public int getSection(int position) {
+            int realPosition = xmlAvailable ? position : position + 1;
+            int section;
+            if (realPosition == 0) {
+                section = SECTION_XML;
+            } else if (realPosition == 1) {
+                section = SECTION_HTML;
             } else {
-                FragmentManager fm = getSupportFragmentManager();
-                ShareTaskFragment frg = (ShareTaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
-                if (frg != null) {
-                    frg.startTask(section, mAppList);
-                }
+                section = SECTION_TEXT;
             }
-        } else {
-            shareAppListText(section, footer);
+            return section;
         }
     }
     
@@ -233,6 +266,16 @@ public class ShareActivity extends BaseActivity implements
             }
             finish();
         }
+    }
+
+    @Override
+    public void fragmentAttached(int section, ShareFragment f) {
+        mFragments.put(section, f);
+    }
+
+    @Override
+    public void fragmentStopped(int section) {
+        mFragments.remove(section);
     }
 
 }

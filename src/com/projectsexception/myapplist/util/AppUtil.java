@@ -189,17 +189,19 @@ public class AppUtil {
     public static String appInfoToHTML(Context ctx, List<AppInfo> lst, boolean footer) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
+            boolean first = true;
             for (AppInfo appInfo : lst) {
-                sb.append("<a href=\"");
-                sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
-                sb.append("\">");            
-                sb.append(appInfo.getName());
-                sb.append("</a><br/>\n");
+                if (first) {
+                    first = false;
+                } else {
+                    sb.append("<br/>\n");                    
+                }
+                sb.append(ctx.getString(R.string.play_google_web_html, appInfo.getPackageName(), appInfo.getName()));
             }
         }
         if (footer) {
-            sb.append("<br/>\n"); 
-            sb.append(ctx.getString(R.string.share_file_html));
+            sb.append("<br/>\n<br/>\n"); 
+            sb.append(ctx.getString(R.string.share_file_html, ctx.getPackageName()));
         }
         return sb.toString();
     }
@@ -207,15 +209,18 @@ public class AppUtil {
     public static String appInfoToText(Context ctx, List<AppInfo> lst, boolean footer) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
+            boolean first = true;
             for (AppInfo appInfo : lst) {
-                sb.append(appInfo.getName());
-                sb.append(": ");
-                sb.append(ctx.getString(R.string.play_google_web, appInfo.getPackageName()));
-                sb.append("\n"); 
+                if (first) {
+                    first = false;
+                } else {
+                    sb.append("\n");                    
+                }
+                sb.append(ctx.getString(R.string.play_google_web_text, appInfo.getPackageName(), appInfo.getName())); 
             }
         }
         if (footer) {
-            sb.append("\n"); 
+            sb.append("\n\n"); 
             sb.append(ctx.getString(R.string.share_file_text, ctx.getPackageName()));
         }
         return sb.toString();

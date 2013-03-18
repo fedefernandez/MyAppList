@@ -4,9 +4,4 @@
         <item>Oscuro</item>
         <item>Claro</item>
     </string-array>
-    <string-array name="backup">
-        <item>6 horas</item>
-        <item>12 horas</item>
-        <item>24 horas</item>
-    </string-array>
 </resources>

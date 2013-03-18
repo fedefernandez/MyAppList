@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -27,7 +26,8 @@ public class ShareFragment extends SherlockFragment implements View.OnClickListe
     }
     
     public static interface CallBack {
-        void shareAppList(int section, boolean file, boolean footer);
+        void fragmentAttached(int section, ShareFragment f);
+        void fragmentStopped(int section); 
     }
     
     private CallBack mCallBack;
@@ -36,13 +36,13 @@ public class ShareFragment extends SherlockFragment implements View.OnClickListe
     private ToggleButton mToggleText;
     private ToggleButton mToggleFile;
     private TextView mTextView;
-    private Button mButton;
     
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof CallBack) {
             mCallBack = (CallBack) activity;
+            mCallBack.fragmentAttached(getArguments().getInt(SECTION, ShareActivity.SECTION_XML), this);
         } else {
             throw new IllegalStateException(activity.getClass().getName() + " must implement " + CallBack.class.getName());
         }
@@ -52,6 +52,14 @@ public class ShareFragment extends SherlockFragment implements View.OnClickListe
     public void onDetach() {
         super.onDetach();
         mCallBack = null;
+    }
+    
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mCallBack != null) {
+            mCallBack.fragmentStopped(mSection);
+        }
     }
 
     @Override
@@ -70,8 +78,6 @@ public class ShareFragment extends SherlockFragment implements View.OnClickListe
             mToggleFile.setOnClickListener(this);
         }
         mTextView = (TextView) v.findViewById(R.id.text);
-        mButton = (Button) v.findViewById(R.id.button_share);
-        mButton.setOnClickListener(this);
         return v;
     }
     
@@ -108,10 +114,15 @@ public class ShareFragment extends SherlockFragment implements View.OnClickListe
             } else {
                 mTextView.setText(R.string.share_text_file_message);
             }            
-        } else if (v.getId() == R.id.button_share) {
-            boolean file = mToggleFile.isChecked();
-            mCallBack.shareAppList(mSection, file, mCheckFooter.isChecked());
         }
+    }
+    
+    public boolean isFile() {
+        return mToggleFile.isChecked();
+    }
+    
+    public boolean isFooter() {
+        return mCheckFooter.isChecked();
     }
 
 }

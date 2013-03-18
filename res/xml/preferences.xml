@@ -22,14 +22,6 @@
             android:summary="@string/backup_check_summary"
             android:title="@string/backup_check_title" />
 
-        <ListPreference
-            android:key="backup_period"
-            android:defaultValue="12"
-            android:entries="@array/backup"
-            android:entryValues="@array/backup_values"
-            android:title="@string/backup_period_title"
-            android:summary="@string/backup_period_summary" />
-
         <Preference
             android:key="backup_ignored"
             android:summary="@string/backup_ignored_apps_summary"

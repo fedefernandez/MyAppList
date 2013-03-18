@@ -119,6 +119,13 @@ public class FileUtil {
     
     public static String writeFile(Context context, List<AppInfo> appList, File file) {
         XmlSerializer serializer = Xml.newSerializer();
+        final File backupFile;
+        if (file.exists()) {
+            backupFile = new File(file.getAbsolutePath() + ".bak");
+            file.renameTo(backupFile);
+        } else {
+            backupFile = null;
+        }
         try {
             FileWriter writer = new FileWriter(file);
             serializer.setOutput(writer);
@@ -142,6 +149,12 @@ public class FileUtil {
             writer.close();
             return null;
         } catch (Exception e) {
+            if (backupFile != null && backupFile.exists()) {
+                if (file.exists()) {
+                    file.delete();
+                }
+                backupFile.renameTo(file);
+            }
             if (context != null) {
                 return context.getString(R.string.error_creating_file, file.getAbsolutePath());
             } else {

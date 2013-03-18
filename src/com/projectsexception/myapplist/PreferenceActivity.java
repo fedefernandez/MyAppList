@@ -1,13 +1,15 @@
 package com.projectsexception.myapplist;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.projectsexception.myapplist.util.BackupReceiver;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.work.SaveListService;
 
@@ -16,10 +18,8 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
     private static final String KEY_EMAIL = "mail";
     public static final String KEY_THEME = "theme";
     public static final String KEY_BACKUP_CHECK = "backup_check";
-    public static final String KEY_BACKUP_PERIOD = "backup_period";
     public static final String KEY_BACKUP_IGNORED_APPS = "backup_ignored";
     
-    private ListPreference mBackupPeriodPreference;
     private Preference mBackupIgnoredPreference;
     
     @SuppressWarnings("deprecation")
@@ -35,10 +35,6 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         CheckBoxPreference check = (CheckBoxPreference) findPreference(KEY_BACKUP_CHECK);
         check.setOnPreferenceChangeListener(this);
         
-        mBackupPeriodPreference = (ListPreference) findPreference(KEY_BACKUP_PERIOD);
-        mBackupPeriodPreference.setOnPreferenceChangeListener(this);
-        mBackupPeriodPreference.setEnabled(check.isChecked());
-        
         mBackupIgnoredPreference = findPreference(KEY_BACKUP_IGNORED_APPS);
         mBackupIgnoredPreference.setOnPreferenceClickListener(this);
         mBackupIgnoredPreference.setEnabled(check.isChecked());
@@ -51,11 +47,25 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
             ThemeManager.restartActivity(this);
         } else if (KEY_BACKUP_CHECK.equals(preference.getKey())) {
             boolean backup = (Boolean) newValue;
-            mBackupPeriodPreference.setEnabled(backup);
             mBackupIgnoredPreference.setEnabled(backup);
-            SaveListService.updateService(this, backup, mBackupPeriodPreference.getValue());
-        } else if (KEY_BACKUP_PERIOD.equals(preference.getKey())) {
-            SaveListService.updateService(this, true, mBackupPeriodPreference.getValue());
+            if (backup) {
+                BackupReceiver.enableReceiver(this); 
+                final Context ctx = this;
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
+                dialog.setTitle(R.string.backup_dialog_title);
+                dialog.setMessage(R.string.backup_dialog_message);
+                dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {                    
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ctx.startService(new Intent(ctx, SaveListService.class));
+                    }
+                });
+                dialog.setNegativeButton(android.R.string.cancel, null);
+                dialog.show();
+            } else {
+                BackupReceiver.disableReceiver(this);
+                SaveListService.cancelService(this);
+            }
         }
         return true;
     }
