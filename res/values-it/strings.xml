@@ -52,8 +52,8 @@
   <string name="menu_settings">Impostazioni</string>
   <string name="menu_share">Condividi</string>
   <string name="share_chooser">Condividi con...</string>
-  <string name="share_file_text">Condividi con \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
-  <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Condividi con \'My App List\'&lt;/a&gt;</string>
+  <string name="share_file_text">Condiviso da https://play.google.com/store/apps/details?id=%s \'My App List\'</string>
+  <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Condiviso da \'My App List\'&lt;/a&gt;</string>
   <string name="share_text_send_failed">Non è stata riscontrata nessuna attività per condividere il contenuto</string>
   <string name="share_file_failed">Errore nella creazione del file</string>
   <string name="share_file_send_failed">Nessuna attività può aprire questo file. Controllalo in: %s</string>
@@ -74,6 +74,8 @@
   <string name="share_button_type_file">Archivia</string>
   <string name="share_button_export">Condividi</string>
   <string name="play_google">market://details?id=%s</string>
+  <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
+  <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
   <string name="error_creating_dir">Impossibile accedere a %s sulla sdcard</string>
   <string name="error_creating_file">Impossibile scrivere sul file %s</string>
   <string name="problem_no_google_play">Google Play non trovato</string>
@@ -104,4 +106,5 @@
   <string name="fragment_list_empty">Lista vuota</string>
   <string name="backup_dialog_title">Servizio di backup abilitato</string>
   <string name="backup_dialog_message">Il servizio di backup è ora attivo. Quando si installa o disinstallano applicazioni nuove \'My App List\' genererà un nuovo file XML. Si desidera generare un nuovo file ora?. Fare clic su \'Annulla\' se è stato creato un file di backup recente.</string>
+  <string name="error_start_application">Impossibile avviare l\'applicazione</string>
 </resources>

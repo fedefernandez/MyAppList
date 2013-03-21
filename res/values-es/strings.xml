@@ -52,14 +52,14 @@
   <string name="menu_settings">Ajustes</string>
   <string name="menu_share">Compartir</string>
   <string name="share_chooser">Compartir con...</string>
-  <string name="share_file_text">Compartido desde \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
-  <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Compartido desde \'My App List\'&lt;/a&gt;</string>
+  <string name="share_file_text">Compartido por \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
+  <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\" &gt; compartido con \'My App List\' &lt;/a&gt;</string>
   <string name="share_text_send_failed">No se encontró ninguna actividad para compartir el contenido</string>
   <string name="share_file_failed">Error creando fichero</string>
   <string name="share_file_send_failed">Ninguna activiedad puede abrir el fichero. Compruébalo en: %s</string>
   <string name="share_xml_message">El fichero XML puede ser abierto por \'My App List\'.\nPuedes enviar este fichero a tus contactos o salvarlo para utilizarlo más adelante.\nRecuerda que el fichero XML sólo almacena el nombre y el identificador de la aplicación, no la aplicación en sí misma.</string>
   <string name="share_text_message">Compartir las aplicaciones en formato de texto le permite enviar la lista en un correo electrónico o mensaje con la url a la tienda de Google Play.</string>
-  <string name="share_text_file_message">Compartir las aplicaciones en formato de texto le permite enviar la lista en un correo electrónico o mensaje con la url a la tienda de Google Play.\nEste archivo de texto puede ser guardado en cualquier lugar o enviado por correo electrónico.\nRecuerde que \'My App List\' puede leer archivos XML, no el archivo de texto.</string>
+  <string name="share_text_file_message">Compartir las aplicaciones en formato de texto le permite enviar la lista en un email o mensaje con la url en Google Play Store.\nEste archivo de texto puede ser guardado en cualquier lugar o enviado por correo electrónico. \nRecuerda que \'My App List\' puede leer el archivo XML, pero no el archivo de texto.</string>
   <string name="share_html_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda Google Play.</string>
   <string name="share_html_file_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda de Google Play.\nEste archivo HTML puede ser guardado en cualquier lugar o enviado por correo electrónico.\nRecuerde que \'My App List\' puede leer archivos XML, pero no el archivo HTML, sin embargo puede abrir este archivo en un navegador para ver los enlaces.</string>
   <string name="ab_title_ignored_list">Aplicaciones ignoradas</string>
@@ -74,6 +74,8 @@
   <string name="share_button_type_file">Archivo</string>
   <string name="share_button_export">Compartir</string>
   <string name="play_google">market://details?id=%s</string>
+  <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
+  <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
   <string name="error_creating_dir">Imposible acceder a %s en la tarjeta SD</string>
   <string name="error_creating_file">Imposible escribir en el fichero %s</string>
   <string name="problem_no_google_play">Google Play no encontrado</string>
@@ -104,4 +106,5 @@
   <string name="fragment_list_empty">Lista vacía</string>
   <string name="backup_dialog_title">Servicio de copia de seguridad activado</string>
   <string name="backup_dialog_message">Se ha habilitado el servicio de backup. Al instalar o desinstalar aplicaciones nuevas \"My App List\" generará un nuevo archivo XML. ¿Desea generar un nuevo archivo ahora?. Haga clic en \"Cancelar\" si ha creado un archivo de copia de seguridad recientemente.</string>
+  <string name="error_start_application">No se puede iniciar la aplicación</string>
 </resources>

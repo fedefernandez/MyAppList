@@ -3,7 +3,7 @@ My App List
 
 This GitHub repository hosts the code for the Android app My App List
 
-For more information have a look at http://projectsexception.com/myapplist
+Download from: https://play.google.com/store/apps/details?id=com.projectsexception.myapplist
 
 Contributing
 ------------
