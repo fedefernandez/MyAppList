@@ -58,7 +58,7 @@ public class SaveListService extends IntentService {
         Intent intent = new Intent(ctx, SaveListService.class);
         PendingIntent pintent = PendingIntent.getService(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (enable) {
-            long time = System.currentTimeMillis() + (1000 * 60 * 60);
+            long time = System.currentTimeMillis() + (1000 * 60 * 15);
             alarm.set(AlarmManager.RTC, time, pintent);
         } else {
             alarm.cancel(pintent);

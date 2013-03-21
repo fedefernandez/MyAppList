@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -144,11 +145,18 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             
             if (launchIntent == null) {
                 getView().findViewById(R.id.start_application).setEnabled(false);
-            } else {
+            } else {                
                 getView().findViewById(R.id.start_application).setOnClickListener(new View.OnClickListener() { 
                     @Override
                     public void onClick(View v) {
-                        startActivity(launchIntent);
+                        final Context ctx = getSherlockActivity();
+                        if (ctx != null) {
+                            try {
+                                ctx.startActivity(launchIntent);                            
+                            } catch (Exception e) {
+                                Toast.makeText(ctx, R.string.error_start_application, Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 });
             }

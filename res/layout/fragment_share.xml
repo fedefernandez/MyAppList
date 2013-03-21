@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/ShareFragmentLayout"
     android:orientation="vertical" >
-    
+
     <LinearLayout
-        android:id="@+id/buttons" 
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="10dp" >
 
         <ToggleButton
             android:id="@+id/button_text"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textOn="@string/share_button_type_text"
+            android:layout_weight="1"
+            android:checked="true"
             android:textOff="@string/share_button_type_text"
-            android:checked="true" />
+            android:textOn="@string/share_button_type_text" />
 
         <ToggleButton
             android:id="@+id/button_file"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textOn="@string/share_button_type_file"
-            android:textOff="@string/share_button_type_file" />        
+            android:layout_weight="1"
+            android:textOff="@string/share_button_type_file"
+            android:textOn="@string/share_button_type_file" />
     </LinearLayout>
-    
-    <CheckBox 
+
+    <CheckBox
         android:id="@+id/footer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="10dp"
-        android:text="@string/share_check_footer"/>
-    
-    <TextView 
-        android:id="@+id/text"
+        android:gravity="center"
+        android:text="@string/share_check_footer" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:gravity="center"
-        android:textSize="20sp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="@dimen/share_padding" >
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:freezesText="true" />
+    </ScrollView>
 
 </LinearLayout>

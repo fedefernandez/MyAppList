@@ -67,6 +67,7 @@ public class ShareActivity extends BaseActivity implements
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.ab_title_share);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         
         // If we receive the file path, we can share xml
         String filePath = getIntent().getStringExtra(FILE_PATH);
@@ -123,7 +124,17 @@ public class ShareActivity extends BaseActivity implements
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_share) {
+        if (item.getItemId() == android.R.id.home) {
+            // This is called when the Home (Up) button is pressed
+            // in the Action Bar.
+            Intent parentActivityIntent = new Intent(this, MainActivity.class);
+            parentActivityIntent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                    Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(parentActivityIntent);
+            finish();
+            return true;
+        } else if (item.getItemId() == R.id.menu_share) {
             int section = mSectionsPagerAdapter.getSection(mViewPager.getCurrentItem());
             ShareFragment frg = mFragments.get(section);
             if (frg != null) {

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="action_refresh_size">32dp</dimen>
     <dimen name="separator_height">1px</dimen>
+    <dimen name="share_padding">10dp</dimen>
 </resources>

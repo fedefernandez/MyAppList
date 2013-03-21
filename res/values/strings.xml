@@ -105,5 +105,6 @@
   <string name="rate_dialog_positive">Rate it!</string>  
   <string name="fragment_list_empty">Empty list</string>  
   <string name="backup_dialog_title">Backup service enabled</string>  
-  <string name="backup_dialog_message">The backup service is now enabled. When you install or uninstall new applications \'My App List\' will generate a new XML file. Do you want to generate a new file now?. Click \'Cancel\' if you created a backup file recently.</string>
+  <string name="backup_dialog_message">The backup service is now enabled. When you install or uninstall new applications \'My App List\' will generate a new XML file. Do you want to generate a new file now?. Click \'Cancel\' if you created a backup file recently.</string>  
+  <string name="error_start_application">Can\'t start application</string>
 </resources>

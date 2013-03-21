@@ -6,7 +6,7 @@ public class CustomLog {
     
     private static final String TAG = "MyAppList";
     
-    private static final int LOG_LEVEL = Log.INFO;
+    private static final int LOG_LEVEL = Log.DEBUG;
     
     private static final boolean VERBOSE = LOG_LEVEL <= Log.VERBOSE;
     private static final boolean DEBUG = LOG_LEVEL <= Log.DEBUG;

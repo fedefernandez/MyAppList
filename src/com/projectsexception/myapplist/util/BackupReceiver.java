@@ -12,7 +12,7 @@ public class BackupReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // The data have changed, set or update the alarm 1 hour later
+        CustomLog.debug("BackupReceiver", "Receiver package changes, program the service");
         SaveListService.updateService(context);
     }
 

@@ -84,12 +84,22 @@ public class ShareFragment extends SherlockFragment implements View.OnClickListe
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (mSection == ShareActivity.SECTION_XML) {
-            mTextView.setText(R.string.share_xml_message);
-        } else if (mSection == ShareActivity.SECTION_HTML) {
-            mTextView.setText(R.string.share_html_message);
-        } else {
-            mTextView.setText(R.string.share_text_message);
+        if (savedInstanceState == null) {
+            if (mSection == ShareActivity.SECTION_XML) {
+                mTextView.setText(R.string.share_xml_message);
+            } else if (mSection == ShareActivity.SECTION_HTML) {
+                if (mToggleFile.isChecked()) {
+                    mTextView.setText(R.string.share_html_file_message);                    
+                } else {
+                    mTextView.setText(R.string.share_html_message);                    
+                }
+            } else {
+                if (mToggleFile.isChecked()) {
+                    mTextView.setText(R.string.share_text_file_message);
+                } else {
+                    mTextView.setText(R.string.share_text_message);
+                }
+            }
         }
     }
 
