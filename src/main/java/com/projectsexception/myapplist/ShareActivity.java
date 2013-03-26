@@ -206,10 +206,10 @@ public class ShareActivity extends BaseActivity implements
             if (realPosition == 0) {
                 return getString(R.string.share_tab_xml);
             } else if (realPosition == 1) {
-                return getString(R.string.share_tab_html);
-            } else if (realPosition == 2) {
                 return getString(R.string.share_tab_text);
-            }
+            } else if (realPosition == 2) {
+                return getString(R.string.share_tab_html);
+            } 
             return null;
         }
         
@@ -219,9 +219,9 @@ public class ShareActivity extends BaseActivity implements
             if (realPosition == 0) {
                 section = SECTION_XML;
             } else if (realPosition == 1) {
-                section = SECTION_HTML;
-            } else {
                 section = SECTION_TEXT;
+            } else {
+                section = SECTION_HTML;
             }
             return section;
         }
