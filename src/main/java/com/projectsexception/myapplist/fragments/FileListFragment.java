@@ -1,10 +1,5 @@
 package com.projectsexception.myapplist.fragments;
 
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
@@ -14,7 +9,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -27,6 +21,11 @@ import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.work.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
+
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class FileListFragment extends AbstractAppListFragment {
     

@@ -1,8 +1,5 @@
 package com.projectsexception.myapplist.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +9,6 @@ import android.util.SparseBooleanArray;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -22,6 +18,9 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.NewFileDialog;
 import com.projectsexception.myapplist.work.AppListLoader;
 import com.projectsexception.myapplist.work.AppSaveTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppListFragment extends AbstractAppListFragment {
     
@@ -69,16 +68,6 @@ public class AppListFragment extends AbstractAppListFragment {
                 intent.putParcelableArrayListExtra(ShareActivity.APP_LIST, appInfoList);
                 startActivity(intent);
             }
-            
-//            int format = FileUtil.FILE_TEXT;
-//            boolean file = false;
-//            if (item.getItemId() == R.id.menu_share_html || item.getItemId() == R.id.menu_share_html_file) {
-//                format = FileUtil.FILE_HTML;
-//            }
-//            if (item.getItemId() == R.id.menu_share_text_file || item.getItemId() == R.id.menu_share_html_file) {
-//                file = true;
-//            }
-//            shareAppList(getSelectedItems(), format, file);
             return true;
         }
         return super.onOptionsItemSelected(item);

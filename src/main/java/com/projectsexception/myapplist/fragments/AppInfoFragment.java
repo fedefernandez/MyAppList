@@ -1,9 +1,5 @@
 package com.projectsexception.myapplist.fragments;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -21,12 +17,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class AppInfoFragment extends SherlockFragment implements View.OnClickListener {
     
@@ -34,9 +33,10 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         void removeAppInfoFragment();
     }
     
+    private static final String KEY_LISTENER = "AppInfoFragment";
     private static final String NAME_ARG = "nameArg";
     private static final String PACKAGE_ARG = "packageArg";
-    
+
     public static AppInfoFragment newInstance(String name, String packageName) {
         AppInfoFragment frg = new AppInfoFragment();
         Bundle args = new Bundle();
@@ -67,7 +67,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ApplicationsReceiver.getInstance(getSherlockActivity()).registerListener(getClass().getName());
+        ApplicationsReceiver.getInstance(getSherlockActivity()).registerListener(KEY_LISTENER);
         mName = getArguments().getString(NAME_ARG);
         mPackage = getArguments().getString(PACKAGE_ARG);
         if (mPackage != null) {
@@ -95,11 +95,10 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         super.onResume();
         final SherlockFragmentActivity activity = getSherlockActivity();
         final ApplicationsReceiver receiver = ApplicationsReceiver.getInstance(activity);
-        final String key = getClass().getName();
-        if (receiver.isContextChanged(key)) {
+        if (receiver.isContextChanged(KEY_LISTENER)) {
             mName = null;
             mPackage = null;
-            receiver.removeListener(key);
+            receiver.removeListener(KEY_LISTENER);
             mActivity.removeAppInfoFragment();
         }
         checkStopButton();

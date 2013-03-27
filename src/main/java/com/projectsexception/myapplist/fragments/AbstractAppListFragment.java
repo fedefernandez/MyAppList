@@ -1,14 +1,11 @@
 package com.projectsexception.myapplist.fragments;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.View;
-
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.AppInfoActivity;
@@ -18,8 +15,11 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.AppListAdapter;
 
+import java.util.ArrayList;
+
 public abstract class AbstractAppListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>, View.OnClickListener {
 
+    private static final String KEY_LISTENER = "AbstractAppListFragment";
     private static final String CUR_NAME = "curName";
     private static final String CUR_PACKAGE = "curPackage";
 
@@ -47,6 +47,8 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
 
         // Start out with a progress indicator.
         setListShown(false);
+
+        getListView().setFastScrollEnabled(true);
         
         registerForContextMenu(getListView());
         
@@ -74,7 +76,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     @Override
     public void onResume() {
         super.onResume();
-        if (ApplicationsReceiver.getInstance(getSherlockActivity()).isContextChanged(getClass().getName())) {
+        if (ApplicationsReceiver.getInstance(getSherlockActivity()).isContextChanged(KEY_LISTENER)) {
             Bundle args = new Bundle();
             args.putBoolean(ARG_RELOAD, true);
             getLoaderManager().restartLoader(0, args, this);
@@ -113,7 +115,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     public void onLoadFinished(Loader<ArrayList<AppInfo>> loader, ArrayList<AppInfo> data) {
         loading(false);
         
-        ApplicationsReceiver.getInstance(getSherlockActivity()).registerListener(getClass().getName());
+        ApplicationsReceiver.getInstance(getSherlockActivity()).registerListener(KEY_LISTENER);
         
         // Set the new data in the adapter.
         mAdapter.setData(data);
