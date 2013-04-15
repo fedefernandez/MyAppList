@@ -44,6 +44,7 @@
         android:state_focused="true"/>
     <item 
         android:drawable="@drawable/list_pressed_holo_light" 
-        android:state_checked="true"/>
+        android:state_checked="true"
+        android:state_selected="true"/>
 
 </selector>

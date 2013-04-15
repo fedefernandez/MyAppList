@@ -4,6 +4,8 @@ Thanks to:
 
 Jake Wharton for his wonderful library ActionBarSherlock (http://actionbarsherlock.com)
 
+Manuel Peinado for MultiChoiceAdapter (https://github.com/ManuelPeinado/MultiChoiceAdapter)
+
 Apostrophic Laboratories for his Komika font used in main title (http://moorstation.org/typoasis/designers/lab/index.htm)
 
 AnderWeb (http://jbthemes.com/anderweb/) and androcode.es for his selectable elements tutorial (http://androcode.es/2012/03/seleccion-individualmultiple-de-elementos-en-un-listview/)

@@ -54,6 +54,12 @@
 			<type>apklib</type>
 		</dependency>
         <dependency>
+            <groupId>com.github.manuelpeinado.multichoiceadapter</groupId>
+            <artifactId>library</artifactId>
+            <version>1.0.6</version>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>

@@ -3,12 +3,6 @@ package com.projectsexception.myapplist.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -16,7 +10,6 @@ import com.projectsexception.myapplist.ListActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.ShareActivity;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.work.FileListLoader;
@@ -26,14 +19,19 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 
 public class FileListFragment extends AbstractAppListFragment {
     
-    private static final int MENU_REMOVE = 3;
-    
     private File mFile;
-    
-    @Override 
+
+    @Override
+    int getMenuAdapter() {
+        return R.menu.adapter_file;
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
@@ -68,15 +66,10 @@ public class FileListFragment extends AbstractAppListFragment {
         inflater.inflate(R.menu.filelist, menu);
         mRefreshItem = menu.findItem(R.id.menu_refresh);
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_refresh) {
-            Bundle args = new Bundle();
-            args.putBoolean(ARG_RELOAD, true);
-            getLoaderManager().restartLoader(0, args, this);
-            return true;
-        } else if (item.getItemId() == R.id.menu_save) {
+        if (item.getItemId() == R.id.menu_save) {
             new AppSaveTask(getActivity(), mFile.getName(), mAdapter.getData()).execute(true);
             return true;
         } else if (item.getItemId() == R.id.menu_share) {
@@ -91,33 +84,20 @@ public class FileListFragment extends AbstractAppListFragment {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        menu.add(info.position, MENU_REMOVE, 0, R.string.context_menu_remove_from_list);
-    }
-    
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
-        int position = item.getGroupId();
-        if (position < mAdapter.getData().size()) {
-            if (item.getItemId() == MENU_REMOVE) {
-                mAdapter.getData().remove(position);
-                mAdapter.notifyDataSetChanged();                
-                return true;
-            }
-        }
-        return super.onContextItemSelected(item);
-    }
-    
-    @Override 
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        AppInfo appInfo = mAdapter.getData().get(position);
-        if (!TextUtils.isEmpty(appInfo.getPackageName())) {
-            if (appInfo.isInstalled()) {
-                showAppInfo(appInfo.getName(), appInfo.getPackageName());
-            } else {
-                AppUtil.showPlayGoogleApp(getActivity(), appInfo.getPackageName());
+    public void actionItemClicked(int id) {
+        if (id == R.id.menu_delete) {
+            Set<Long> selection = mAdapter.getSelection();
+            if (selection != null) {
+                Iterator<AppInfo> it = mAdapter.getData().iterator();
+                long pos = 0;
+                while (it.hasNext()) {
+                    it.next();
+                    if (selection.contains(pos)) {
+                        it.remove();
+                    }
+                    pos++;
+                }
+                mAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -133,10 +113,4 @@ public class FileListFragment extends AbstractAppListFragment {
         }
         return new FileListLoader(getActivity(), mFile, lst);
     }
-
-    @Override
-    public boolean isInfoButtonAvailable() {
-        return false;
-    }
-
 }

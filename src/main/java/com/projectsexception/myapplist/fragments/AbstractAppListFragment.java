@@ -5,19 +5,25 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.AppInfoActivity;
 import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.AppListAdapter;
 
 import java.util.ArrayList;
 
-public abstract class AbstractAppListFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>, View.OnClickListener {
+public abstract class AbstractAppListFragment extends SherlockListFragment implements
+        LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>,
+        AdapterView.OnItemClickListener,
+        AppListAdapter.ActionListener {
 
     private static final String KEY_LISTENER = "AbstractAppListFragment";
     private static final String CUR_NAME = "curName";
@@ -31,6 +37,8 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     private boolean mDualPane;
     private String mCurrentName;
     private String mCurrentPackage;
+
+    abstract int getMenuAdapter();
     
     @Override 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -39,18 +47,15 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         setEmptyText(getSherlockActivity().getString(R.string.fragment_list_empty));
 
         // Create an empty adapter we will use to display the loaded data.
-        mAdapter = new AppListAdapter(getSherlockActivity());
-        if (isInfoButtonAvailable()) {
-            mAdapter.setListener(this);
-        }
-        setListAdapter(mAdapter);
+        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter());
+        mAdapter.setOnItemClickListener(this);
+        mAdapter.setAdapterView(getListView());
+        mAdapter.setListener(this);
 
         // Start out with a progress indicator.
         setListShown(false);
 
         getListView().setFastScrollEnabled(true);
-        
-        registerForContextMenu(getListView());
         
         if (savedInstanceState != null) {
             // Restore last state for checked position.
@@ -70,7 +75,9 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString(CUR_NAME, mCurrentName);
         outState.putString(CUR_PACKAGE, mCurrentPackage);
+        mAdapter.save(outState);
     }
     
     @Override
@@ -82,11 +89,17 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
             getLoaderManager().restartLoader(0, args, this);
         }
     }
-    
+
     @Override
-    public void onClick(View v) {
-        AppInfo appInfo = (AppInfo) v.getTag();
-        showAppInfo(appInfo.getName(), appInfo.getPackageName());
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        AppInfo appInfo = mAdapter.getData().get(position);
+        if (!TextUtils.isEmpty(appInfo.getPackageName())) {
+            if (appInfo.isInstalled()) {
+                showAppInfo(appInfo.getName(), appInfo.getPackageName());
+            } else {
+                AppUtil.showPlayGoogleApp(getActivity(), appInfo.getPackageName());
+            }
+        }
     }
     
     @Override
@@ -102,11 +115,19 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             return true;
+        }  else if (item.getItemId() == R.id.menu_select_all) {
+            for (int i = 0; i < mAdapter.getCount(); ++i) {
+                mAdapter.select(i);
+            }
+            return true;
+        } else if (item.getItemId() == R.id.menu_refresh) {
+            Bundle args = new Bundle();
+            args.putBoolean(ARG_RELOAD, true);
+            getLoaderManager().restartLoader(0, args, this);
+            return true;
         }
         return false;
     }
-    
-    public abstract boolean isInfoButtonAvailable();
 
     @Override 
     public abstract Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args);
@@ -178,38 +199,4 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
             }           
         }
     }
-    
-//    protected void shareAppList(final List<AppInfo> selectedApps, int format, boolean file) {
-//        if (selectedApps == null || selectedApps.isEmpty()) {
-//            Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
-//        } else {
-//            if (file) {
-//                shareAppListFile(selectedApps, format);
-//            } else {
-//                shareAppListText(selectedApps, format);
-//            }
-//        }
-//    }
-    
-//    protected void shareAppListText(List<AppInfo> selectedApps, int format) {
-//        Intent intent = new Intent(Intent.ACTION_SEND);
-//        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
-//        if (format == FileUtil.FILE_HTML) {
-//            intent.setType("text/html");
-//            intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(AppUtil.appInfoToHTML(getActivity(), selectedApps)));
-//        } else {
-//            intent.setType("text/plain");                    
-//            intent.putExtra(Intent.EXTRA_TEXT, AppUtil.appInfoToText(getActivity(), selectedApps));
-//        }
-//        try {
-//            startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
-//        } catch (Exception e) {
-//            // Something was wrong
-//        }
-//    }
-    
-//    protected void shareAppListFile(List<AppInfo> selectedApps, int format) {        
-//        new ShareAppSaveTask(getSherlockActivity(), selectedApps, format).execute(new Void[0]);
-//    }
-
 }

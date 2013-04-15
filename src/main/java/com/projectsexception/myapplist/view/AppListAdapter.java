@@ -1,46 +1,58 @@
 package com.projectsexception.myapplist.view;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.manuelpeinado.multichoiceadapter.MultiChoiceBaseAdapter;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 
-public class AppListAdapter extends BaseAdapter {
-    
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+public class AppListAdapter extends MultiChoiceBaseAdapter {
+
     static class AppInfoView {
         TextView title;
         ImageView icon;
-        View button;
+    }
+
+    public static interface ActionListener {
+        void actionItemClicked(int id);
     }
     
     private final LayoutInflater mInflater;
     private final PackageManager mPm;
-    private View.OnClickListener mListener;
     private ArrayList<AppInfo> mAppList;
     private int mNotInstalledColor;
     private int mInstalledColor;
+    private int mMenu;
+    private ActionListener mListener;
 
-    public AppListAdapter(Context context) {
+    public AppListAdapter(Context context, Bundle savedInstance, int menu) {
+        super(savedInstance);
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mPm = context.getPackageManager();
         this.mAppList = new ArrayList<AppInfo>();
         this.mNotInstalledColor = context.getResources().getColor(R.color.app_not_installed);
+        this.mMenu = menu;
     }
-    
-    public void setListener(View.OnClickListener listener) {
-        this.mListener = listener;
+
+    public void setListener(ActionListener mListener) {
+        this.mListener = mListener;
     }
 
     public void setData(ArrayList<AppInfo> data) {
@@ -52,8 +64,8 @@ public class AppListAdapter extends BaseAdapter {
         return mAppList;
     }
 
-    @Override 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getViewImpl(int position, View convertView, ViewGroup parent) {
         View view;
         AppInfoView appInfoView;
         if (convertView == null) {
@@ -62,7 +74,6 @@ public class AppListAdapter extends BaseAdapter {
             appInfoView.title = (TextView) view.findViewById(R.id.list_item_text);
             mInstalledColor = appInfoView.title.getCurrentTextColor();
             appInfoView.icon = (ImageView) view.findViewById(R.id.list_item_icon);
-            appInfoView.button = view.findViewById(R.id.list_item_details);
             view.setTag(appInfoView);
         } else {
             view = convertView;
@@ -85,14 +96,6 @@ public class AppListAdapter extends BaseAdapter {
             appInfoView.icon.setImageResource(R.drawable.ic_default_launcher);
         } else {
             appInfoView.icon.setImageDrawable(icon);
-        }
-        
-        if (mListener == null) {
-            appInfoView.button.setVisibility(View.GONE);
-        } else {
-            appInfoView.button.setVisibility(View.VISIBLE);
-            appInfoView.button.setTag(item);
-            appInfoView.button.setOnClickListener(mListener);
         }
         return view;
     }
@@ -118,5 +121,42 @@ public class AppListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(mMenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        if (mListener != null) {
+            mListener.actionItemClicked(item.getItemId());
+            finishActionMode();
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<AppInfo> getSelectedItems() {
+        ArrayList<AppInfo> selectedApps = new ArrayList<AppInfo>();
+        Set<Long> selection = getSelection();
+        if (selection != null) {
+            List<AppInfo> allApps = getData();
+            int size = getCount();
+            for (int i = 0 ; i < size ; i++) {
+                if (selection.contains(new Long(i))) {
+                    selectedApps.add(allApps.get(i));
+                }
+            }
+        }
+        return selectedApps;
     }
 }

@@ -7,16 +7,6 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_refresh"/>
     <item
-        android:id="@+id/menu_save"
-        android:icon="@drawable/ic_menu_save"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_save"/>
-    <item
-        android:id="@+id/menu_share"
-        android:icon="@drawable/ic_menu_share"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_share"/>
-    <item
         android:id="@+id/menu_select_all"
         android:icon="@drawable/ic_menu_select_all"
         android:showAsAction="ifRoom|withText"

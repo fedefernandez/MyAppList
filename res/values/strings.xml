@@ -50,7 +50,8 @@
   <string name="menu_select_all">Select all</string>
   <string name="menu_unselect_all">Unselect all</string>
   <string name="menu_settings">Settings</string>
-  <string name="menu_share">Share</string>  
+  <string name="menu_share">Share</string>
+  <string name="menu_delete">Delete</string>
   <string name="share_chooser">Share with…</string>
   <string name="share_file_text">Shared by \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Shared by \'My App List\'&lt;/a&gt;</string>
@@ -79,9 +80,6 @@
   <string name="error_creating_dir">Can\'t access to %s on sdcard</string>
   <string name="error_creating_file">Can\'t write on file %s</string>
   <string name="problem_no_google_play">Google Play market not found</string>
-  <string name="context_menu_application_information">Application system information</string>
-  <string name="context_menu_application_play">See on Google Play</string>
-  <string name="context_menu_remove_from_list">Remove from list</string>
   <string name="content_desc_application_icon">Application Icon</string>
   <string name="content_desc_application_title">Application title</string>
   <string name="content_desc_button_details">Button to see application details</string>

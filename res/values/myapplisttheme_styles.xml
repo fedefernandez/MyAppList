@@ -16,7 +16,6 @@
     </style>
 
     <style name="ItemDetailsMyAppListTheme" parent="ImageButtonMyAppListTheme">
-        <item name="android:background">@drawable/list_selector_holo_dark</item>
         <item name="android:src">@drawable/ic_ab_back_holo_dark</item>
     </style>
 
@@ -52,6 +51,10 @@
 
     <style name="CheckBoxMyAppListTheme" parent="android:Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/btn_check_holo_dark</item>
+    </style>
+
+    <style name="MultiChoiceAdapter">
+        <item name="selectedItemBackground">@drawable/list_pressed_holo_dark</item>
     </style>
 
     <!-- Light Theme -->
@@ -103,6 +106,10 @@
 
     <style name="CheckBoxMyAppListThemeLight" parent="android:Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/btn_check_holo_light</item>
+    </style>
+
+    <style name="MultiChoiceAdapterLight">
+        <item name="selectedItemBackground">@drawable/list_pressed_holo_light</item>
     </style>
 
     <!-- Custom Base Styles -->
