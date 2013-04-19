@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_menu_info_details"
             style="?appInfoButtonStyle"
-            android:text="@string/context_menu_application_information" />
+            android:text="@string/application_information" />
 
         <TextView
             android:id="@+id/play"
@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:drawableLeft="@drawable/play_icon"
             style="?appInfoButtonStyle"
-            android:text="@string/context_menu_application_play" />
+            android:text="@string/application_play" />
     </LinearLayout>
 
     <View
@@ -119,21 +119,38 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 
-                <Button 
+                <TextView
                     android:id="@+id/start_application"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
-                    android:text="@string/start_application"/>
+                    android:drawableTop="@drawable/ic_menu_play_clip"
+                    android:text="@string/start_application"
+                    android:singleLine="true"
+                    style="?android:buttonStyle"/>
+
+                <TextView
+                    android:id="@+id/uninstall_application"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:drawableTop="@drawable/ic_menu_delete"
+                    android:text="@string/uninstall_application"
+                    android:singleLine="true"
+                    style="?android:buttonStyle"/>
                 
-                <Button 
+                <TextView
                     android:id="@+id/stop_application"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
-                    android:text="@string/stop_application"/>
+                    android:drawableTop="@drawable/ic_menu_stop"
+                    android:text="@string/stop_application"
+                    android:singleLine="true"
+                    style="?android:buttonStyle"/>
                 
             </LinearLayout>
 

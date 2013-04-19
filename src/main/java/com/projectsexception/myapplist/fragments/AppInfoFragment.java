@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -73,12 +74,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         if (mPackage != null) {
             PackageManager pManager = getActivity().getPackageManager();
             final PackageInfo packageInfo = AppUtil.loadPackageInfo(pManager, mPackage);
-            final boolean isFromGPlay;
-            if (packageInfo == null) {
-                isFromGPlay = false;
-            } else {
-                isFromGPlay = AppUtil.isFromGooglePlay(pManager, mPackage);
-            }
+            final boolean isFromGPlay = packageInfo != null && AppUtil.isFromGooglePlay(pManager, mPackage);
             populateView(pManager, packageInfo, isFromGPlay);
         } else {
             getView().setVisibility(View.GONE);
@@ -116,8 +112,13 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             getView().findViewById(R.id.version).setVisibility(View.INVISIBLE);
             getView().findViewById(R.id.app_data).setVisibility(View.GONE);
             getView().findViewById(R.id.play_linked).setVisibility(View.GONE);
-            getView().findViewById(R.id.stop_application).setEnabled(false);            
-            getView().findViewById(R.id.start_application).setEnabled(false);            
+            getView().findViewById(R.id.stop_application).setEnabled(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                getView().findViewById(R.id.uninstall_application).setEnabled(false);
+            } else {
+                getView().findViewById(R.id.uninstall_application).setVisibility(View.GONE);
+            }
+            getView().findViewById(R.id.start_application).setEnabled(false);
         } else {
             final ApplicationInfo applicationInfo = packageInfo.applicationInfo;
             
@@ -141,17 +142,37 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             }
             
             checkStopButton();
-            
-            if (launchIntent == null) {
-                getView().findViewById(R.id.start_application).setEnabled(false);
-            } else {                
-                getView().findViewById(R.id.start_application).setOnClickListener(new View.OnClickListener() { 
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                getView().findViewById(R.id.uninstall_application).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         final Context ctx = getSherlockActivity();
                         if (ctx != null) {
                             try {
-                                ctx.startActivity(launchIntent);                            
+                                Uri packageUri = Uri.parse("package:" + packageName);
+                                Intent i = new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageUri);
+                                ctx.startActivity(i);
+                            } catch (Exception e) {
+                                Toast.makeText(ctx, R.string.error_start_application, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+            } else {
+                getView().findViewById(R.id.uninstall_application).setVisibility(View.GONE);
+            }
+            
+            if (launchIntent == null) {
+                getView().findViewById(R.id.start_application).setEnabled(false);
+            } else {                
+                getView().findViewById(R.id.start_application).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Context ctx = getSherlockActivity();
+                        if (ctx != null) {
+                            try {
+                                ctx.startActivity(launchIntent);
                             } catch (Exception e) {
                                 Toast.makeText(ctx, R.string.error_start_application, Toast.LENGTH_SHORT).show();
                             }
@@ -222,7 +243,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         if (v.getId() == R.id.info) {
             AppUtil.showInstalledAppDetails(getActivity(), mPackage);
         } else if (v.getId() == R.id.play) {
-            AppUtil.showPlayGoogleApp(getActivity(), mPackage);
+            AppUtil.showPlayGoogleApp(getActivity(), mPackage, false);
         }
     }
     

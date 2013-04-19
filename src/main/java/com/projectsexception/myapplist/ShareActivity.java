@@ -251,7 +251,7 @@ public class ShareActivity extends BaseActivity implements
             }
             finish();
         } else {
-            Toast.makeText(this, getString(R.string.share_file_failed, file.getAbsolutePath()), Toast.LENGTH_LONG).show();                    
+            Toast.makeText(this, getString(R.string.share_file_failed), Toast.LENGTH_LONG).show();
         }
     }
     

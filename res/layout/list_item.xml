@@ -7,6 +7,13 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
+    <CheckBox
+        android:id="@android:id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:layout_margin="@dimen/item_checkbox_margin"/>
+
     <ImageView
         android:id="@android:id/icon1"
         android:layout_width="@dimen/item_icon_size"
@@ -18,13 +25,7 @@
         android:id="@android:id/text1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:singleLine="true"
         android:layout_weight="1"/>
-
-    <CheckBox
-        android:id="@android:id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:focusable="false"
-        android:layout_margin="@dimen/item_checkbox_margin"/>
 
 </LinearLayout>

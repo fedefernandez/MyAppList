@@ -17,7 +17,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MyAppListTheme" >
-        <activity android:name=".ListActivity" >
+        <activity
+            android:name=".ListActivity"
+            android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,7 +81,9 @@
         <activity android:name="com.projectsexception.myapplist.PreferenceActivity" />
         <activity android:name=".AppInfoActivity" />
         <activity android:name=".ListIgnoredActivity" />
-        <activity android:name=".ShareActivity" />
+        <activity android:name=".ShareActivity"
+                  android:uiOptions="splitActionBarWhenNarrow" />
+        <activity android:name=".ListInstallActivity" />
 
         <service android:name=".work.SaveListService" />
 

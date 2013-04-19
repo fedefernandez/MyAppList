@@ -63,7 +63,6 @@
   <string name="share_html_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda Google Play.</string>
   <string name="share_html_file_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda de Google Play.\nEste archivo HTML puede ser guardado en cualquier lugar o enviado por correo electrónico.\nRecuerde que \'My App List\' puede leer archivos XML, pero no el archivo HTML, sin embargo puede abrir este archivo en un navegador para ver los enlaces.</string>
   <string name="ab_title_ignored_list">Aplicaciones ignoradas</string>
-  <string name="ab_title_app_list">Aplicaciones instaladas</string>
   <string name="ab_title_file_list">Aplicaciones en el fichero</string>
   <string name="ab_title_share">Compartir aplicaciones</string>
   <string name="share_check_footer">¿Añadir el pie de página a texto?</string>
@@ -79,14 +78,12 @@
   <string name="error_creating_dir">Imposible acceder a %s en la tarjeta SD</string>
   <string name="error_creating_file">Imposible escribir en el fichero %s</string>
   <string name="problem_no_google_play">Google Play no encontrado</string>
-  <string name="context_menu_application_information">Información del sistema</string>
-  <string name="context_menu_application_play">Ver en Google Play</string>
+  <string name="application_information">Información del sistema</string>
+  <string name="application_play">Google Play</string>
   <string name="context_menu_remove_from_list">Eliminar de la lista</string>
   <string name="content_desc_application_icon">Icono de la aplicación</string>
   <string name="content_desc_application_title">Título de la Aplicación</string>
   <string name="content_desc_button_details">Botón para ver los detalles de la aplicación</string>
-  <string name="start_application">Iniciar aplicación</string>
-  <string name="stop_application">Detener la aplicación</string>
   <string name="app_info_not_installed">Aplicación no instalada</string>
   <string name="app_info_local_installed">Aplicación Instalada</string>
   <string name="app_info_sd_installed">Aplicación instalada en almacenamiento externo</string>

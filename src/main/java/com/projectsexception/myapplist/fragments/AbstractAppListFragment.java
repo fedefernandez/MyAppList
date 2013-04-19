@@ -77,7 +77,9 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         super.onSaveInstanceState(outState);
         outState.putString(CUR_NAME, mCurrentName);
         outState.putString(CUR_PACKAGE, mCurrentPackage);
-        mAdapter.save(outState);
+        if (mAdapter != null) {
+            mAdapter.save(outState);
+        }
     }
     
     @Override
@@ -97,7 +99,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
             if (appInfo.isInstalled()) {
                 showAppInfo(appInfo.getName(), appInfo.getPackageName());
             } else {
-                AppUtil.showPlayGoogleApp(getActivity(), appInfo.getPackageName());
+                AppUtil.showPlayGoogleApp(getActivity(), appInfo.getPackageName(), false);
             }
         }
     }

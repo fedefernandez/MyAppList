@@ -8,9 +8,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.fragments.IgnoredListFragment;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
 
-public class ListIgnoredActivity extends SherlockFragmentActivity implements IgnoredListFragment.CallBack {
-
-    public static final String ARG_FILE = "fileName";
+public class ListIgnoredActivity extends BaseActivity implements IgnoredListFragment.CallBack {
     
     private MyAppListDbHelper mDbHelper;
     

@@ -3,6 +3,7 @@ package com.projectsexception.myapplist.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -33,6 +34,7 @@ public class FileListFragment extends AbstractAppListFragment {
     public static interface CallBack {
         void updateAppList(String fileName, List<AppInfo> appList);
         void shareAppList(String filePath, ArrayList<AppInfo> appList);
+        void installAppList(ArrayList<AppInfo> appList);
     }
 
     private CallBack mCallBack;
@@ -69,6 +71,14 @@ public class FileListFragment extends AbstractAppListFragment {
             reloadFile(getArguments().getString("fileName"));
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getSherlockActivity() != null) {
+            getSherlockActivity().getSupportActionBar().setTitle(R.string.ab_title_file_list);
+        }
+    }
     
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -84,6 +94,19 @@ public class FileListFragment extends AbstractAppListFragment {
                 return true;
             } else if (item.getItemId() == R.id.menu_share) {
                 mCallBack.shareAppList(mFile.getAbsolutePath(), mAdapter.getData());
+                return true;
+            } else if (item.getItemId() == R.id.menu_install) {
+                ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>(mAdapter.getData());
+                for (Iterator<AppInfo> it = appInfoList.iterator(); it.hasNext(); ) {
+                    if (it.next().isInstalled()) {
+                        it.remove();
+                    }
+                }
+                if (appInfoList.isEmpty()) {
+                    Toast.makeText(getSherlockActivity(), R.string.empty_list_install_error, Toast.LENGTH_SHORT).show();
+                } else {
+                    mCallBack.installAppList(appInfoList);
+                }
                 return true;
             }
         }

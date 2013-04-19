@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.widget.Toast;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.fragments.*;
@@ -40,13 +40,14 @@ public class ListActivity extends BaseActivity implements
 
     private List<AppInfo> mAppList;
     private String mFileStream;
+    private MenuItem mMeunLoad;
+    private MenuItem mMeunSettings;
 
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
         
         setContentView(R.layout.activity_list);
-
         checkRateApp();
         
         String fileName = getIntent().getStringExtra(ARG_FILE);
@@ -65,7 +66,7 @@ public class ListActivity extends BaseActivity implements
             }
         } else {
             // Load file
-            loadFileListFragment(fileName);
+            loadFileListFragment(fileName, false);
         }
     }
 
@@ -82,7 +83,19 @@ public class ListActivity extends BaseActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.activity_list, menu);
+        mMeunLoad = menu.findItem(R.id.menu_load_file);
+        mMeunSettings = menu.findItem(R.id.menu_settings);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.app_list);
+        boolean visible = !(fragment instanceof FileListFragment);
+        mMeunLoad.setVisible(visible);
+        mMeunSettings.setVisible(visible);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -97,6 +110,12 @@ public class ListActivity extends BaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+     * ----------------------------
+     * AppListFragment.CallBack methods
+     * ----------------------------
+     */
+
     @Override
     public void saveAppList(List<AppInfo> appList) {
         mAppList = appList;
@@ -107,6 +126,12 @@ public class ListActivity extends BaseActivity implements
     public void shareAppList(ArrayList<AppInfo> appList) {
         shareAppList(null, appList);
     }
+
+    /*
+     * ----------------------------
+     * FileListFragment.CallBack methods
+     * ----------------------------
+     */
 
     @Override
     public void updateAppList(String fileName, List<AppInfo> appList) {
@@ -123,6 +148,19 @@ public class ListActivity extends BaseActivity implements
     }
 
     @Override
+    public void installAppList(ArrayList<AppInfo> appList) {
+        Intent intent = new Intent(this, ListInstallActivity.class);
+        intent.putParcelableArrayListExtra(ListInstallActivity.ARG_APP_INFO_LIST, appList);
+        startActivity(intent);
+    }
+
+    /*
+     * ----------------------------
+     * AppInfoFragment.CallBack method
+     * ----------------------------
+     */
+
+    @Override
     public void removeAppInfoFragment() {
         FragmentManager fm = getSupportFragmentManager();
         AppInfoFragment infoFragment = (AppInfoFragment) fm.findFragmentById(R.id.app_info);
@@ -130,6 +168,12 @@ public class ListActivity extends BaseActivity implements
             fm.beginTransaction().remove(infoFragment).commit();
         }
     }
+
+    /*
+     * ----------------------------
+     * FileDialogFragment.CallBack method
+     * ----------------------------
+     */
 
     @Override
     public void nameAccepted(String name) {
@@ -150,6 +194,12 @@ public class ListActivity extends BaseActivity implements
         mFileStream = null;
     }
 
+    /*
+     * ----------------------------
+     * AppSaveTask.Listener methods
+     * ----------------------------
+     */
+
     @Override
     public Context getContext() {
         return getApplicationContext();
@@ -159,7 +209,7 @@ public class ListActivity extends BaseActivity implements
     public void saveFinished(String fileName, String errorMsg, int operation) {
          if (errorMsg == null) {
              if (operation == AppSaveTask.OP_SAVE_STREAM) {
-                 loadFileListFragment(fileName);
+                 loadFileListFragment(fileName, false);
              } else if (operation == AppSaveTask.OP_SAVE_LIST) {
                  Toast.makeText(this, R.string.export_successfully_update, Toast.LENGTH_SHORT).show();
              } else {
@@ -172,7 +222,6 @@ public class ListActivity extends BaseActivity implements
 
     void loadAppListFragment() {
         FragmentManager fm = getSupportFragmentManager();
-        getSupportActionBar().setTitle(R.string.ab_title_app_list);
         Fragment fragment = fm.findFragmentById(R.id.app_list);
         if (fragment instanceof AppListFragment) {
             ((AppListFragment) fragment).reloadApplications();
@@ -181,23 +230,27 @@ public class ListActivity extends BaseActivity implements
         }
     }
 
-    void loadFileListFragment(String fileName) {
+    void loadFileListFragment(String fileName, boolean addToBack) {
         FragmentManager fm = getSupportFragmentManager();
-        getSupportActionBar().setTitle(R.string.ab_title_app_list);
         Fragment fragment = fm.findFragmentById(R.id.app_list);
         if (fragment instanceof FileListFragment) {
             ((FileListFragment) fragment).reloadFile(fileName);
         } else {
-            fm.beginTransaction().replace(R.id.app_list, FileListFragment.newInstance(fileName)).commit();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.app_list, FileListFragment.newInstance(fileName));
+            if (addToBack) {
+                ft.addToBackStack("file_list");
+            }
+            ft.commit();
         }
     }
 
     static class FileListTask extends AsyncTask<Void, Void, String[]> {
 
-        private Context context;
+        private ListActivity listActivity;
 
-        public FileListTask(Context context) {
-            this.context = context;
+        public FileListTask(ListActivity listActivity) {
+            this.listActivity = listActivity;
         }
 
         @Override
@@ -208,17 +261,15 @@ public class ListActivity extends BaseActivity implements
         @Override
         protected void onPostExecute(final String[] result) {
             if (result == null || result.length == 0) {
-                Toast.makeText(context, R.string.main_no_files, Toast.LENGTH_SHORT).show();
+                Toast.makeText(listActivity, R.string.main_no_files, Toast.LENGTH_SHORT).show();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(listActivity);
                 builder.setTitle(R.string.main_select_files);
                 builder.setItems(result, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String fileName = result[which];
-                        Intent intent = new Intent(context, ListActivity.class);
-                        intent.putExtra(ListActivity.ARG_FILE, fileName);
-                        context.startActivity(intent);
+                        listActivity.loadFileListFragment(fileName, true);
                     }
                 });
                 builder.create().show();

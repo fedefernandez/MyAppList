@@ -63,7 +63,6 @@
   <string name="share_html_message">Condividere le applicazioni in formato HTML ti permette di inviare la lista in un\'email con link cliccabili al Google Play Store.</string>
   <string name="share_html_file_message">Condividere le applicazioni in formato HTML ti permette di inviare la lista in un email con link cliccabili al Google Play Store.\nQuesto file HTML può essere salvato dovunque o inviato via email.\nRicorda che \'My App List\' può leggere i file XML ma non i file HTML, tuttavia puoi aprire questo file in un browser per vedere i link.</string>
   <string name="ab_title_ignored_list">Applicazioni ignorate</string>
-  <string name="ab_title_app_list">Applicazioni installate</string>
   <string name="ab_title_file_list">Archivia Applicazioni</string>
   <string name="ab_title_share">Condividi Applicazioni</string>
   <string name="share_check_footer">Aggiungi piè di pagina al testo?</string>
@@ -85,8 +84,6 @@
   <string name="content_desc_application_icon">Icona applicazione</string>
   <string name="content_desc_application_title">Titolo applicazione</string>
   <string name="content_desc_button_details">Premi per i dettagli applicazione</string>
-  <string name="start_application">Avvia l\'applicazione</string>
-  <string name="stop_application">Interrompere l\'applicazione</string>
   <string name="app_info_not_installed">Applicazione non installata</string>
   <string name="app_info_local_installed">Applicazione installata</string>
   <string name="app_info_sd_installed">Applicazione installata sulla memoria esterna</string>

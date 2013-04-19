@@ -53,7 +53,15 @@ public class AppListFragment extends AbstractAppListFragment {
         // or start a new one.
         getLoaderManager().initLoader(0, null, this);
     }
-    
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getSherlockActivity() != null) {
+            getSherlockActivity().getSupportActionBar().setTitle(R.string.app_name);
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_app, menu);

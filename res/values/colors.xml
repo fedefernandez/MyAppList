@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="app_not_installed">#ffff4444</color>
+    <color name="install_cancel_button">#FF4444</color>
 </resources>

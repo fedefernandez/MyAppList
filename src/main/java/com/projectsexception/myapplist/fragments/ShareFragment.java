@@ -128,7 +128,7 @@ public class ShareFragment extends SherlockFragment implements View.OnClickListe
     }
     
     public boolean isFile() {
-        return mToggleFile.isChecked();
+        return mSection == ShareActivity.SECTION_XML || mToggleFile.isChecked();
     }
     
     public boolean isFooter() {

@@ -38,6 +38,7 @@
   <string name="share_html_filename">myapplist-backup.html</string>
   <string name="share_text_filename">myapplist-backup.txt</string>
   <string name="empty_list_error">No selected elements</string>
+  <string name="empty_list_install_error">All applications are installed</string>
   <string name="empty_name_error">Name can\'t be empty</string>
   <string name="empty_list_post_error">No applications selected</string>
   <string name="export_init">Starting export</string>
@@ -52,6 +53,7 @@
   <string name="menu_settings">Settings</string>
   <string name="menu_share">Share</string>
   <string name="menu_delete">Delete</string>
+  <string name="menu_install">Install</string>
   <string name="menu_load_file">Load file</string>
   <string name="share_chooser">Share with…</string>
   <string name="share_file_text">Shared by \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
@@ -64,8 +66,8 @@
   <string name="share_text_file_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.\nThis text file can be saved in anywhere or sent by email.\nRemember that \'My App List\' can read the XML file but not the text file.</string>  
   <string name="share_html_message">Sharing the applications in HTML format allows you to send the list in a email with clickeable links to Google Play Store.</string>  
   <string name="share_html_file_message">Sharing the applications in HTML format allows you to send the list in a email with clickeable links to Google Play Store.\nThis HTML file can be saved in anywhere or sent by email.\nRemember that \'My App List\' can read the XML file but not the HTML file, however you can open this file in a browser to see the links.</string>  
+  <string name="ab_title_install_list">Installing Applications</string>
   <string name="ab_title_ignored_list">Ignored Applications</string>
-  <string name="ab_title_app_list">Installed Applications</string>
   <string name="ab_title_file_list">File Applications</string>
   <string name="ab_title_share">Share Applications</string>
   <string name="share_check_footer">Add footer to text?</string>  
@@ -81,11 +83,12 @@
   <string name="error_creating_dir">Can\'t access to %s on sdcard</string>
   <string name="error_creating_file">Can\'t write on file %s</string>
   <string name="problem_no_google_play">Google Play market not found</string>
+  <string name="application_information">System intormation</string>
+  <string name="application_play">Google Play</string>
   <string name="content_desc_application_icon">Application Icon</string>
   <string name="content_desc_application_title">Application title</string>
   <string name="content_desc_button_details">Button to see application details</string>
-  <string name="start_application">Start application</string>
-  <string name="stop_application">Stop application</string>
+  <string name="cancel_install">Redirecting to Google Play in %d seconds\nPress to finish process</string>
   <string name="app_info_not_installed">Application not installed</string>
   <string name="app_info_local_installed">Application installed</string>
   <string name="app_info_sd_installed">Application installed on external storage</string>
@@ -106,4 +109,12 @@
   <string name="backup_dialog_title">Backup service enabled</string>  
   <string name="backup_dialog_message">The backup service is now enabled. When you install or uninstall new applications \'My App List\' will generate a new XML file. Do you want to generate a new file now?. Click \'Cancel\' if you created a backup file recently.</string>  
   <string name="error_start_application">Can\'t start application</string>
+    <string name="dialog_install_title">Install applications</string>
+    <string name="dialog_install_message">This screen can help you to install the selected applications. It will open
+        Google Play with every application in this list. You can stop this process at any time.
+    </string>
+    <string name="install_process_finished">Process finished</string>
+    <string name="start_application">Start</string>
+    <string name="uninstall_application">Uninstall</string>
+    <string name="stop_application">Stop</string>
 </resources>

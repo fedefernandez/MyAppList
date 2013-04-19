@@ -3,6 +3,7 @@ package com.projectsexception.myapplist.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
@@ -177,12 +178,16 @@ public class AppUtil {
         context.startActivity(intent);
     }
     
-    public static void showPlayGoogleApp(Context context, String packageName) {
-        String url = context.getString(R.string.play_google, packageName);
+    public static void showPlayGoogleApp(Activity activity, String packageName, boolean isForResult) {
+        String url = activity.getString(R.string.play_google, packageName);
         try {
-        	context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            if (isForResult) {
+                activity.startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse(url)), 1);
+            } else {
+        	    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
 		} catch (Exception e) {
-			Toast.makeText(context, R.string.problem_no_google_play, Toast.LENGTH_SHORT).show();
+			Toast.makeText(activity, R.string.problem_no_google_play, Toast.LENGTH_SHORT).show();
 		}
     }
     
