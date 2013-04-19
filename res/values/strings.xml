@@ -52,6 +52,7 @@
   <string name="menu_settings">Settings</string>
   <string name="menu_share">Share</string>
   <string name="menu_delete">Delete</string>
+  <string name="menu_load_file">Load file</string>
   <string name="share_chooser">Share with…</string>
   <string name="share_file_text">Shared by \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Shared by \'My App List\'&lt;/a&gt;</string>

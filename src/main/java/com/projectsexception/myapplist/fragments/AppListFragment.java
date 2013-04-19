@@ -1,24 +1,42 @@
 package com.projectsexception.myapplist.fragments;
 
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.projectsexception.myapplist.R;
-import com.projectsexception.myapplist.ShareActivity;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.NewFileDialog;
 import com.projectsexception.myapplist.work.AppListLoader;
-import com.projectsexception.myapplist.work.AppSaveTask;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppListFragment extends AbstractAppListFragment {
+
+    public static interface CallBack {
+        void saveAppList(List<AppInfo> appList);
+        void shareAppList(ArrayList<AppInfo> appList);
+    }
+
+    private CallBack mCallBack;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof CallBack) {
+            mCallBack = (CallBack) activity;
+        } else {
+            throw new IllegalStateException("Activity must implement fragment's callback");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        mCallBack = null;
+        super.onDetach();
+    }
 
     @Override
     int getMenuAdapter() {
@@ -30,7 +48,6 @@ public class AppListFragment extends AbstractAppListFragment {
         super.onActivityCreated(savedInstanceState);
         
         setHasOptionsMenu(true);
-//        getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
@@ -39,22 +56,20 @@ public class AppListFragment extends AbstractAppListFragment {
     
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.applist, menu);
+        inflater.inflate(R.menu.fragment_app, menu);
         mRefreshItem = menu.findItem(R.id.menu_refresh);
     }
 
     @Override
     public void actionItemClicked(int id) {
-        if (id == R.id.menu_save) {
-            createNewFileDialog(mAdapter.getSelectedItems());
-        } else if (id == R.id.menu_share) {
-            ArrayList<AppInfo> appInfoList = mAdapter.getSelectedItems();
-            if (appInfoList.isEmpty()) {
-                Toast.makeText(getSherlockActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
-            } else {
-                Intent intent = new Intent(getSherlockActivity(), ShareActivity.class);
-                intent.putParcelableArrayListExtra(ShareActivity.APP_LIST, appInfoList);
-                startActivity(intent);
+        if (mCallBack != null) {
+            ArrayList<AppInfo> appList = mAdapter.getSelectedItems();
+            if (appList == null || appList.isEmpty()) {
+                Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.menu_save) {
+                mCallBack.saveAppList(appList);
+            } else if (id == R.id.menu_share) {
+                mCallBack.shareAppList(appList);
             }
         }
     }
@@ -65,21 +80,7 @@ public class AppListFragment extends AbstractAppListFragment {
         return new AppListLoader(getActivity());
     }
 
-    private void createNewFileDialog(final List<AppInfo> appList) {
-        final Context context = getActivity();
-        if (appList == null || appList.isEmpty()) {
-            Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
-        } else {
-            NewFileDialog.showDialog(context, new NewFileDialog.Listener() {
-                @Override
-                public void nameAccepted(String name) {
-                    if (TextUtils.isEmpty(name)) {
-                        Toast.makeText(context, R.string.empty_name_error, Toast.LENGTH_SHORT).show();
-                    } else {
-                        new AppSaveTask(context, name, appList).execute(false);
-                    }
-                }
-            });
-        }
+    public void reloadApplications() {
+        getLoaderManager().initLoader(0, null, this);
     }
 }

@@ -6,7 +6,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.fragments.AppInfoFragment;
 import com.projectsexception.myapplist.view.ThemeManager;
 
-public class AppInfoActivity extends SherlockFragmentActivity implements AppInfoFragment.ActivityInterface {
+public class AppInfoActivity extends SherlockFragmentActivity implements AppInfoFragment.CallBack {
     
     public static final String NAME_EXTRA = "nameExtra";
     public static final String PACKAGE_EXTRA = "packageNameExtra";

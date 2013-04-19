@@ -118,7 +118,7 @@ public class ShareActivity extends BaseActivity implements
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.share, menu);
+        getSupportMenuInflater().inflate(R.menu.activity_share, menu);
         return true;
     }
     
@@ -127,7 +127,7 @@ public class ShareActivity extends BaseActivity implements
         if (item.getItemId() == android.R.id.home) {
             // This is called when the Home (Up) button is pressed
             // in the Action Bar.
-            Intent parentActivityIntent = new Intent(this, MainActivity.class);
+            Intent parentActivityIntent = new Intent(this, ListActivity.class);
             parentActivityIntent.addFlags(
                     Intent.FLAG_ACTIVITY_CLEAR_TOP |
                     Intent.FLAG_ACTIVITY_NEW_TASK);

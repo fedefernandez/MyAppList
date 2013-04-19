@@ -3,4 +3,8 @@
     <dimen name="action_refresh_size">32dp</dimen>
     <dimen name="separator_height">1px</dimen>
     <dimen name="share_padding">10dp</dimen>
+    <dimen name="item_min_height">64dp</dimen>
+    <dimen name="item_icon_size">32dp</dimen>
+    <dimen name="item_icon_margin">10dp</dimen>
+    <dimen name="item_checkbox_margin">10dp</dimen>
 </resources>

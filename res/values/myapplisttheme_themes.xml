@@ -6,7 +6,6 @@
         <item name="itemDetailsStyle">@style/ItemDetailsMyAppListTheme</item>
         <item name="itemStyle">@style/ItemMyAppListTheme</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListTheme</item>
-        <item name="frontImageStyle">@style/FrontImageMyAppListTheme</item>
         <item name="multiChoiceAdapterStyle">@style/MultiChoiceAdapter</item>
     </style>
 
@@ -14,7 +13,6 @@
         <item name="itemDetailsStyle">@style/ItemDetailsMyAppListThemeLight</item>
         <item name="itemStyle">@style/ItemMyAppListThemeLight</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListThemeLight</item>
-        <item name="frontImageStyle">@style/FrontImageMyAppListThemeLight</item>
         <item name="multiChoiceAdapterStyle">@style/MultiChoiceAdapterLight</item>
     </style>
 

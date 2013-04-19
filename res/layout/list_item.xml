@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.projectsexception.myapplist.view.CheckedLinearLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:minHeight="@dimen/item_min_height"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
 
     <ImageView
-        android:id="@+id/list_item_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_margin="10dp"
+        android:id="@android:id/icon1"
+        android:layout_width="@dimen/item_icon_size"
+        android:layout_height="@dimen/item_icon_size"
+        android:layout_margin="@dimen/item_icon_margin"
         android:contentDescription="@string/content_desc_application_icon" />
 
     <TextView
-        android:id="@+id/list_item_text"
+        android:id="@android:id/text1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
-</com.projectsexception.myapplist.view.CheckedLinearLayout>
+    <CheckBox
+        android:id="@android:id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:layout_margin="@dimen/item_checkbox_margin"/>
+
+</LinearLayout>

@@ -50,7 +50,7 @@ public class IgnoredListFragment extends AbstractAppListFragment {
     
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.ignored_list, menu);
+        inflater.inflate(R.menu.fragment_ign, menu);
         mRefreshItem = menu.findItem(R.id.menu_refresh);
     }
 

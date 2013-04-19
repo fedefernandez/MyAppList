@@ -9,6 +9,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.util.BackupReceiver;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.work.SaveListService;
@@ -28,6 +29,8 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         setTheme(ThemeManager.getTheme(this));
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         findPreference(KEY_EMAIL).setOnPreferenceClickListener(this);
         findPreference(KEY_THEME).setOnPreferenceChangeListener(this);
@@ -38,6 +41,22 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         mBackupIgnoredPreference = findPreference(KEY_BACKUP_IGNORED_APPS);
         mBackupIgnoredPreference.setOnPreferenceClickListener(this);
         mBackupIgnoredPreference.setEnabled(check.isChecked());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // This is called when the Home (Up) button is pressed
+            // in the Action Bar.
+            Intent parentActivityIntent = new Intent(this, ListActivity.class);
+            parentActivityIntent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(parentActivityIntent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

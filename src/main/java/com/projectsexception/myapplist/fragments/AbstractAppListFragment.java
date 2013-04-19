@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.AppInfoActivity;
-import com.projectsexception.myapplist.MainActivity;
+import com.projectsexception.myapplist.ListActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -111,7 +111,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
+            Intent intent = new Intent(getActivity(), ListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             return true;

@@ -71,9 +71,9 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
         if (convertView == null) {
             view = mInflater.inflate(R.layout.list_item, parent, false);
             appInfoView = new AppInfoView();
-            appInfoView.title = (TextView) view.findViewById(R.id.list_item_text);
+            appInfoView.title = (TextView) view.findViewById(android.R.id.text1);
             mInstalledColor = appInfoView.title.getCurrentTextColor();
-            appInfoView.icon = (ImageView) view.findViewById(R.id.list_item_icon);
+            appInfoView.icon = (ImageView) view.findViewById(android.R.id.icon1);
             view.setTag(appInfoView);
         } else {
             view = convertView;

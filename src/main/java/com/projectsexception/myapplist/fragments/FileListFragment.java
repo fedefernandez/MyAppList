@@ -1,17 +1,14 @@
 package com.projectsexception.myapplist.fragments;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.projectsexception.myapplist.ListActivity;
 import com.projectsexception.myapplist.R;
-import com.projectsexception.myapplist.ShareActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.CustomLog;
-import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.work.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
 
@@ -20,11 +17,42 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class FileListFragment extends AbstractAppListFragment {
-    
+
+    public static FileListFragment newInstance(String fileName) {
+        Bundle fragmentArgs = new Bundle();
+        fragmentArgs.putString("fileName", fileName);
+        FileListFragment fragment = new FileListFragment();
+        fragment.setArguments(fragmentArgs);
+        return fragment;
+    }
+
+    public static interface CallBack {
+        void updateAppList(String fileName, List<AppInfo> appList);
+        void shareAppList(String filePath, ArrayList<AppInfo> appList);
+    }
+
+    private CallBack mCallBack;
     private File mFile;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof CallBack) {
+            mCallBack = (CallBack) activity;
+        } else {
+            throw new IllegalStateException("Activity must implement fragment's callback");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        mCallBack = null;
+        super.onDetach();
+    }
 
     @Override
     int getMenuAdapter() {
@@ -38,47 +66,26 @@ public class FileListFragment extends AbstractAppListFragment {
         setHasOptionsMenu(true);
         
         if (getArguments() != null) {
-            String fileName = getArguments().getString(ListActivity.ARG_FILE);
-            if (fileName != null) {
-                if (fileName.startsWith("file://")) {
-                    try {
-                        mFile = new File(new URI(fileName));
-                    } catch (URISyntaxException e) {
-                        CustomLog.error("FileListFragment", e);
-                    }
-                } else {
-                    mFile = FileUtil.loadFile(fileName);
-                }
-                if (mFile == null || !mFile.exists() || !mFile.canRead()) {
-                    // If file not exists or can't read
-                    return;
-                }
-            }
+            reloadFile(getArguments().getString("fileName"));
         }
-
-        // Prepare the loader.  Either re-connect with an existing one,
-        // or start a new one.
-        getLoaderManager().initLoader(0, null, this);
     }
     
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.filelist, menu);
+        inflater.inflate(R.menu.fragment_file, menu);
         mRefreshItem = menu.findItem(R.id.menu_refresh);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_save) {
-            new AppSaveTask(getActivity(), mFile.getName(), mAdapter.getData()).execute(true);
-            return true;
-        } else if (item.getItemId() == R.id.menu_share) {
-            Intent intent = new Intent(getSherlockActivity(), ShareActivity.class);
-            intent.putExtra(ShareActivity.FILE_PATH, mFile.getAbsolutePath());
-            ArrayList<AppInfo> appInfoList = mAdapter.getData();
-            intent.putParcelableArrayListExtra(ShareActivity.APP_LIST, appInfoList);
-            startActivity(intent);
-            return true;
+        if (mCallBack != null) {
+            if (item.getItemId() == R.id.menu_save) {
+                mCallBack.updateAppList(mFile.getName(), mAdapter.getData());
+                return true;
+            } else if (item.getItemId() == R.id.menu_share) {
+                mCallBack.shareAppList(mFile.getAbsolutePath(), mAdapter.getData());
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -112,5 +119,27 @@ public class FileListFragment extends AbstractAppListFragment {
             lst = mAdapter.getData();
         }
         return new FileListLoader(getActivity(), mFile, lst);
+    }
+
+    public void reloadFile(String fileName) {
+        if (fileName != null) {
+            if (fileName.startsWith("file://")) {
+                try {
+                    mFile = new File(new URI(fileName));
+                } catch (URISyntaxException e) {
+                    CustomLog.error("FileListFragment", e);
+                }
+            } else {
+                mFile = FileUtil.loadFile(fileName);
+            }
+            if (mFile == null || !mFile.exists() || !mFile.canRead()) {
+                // If file not exists or can't read
+                return;
+            }
+        }
+
+        // Prepare the loader.  Either re-connect with an existing one,
+        // or start a new one.
+        getLoaderManager().initLoader(0, null, this);
     }
 }

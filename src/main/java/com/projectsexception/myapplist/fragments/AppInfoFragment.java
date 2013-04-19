@@ -29,7 +29,7 @@ import java.util.Locale;
 
 public class AppInfoFragment extends SherlockFragment implements View.OnClickListener {
     
-    public static interface ActivityInterface {
+    public static interface CallBack {
         void removeAppInfoFragment();
     }
     
@@ -46,7 +46,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         return frg;
     }
     
-    private ActivityInterface mActivity;
+    private CallBack mCallBack;
     private String mName;
     private String mPackage;    
     
@@ -58,9 +58,9 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mActivity = (ActivityInterface) activity;            
+            mCallBack = (CallBack) activity;
         } catch (ClassCastException e) {
-            throw new IllegalArgumentException("Activity must implement AppInfoFragment.ActivityInterface");
+            throw new IllegalArgumentException("Activity must implement AppInfoFragment.CallBack");
         }
     }
     
@@ -99,7 +99,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             mName = null;
             mPackage = null;
             receiver.removeListener(KEY_LISTENER);
-            mActivity.removeAppInfoFragment();
+            mCallBack.removeAppInfoFragment();
         }
         checkStopButton();
     }
