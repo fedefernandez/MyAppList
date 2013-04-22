@@ -1,14 +1,13 @@
 package com.projectsexception.myapplist.work;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
+
+import java.util.ArrayList;
 
 public class AppListLoader extends AbstractListLoader {
     
@@ -33,6 +32,6 @@ public class AppListLoader extends AbstractListLoader {
 
     @Override
     public boolean isPackageIntentReceiver() {
-        return false;
+        return true;
     }
 }

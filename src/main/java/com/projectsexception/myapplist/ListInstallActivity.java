@@ -28,6 +28,7 @@ public class ListInstallActivity extends SherlockListActivity {
 
     private static final String ARG_INSTALLING = "installing";
     private static final int WHAT = 1;
+    private static final int SECONDS = 2;
 
     private boolean mInstallig;
     private ArrayList<AppInfo> mAppInfoList;
@@ -119,7 +120,7 @@ public class ListInstallActivity extends SherlockListActivity {
 
     void sendMessage() {
         Message m = handler.obtainMessage(WHAT);
-        m.arg1 = 3;
+        m.arg1 = SECONDS;
         handler.sendMessage(m);
     }
 

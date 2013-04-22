@@ -111,7 +111,7 @@
   <string name="error_start_application">Can\'t start application</string>
     <string name="dialog_install_title">Install applications</string>
     <string name="dialog_install_message">This screen can help you to install the selected applications. It will open
-        Google Play with every application in this list. You can stop this process at any time.
+        Google Play with every application in this list. You can stop this process at any time. Remember to press back button after each installation.
     </string>
     <string name="install_process_finished">Process finished</string>
     <string name="start_application">Start</string>

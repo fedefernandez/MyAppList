@@ -1,31 +1,20 @@
 package com.projectsexception.myapplist.xml;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import android.content.Context;
+import android.os.Environment;
+import android.util.Xml;
+import com.projectsexception.myapplist.R;
+import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.util.AppUtil;
+import com.projectsexception.myapplist.util.CustomLog;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.xmlpull.v1.XmlSerializer;
-
-import android.content.Context;
-import android.os.Environment;
-import android.util.Xml;
-
-import com.projectsexception.myapplist.R;
-import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.AppUtil;
-import com.projectsexception.myapplist.util.CustomLog;
 
 public class FileUtil {
     
@@ -147,6 +136,7 @@ public class FileUtil {
             serializer.endTag("", "app-list");
             serializer.endDocument();
             writer.close();
+            backupFile.delete();
             return null;
         } catch (Exception e) {
             if (backupFile != null && backupFile.exists()) {

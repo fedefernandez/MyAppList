@@ -38,6 +38,7 @@
   <string name="share_html_filename">myapplist-backup.html</string>
   <string name="share_text_filename">myapplist-backup.txt</string>
   <string name="empty_list_error">No hay elementos seleccionados</string>
+  <string name="empty_list_install_error">Todas las aplicaciones están instaladas</string>
   <string name="empty_name_error">El nombre no puede estar vacío</string>
   <string name="empty_list_post_error">No hay aplicaciones seleccionadas</string>
   <string name="export_init">Iniciando la exportación</string>
@@ -51,6 +52,9 @@
   <string name="menu_unselect_all">Deseleccionar todas</string>
   <string name="menu_settings">Ajustes</string>
   <string name="menu_share">Compartir</string>
+  <string name="menu_delete">Eliminar</string>
+  <string name="menu_install">Instalar</string>
+  <string name="menu_load_file">Cargar fichero</string>
   <string name="share_chooser">Compartir con...</string>
   <string name="share_file_text">Compartido por \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\" &gt; compartido con \'My App List\' &lt;/a&gt;</string>
@@ -62,6 +66,7 @@
   <string name="share_text_file_message">Compartir las aplicaciones en formato de texto le permite enviar la lista en un email o mensaje con la url en Google Play Store.\nEste archivo de texto puede ser guardado en cualquier lugar o enviado por correo electrónico. \nRecuerda que \'My App List\' puede leer el archivo XML, pero no el archivo de texto.</string>
   <string name="share_html_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda Google Play.</string>
   <string name="share_html_file_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda de Google Play.\nEste archivo HTML puede ser guardado en cualquier lugar o enviado por correo electrónico.\nRecuerde que \'My App List\' puede leer archivos XML, pero no el archivo HTML, sin embargo puede abrir este archivo en un navegador para ver los enlaces.</string>
+  <string name="ab_title_install_list">Instalando aplicaciones</string>
   <string name="ab_title_ignored_list">Aplicaciones ignoradas</string>
   <string name="ab_title_file_list">Aplicaciones en el fichero</string>
   <string name="ab_title_share">Compartir aplicaciones</string>
@@ -80,10 +85,10 @@
   <string name="problem_no_google_play">Google Play no encontrado</string>
   <string name="application_information">Información del sistema</string>
   <string name="application_play">Google Play</string>
-  <string name="context_menu_remove_from_list">Eliminar de la lista</string>
   <string name="content_desc_application_icon">Icono de la aplicación</string>
   <string name="content_desc_application_title">Título de la Aplicación</string>
   <string name="content_desc_button_details">Botón para ver los detalles de la aplicación</string>
+  <string name="cancel_install">Redirigiendo a Google Play en %d segundas\nPulse aquí para terminar el proceso</string>
   <string name="app_info_not_installed">Aplicación no instalada</string>
   <string name="app_info_local_installed">Aplicación Instalada</string>
   <string name="app_info_sd_installed">Aplicación instalada en almacenamiento externo</string>
@@ -104,4 +109,10 @@
   <string name="backup_dialog_title">Servicio de copia de seguridad activado</string>
   <string name="backup_dialog_message">Se ha habilitado el servicio de backup. Al instalar o desinstalar aplicaciones nuevas \"My App List\" generará un nuevo archivo XML. ¿Desea generar un nuevo archivo ahora?. Haga clic en \"Cancelar\" si ha creado un archivo de copia de seguridad recientemente.</string>
   <string name="error_start_application">No se puede iniciar la aplicación</string>
+  <string name="dialog_install_title">Instalar aplicaciones</string>
+  <string name="dialog_install_message">Esta pantalla puede ayudarle a instalar las aplicaciones seleccionadas. Abrirá Google Play con cada aplicación en esta lista. Puede detener este proceso en cualquier momento. Recuerde presionar el botón de retroceso después de cada instalación.</string>
+  <string name="install_process_finished">Proceso terminado</string>
+  <string name="start_application">Iniciar</string>
+  <string name="uninstall_application">Desinstalar</string>
+  <string name="stop_application">Parar</string>
 </resources>
