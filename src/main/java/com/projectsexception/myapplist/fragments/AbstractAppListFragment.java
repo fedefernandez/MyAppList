@@ -2,7 +2,6 @@ package com.projectsexception.myapplist.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
@@ -10,8 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
-import com.projectsexception.myapplist.AppInfoActivity;
-import com.projectsexception.myapplist.ListActivity;
+import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -26,19 +24,14 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         AppListAdapter.ActionListener {
 
     private static final String KEY_LISTENER = "AbstractAppListFragment";
-    private static final String CUR_NAME = "curName";
-    private static final String CUR_PACKAGE = "curPackage";
 
     protected static final String ARG_RELOAD = "reload";
     
     protected MenuItem mRefreshItem;
     protected AppListAdapter mAdapter;
-    
-    private boolean mDualPane;
-    private String mCurrentName;
-    private String mCurrentPackage;
 
     abstract int getMenuAdapter();
+    abstract void showAppInfo(String name, String packageName);
     
     @Override 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -56,32 +49,16 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         setListShown(false);
 
         getListView().setFastScrollEnabled(true);
-        
-        if (savedInstanceState != null) {
-            // Restore last state for checked position.
-            mCurrentName = savedInstanceState.getString(CUR_NAME);
-            mCurrentPackage = savedInstanceState.getString(CUR_PACKAGE);
-        }
-        
-        View detailsFrame = getSherlockActivity().findViewById(R.id.app_info);
-        mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-        
-        if (mDualPane) {
-            // Make sure our UI is in the correct state.
-            showAppInfo(mCurrentName, mCurrentPackage);
-        }
     }
-    
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(CUR_NAME, mCurrentName);
-        outState.putString(CUR_PACKAGE, mCurrentPackage);
         if (mAdapter != null) {
             mAdapter.save(outState);
         }
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
@@ -113,7 +90,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(getActivity(), ListActivity.class);
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             return true;
@@ -156,38 +133,6 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         loading(false);
         // Clear the data in the adapter.
         mAdapter.setData(null);
-    }
-    
-    protected void showAppInfo(String name, String packageName) {
-        mCurrentPackage = packageName;
-        if (mDualPane) {
-
-            // Check what fragment is shown, replace if needed.
-            AppInfoFragment infoFragment = (AppInfoFragment) 
-                    getFragmentManager().findFragmentById(R.id.app_info);
-            if (infoFragment == null 
-                    || infoFragment.getShownPackage() == null 
-                    || !infoFragment.getShownPackage().equals(packageName)) {
-                // Make new fragment to show this selection.
-                infoFragment = AppInfoFragment.newInstance(name, packageName);
-
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.app_info, infoFragment);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-            }
-
-        } else {
-            // Otherwise we need to launch a new activity to display
-            // the dialog fragment with selected text.
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), AppInfoActivity.class);
-            intent.putExtra(AppInfoActivity.NAME_EXTRA, name);
-            intent.putExtra(AppInfoActivity.PACKAGE_EXTRA, packageName);
-            startActivity(intent);
-        }
     }
     
     protected void loading(boolean loading) {

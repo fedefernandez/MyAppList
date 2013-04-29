@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -27,14 +28,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends BaseActivity implements
+public class MainActivity extends BaseActivity implements
         AppListFragment.CallBack,
         FileListFragment.CallBack,
         AppInfoFragment.CallBack,
         FileDialogFragment.CallBack,
-        AppSaveTask.Listener {
+        AppSaveTask.Listener, FragmentManager.OnBackStackChangedListener {
 
     public static final String ARG_FILE = "fileName";
+    private static final String ARG_DISPLAY_OPT = "display_options";
 
     private static final int MAX_EXECUTIONS = 50;
 
@@ -42,6 +44,7 @@ public class ListActivity extends BaseActivity implements
     private String mFileStream;
     private MenuItem mMeunLoad;
     private MenuItem mMeunSettings;
+    private boolean mDualPane;
 
     @Override
     protected void onCreate(Bundle args) {
@@ -51,6 +54,9 @@ public class ListActivity extends BaseActivity implements
         checkRateApp();
         
         String fileName = getIntent().getStringExtra(ARG_FILE);
+
+        View detailsFrame = findViewById(R.id.app_info);
+        mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
         
         if (fileName == null) {
             if (getIntent().getData() != null) {
@@ -67,6 +73,23 @@ public class ListActivity extends BaseActivity implements
         } else {
             // Load file
             loadFileListFragment(fileName, false);
+        }
+
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ARG_DISPLAY_OPT, getActionBar().getDisplayOptions());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        int savedDisplayOpt = savedInstanceState.getInt(ARG_DISPLAY_OPT);
+        if(savedDisplayOpt != 0){
+            getActionBar().setDisplayOptions(savedDisplayOpt);
         }
     }
 
@@ -92,7 +115,7 @@ public class ListActivity extends BaseActivity implements
     public boolean onPrepareOptionsMenu(Menu menu) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.app_list);
-        boolean visible = !(fragment instanceof FileListFragment);
+        boolean visible = (fragment instanceof AppListFragment);
         mMeunLoad.setVisible(visible);
         mMeunSettings.setVisible(visible);
         return super.onPrepareOptionsMenu(menu);
@@ -100,7 +123,18 @@ public class ListActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_load_file) {
+        if (item.getItemId() == android.R.id.home) {
+            if (mDualPane) {
+                loadAppListFragment();
+            } else {
+                FragmentManager fm = getSupportFragmentManager();
+                int count = fm.getBackStackEntryCount();
+                for (int i = 0 ; i < count ; i++) {
+                    fm.popBackStack();
+                }
+            }
+            return true;
+        } else if (item.getItemId() == R.id.menu_load_file) {
             new FileListTask(this).execute();
             return true;
         } else if (item.getItemId() == R.id.menu_settings) {
@@ -108,6 +142,48 @@ public class ListActivity extends BaseActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+     * ----------------------------
+     * AppListFragment.CallBack and FileListFragment.CallBack method
+     * ----------------------------
+     */
+
+    @Override
+    public void showAppInfo(String name, String packageName) {
+        FragmentManager fm = getSupportFragmentManager();
+
+        AppInfoFragment infoFragment = null;
+        int frameId;
+        if (mDualPane) {
+            frameId = R.id.app_info;
+            // Check what fragment is shown, replace if needed.
+            infoFragment = (AppInfoFragment) fm.findFragmentById(R.id.app_info);
+        } else {
+            frameId = R.id.app_list;
+            Fragment frg = fm.findFragmentById(R.id.app_list);
+            if (frg instanceof AppInfoFragment) {
+                infoFragment = (AppInfoFragment) frg;
+            }
+        }
+
+        if (infoFragment == null
+                || infoFragment.getShownPackage() == null
+                || !infoFragment.getShownPackage().equals(packageName)) {
+            // Make new fragment to show this selection.
+            infoFragment = AppInfoFragment.newInstance(name, packageName);
+
+            // Execute a transaction, replacing any existing
+            // fragment with this one inside the frame.
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(frameId, infoFragment);
+            if (frameId == R.id.app_list) {
+                ft.addToBackStack("app_info");
+            }
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+        }
     }
 
     /*
@@ -136,7 +212,7 @@ public class ListActivity extends BaseActivity implements
     @Override
     public void updateAppList(String fileName, List<AppInfo> appList) {
         mAppList = appList;
-        new AppSaveTask(ListActivity.this, null, mAppList).execute(fileName, Boolean.toString(true));
+        new AppSaveTask(MainActivity.this, null, mAppList).execute(fileName, Boolean.toString(true));
     }
 
     @Override
@@ -163,9 +239,13 @@ public class ListActivity extends BaseActivity implements
     @Override
     public void removeAppInfoFragment() {
         FragmentManager fm = getSupportFragmentManager();
-        AppInfoFragment infoFragment = (AppInfoFragment) fm.findFragmentById(R.id.app_info);
-        if (infoFragment != null) { 
-            fm.beginTransaction().remove(infoFragment).commit();
+        if (mDualPane) {
+            AppInfoFragment infoFragment = (AppInfoFragment) fm.findFragmentById(R.id.app_info);
+            if (infoFragment != null) {
+                fm.beginTransaction().remove(infoFragment).commit();
+            }
+        } else {
+            fm.popBackStack();
         }
     }
 
@@ -180,13 +260,13 @@ public class ListActivity extends BaseActivity implements
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, R.string.empty_name_error, Toast.LENGTH_SHORT).show();
         } else if (mAppList != null) {
-            new AppSaveTask(ListActivity.this, null, mAppList).execute(name);
+            new AppSaveTask(MainActivity.this, null, mAppList).execute(name);
         } else if (mFileStream != null) {
             try {
                 InputStream inputStream = getContentResolver().openInputStream(Uri.parse(mFileStream));
-                new AppSaveTask(ListActivity.this, inputStream, null).execute(name);
+                new AppSaveTask(MainActivity.this, inputStream, null).execute(name);
             } catch (FileNotFoundException e) {
-                CustomLog.error("ListActivity", e);
+                CustomLog.error("MainActivity", e);
             }
         }
 
@@ -245,11 +325,16 @@ public class ListActivity extends BaseActivity implements
         }
     }
 
+    @Override
+    public void onBackStackChanged() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
+    }
+
     static class FileListTask extends AsyncTask<Void, Void, String[]> {
 
-        private ListActivity listActivity;
+        private MainActivity listActivity;
 
-        public FileListTask(ListActivity listActivity) {
+        public FileListTask(MainActivity listActivity) {
             this.listActivity = listActivity;
         }
 

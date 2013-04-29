@@ -37,6 +37,11 @@ public class IgnoredListFragment extends AbstractAppListFragment {
     }
 
     @Override
+    void showAppInfo(String name, String packageName) {
+
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         

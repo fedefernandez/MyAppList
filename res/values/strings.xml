@@ -117,4 +117,6 @@
     <string name="start_application">Start</string>
     <string name="uninstall_application">Uninstall</string>
     <string name="stop_application">Stop</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
 </resources>

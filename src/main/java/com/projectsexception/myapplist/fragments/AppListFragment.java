@@ -18,6 +18,7 @@ public class AppListFragment extends AbstractAppListFragment {
     public static interface CallBack {
         void saveAppList(List<AppInfo> appList);
         void shareAppList(ArrayList<AppInfo> appList);
+        void showAppInfo(String name, String packageName);
     }
 
     private CallBack mCallBack;
@@ -86,6 +87,13 @@ public class AppListFragment extends AbstractAppListFragment {
     public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
         loading(true);
         return new AppListLoader(getActivity());
+    }
+
+    @Override
+    void showAppInfo(String name, String packageName) {
+        if (mCallBack != null) {
+            mCallBack.showAppInfo(name, packageName);
+        }
     }
 
     public void reloadApplications() {

@@ -35,6 +35,7 @@ public class FileListFragment extends AbstractAppListFragment {
         void updateAppList(String fileName, List<AppInfo> appList);
         void shareAppList(String filePath, ArrayList<AppInfo> appList);
         void installAppList(ArrayList<AppInfo> appList);
+        void showAppInfo(String name, String packageName);
     }
 
     private CallBack mCallBack;
@@ -142,6 +143,13 @@ public class FileListFragment extends AbstractAppListFragment {
             lst = mAdapter.getData();
         }
         return new FileListLoader(getActivity(), mFile, lst);
+    }
+
+    @Override
+    void showAppInfo(String name, String packageName) {
+        if (mCallBack != null) {
+            mCallBack.showAppInfo(name, packageName);
+        }
     }
 
     public void reloadFile(String fileName) {

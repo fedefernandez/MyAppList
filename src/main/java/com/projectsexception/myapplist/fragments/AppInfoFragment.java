@@ -107,6 +107,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             // Not installed
             ((ImageView) getView().findViewById(R.id.icon)).setImageResource(R.drawable.ic_default_launcher);
             ((TextView) getView().findViewById(R.id.title)).setText(mName);
+            ((TextView) getView().findViewById(R.id.package_name)).setText(mPackage);
             getView().findViewById(R.id.info).setEnabled(false);
             textView.setText(R.string.app_info_not_installed);
             getView().findViewById(R.id.version).setVisibility(View.INVISIBLE);
@@ -127,6 +128,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             
             ((ImageView) getView().findViewById(R.id.icon)).setImageDrawable(applicationInfo.loadIcon(pManager));
             ((TextView) getView().findViewById(R.id.title)).setText(applicationInfo.loadLabel(pManager));
+            ((TextView) getView().findViewById(R.id.package_name)).setText(packageName);
             ((TextView) getView().findViewById(R.id.version)).setText(getString(R.string.app_info_version, packageInfo.versionName, packageInfo.versionCode));            
             
             if ((applicationInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) == ApplicationInfo.FLAG_EXTERNAL_STORAGE) {

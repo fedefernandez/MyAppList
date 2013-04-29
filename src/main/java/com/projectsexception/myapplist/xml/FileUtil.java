@@ -136,7 +136,9 @@ public class FileUtil {
             serializer.endTag("", "app-list");
             serializer.endDocument();
             writer.close();
-            backupFile.delete();
+            if (backupFile != null && backupFile.exists()) {
+                backupFile.delete();
+            }
             return null;
         } catch (Exception e) {
             if (backupFile != null && backupFile.exists()) {
