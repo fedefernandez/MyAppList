@@ -38,6 +38,7 @@
   <string name="share_html_filename">myapplist-backup.html</string>
   <string name="share_text_filename">myapplist-backup.txt</string>
   <string name="empty_list_error">Nessun elemento selezionato</string>
+  <string name="empty_list_install_error">All applications are installed</string>
   <string name="empty_name_error">Il Nome non può essere vuoto</string>
   <string name="empty_list_post_error">Nessun applicazione selezionata</string>
   <string name="export_init">Inizio esportazione</string>
@@ -51,6 +52,9 @@
   <string name="menu_unselect_all">Deseleziona tutto</string>
   <string name="menu_settings">Impostazioni</string>
   <string name="menu_share">Condividi</string>
+  <string name="menu_delete">Delete</string>
+  <string name="menu_install">Install</string>
+  <string name="menu_load_file">Load file</string>
   <string name="share_chooser">Condividi con...</string>
   <string name="share_file_text">Condiviso da https://play.google.com/store/apps/details?id=%s \'My App List\'</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Condiviso da \'My App List\'&lt;/a&gt;</string>
@@ -62,6 +66,7 @@
   <string name="share_text_file_message">Condividere le applicazioni in formato text ti permette di inviare la lista in un\'email o un messaggio con l\'url di Google Play Store.\nQuesto file text può essere salvato dovunque o inviato via email.\nRicorda che \'My App List\' può leggere il file XML ma non il file text.</string>
   <string name="share_html_message">Condividere le applicazioni in formato HTML ti permette di inviare la lista in un\'email con link cliccabili al Google Play Store.</string>
   <string name="share_html_file_message">Condividere le applicazioni in formato HTML ti permette di inviare la lista in un email con link cliccabili al Google Play Store.\nQuesto file HTML può essere salvato dovunque o inviato via email.\nRicorda che \'My App List\' può leggere i file XML ma non i file HTML, tuttavia puoi aprire questo file in un browser per vedere i link.</string>
+  <string name="ab_title_install_list">Installing Applications</string>
   <string name="ab_title_ignored_list">Applicazioni ignorate</string>
   <string name="ab_title_file_list">Archivia Applicazioni</string>
   <string name="ab_title_share">Condividi Applicazioni</string>
@@ -78,12 +83,12 @@
   <string name="error_creating_dir">Impossibile accedere a %s sulla sdcard</string>
   <string name="error_creating_file">Impossibile scrivere sul file %s</string>
   <string name="problem_no_google_play">Google Play non trovato</string>
-  <string name="context_menu_application_information">Informazioni del sistema</string>
-  <string name="context_menu_application_play">Guarda su Google Play</string>
-  <string name="context_menu_remove_from_list">Rimuovi dalla lista</string>
+  <string name="application_information">System intormation</string>
+  <string name="application_play">Google Play</string>
   <string name="content_desc_application_icon">Icona applicazione</string>
   <string name="content_desc_application_title">Titolo applicazione</string>
   <string name="content_desc_button_details">Premi per i dettagli applicazione</string>
+  <string name="cancel_install">Redirecting to Google Play in %d seconds\nPress to finish process</string>
   <string name="app_info_not_installed">Applicazione non installata</string>
   <string name="app_info_local_installed">Applicazione installata</string>
   <string name="app_info_sd_installed">Applicazione installata sulla memoria esterna</string>
@@ -104,4 +109,14 @@
   <string name="backup_dialog_title">Servizio di backup abilitato</string>
   <string name="backup_dialog_message">Il servizio di backup è ora attivo. Quando si installa o disinstallano applicazioni nuove \'My App List\' genererà un nuovo file XML. Si desidera generare un nuovo file ora?. Fare clic su \'Annulla\' se è stato creato un file di backup recente.</string>
   <string name="error_start_application">Impossibile avviare l\'applicazione</string>
+  <string name="dialog_install_title">Install applications</string>
+  <string name="dialog_install_message">This screen can help you to install the selected applications. It will open
+        Google Play with every application in this list. You can stop this process at any time. Remember to press back button after each installation.
+    </string>
+  <string name="install_process_finished">Process finished</string>
+  <string name="start_application">Start</string>
+  <string name="uninstall_application">Uninstall</string>
+  <string name="stop_application">Stop</string>
+  <string name="theme_dark">Dark</string>
+  <string name="theme_light">Light</string>
 </resources>

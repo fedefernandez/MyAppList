@@ -21,6 +21,8 @@
   <string name="about_twitter_summary">¡Sígueme!</string>
   <string name="about_translate_title">Traducir</string>
   <string name="about_translate_summary">Ayuda a traducir My App List</string>
+  <string name="about_credits_title">Créditos</string>
+  <string name="about_credits_summary">Ver los créditos y agradecimientos</string>
   <string name="about_email">info@projectsexception.com</string>
   <string name="about_subject">[My App List] - </string>
   <string name="about_source_title">Código fuente</string>
@@ -29,6 +31,7 @@
   <string name="twitter_url">http://twitter.com/ProException</string>
   <string name="source_url">https://github.com/projectsexception/MyAppList</string>
   <string name="translate_url">Mira este fichero de \'My App List\'</string>
+  <string name="credits_url">https://github.com/projectsexception/MyAppList/blob/master/CREDITS.md</string>
   <string name="load_list">Cargar lista</string>
   <string name="new_list">Aplicaciones</string>
   <string name="new_file_dialog_title">Nombre del fichero</string>
@@ -115,4 +118,6 @@
   <string name="start_application">Iniciar</string>
   <string name="uninstall_application">Desinstalar</string>
   <string name="stop_application">Parar</string>
+  <string name="theme_dark">Oscuro</string>
+  <string name="theme_light">Claro</string>
 </resources>
