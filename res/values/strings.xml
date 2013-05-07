@@ -63,21 +63,25 @@
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Shared by \'My App List\'&lt;/a&gt;</string>
   <string name="share_text_send_failed">No activity was found to share the content</string>  
   <string name="share_file_failed">Error creating file</string>
-  <string name="share_file_send_failed">No activity can open this file. Check it at: %s</string>  
+  <string name="share_file_send_failed">No activity can open this file. Check it at: %s</string>
+  <string name="share_title">Select format</string>
+  <string name="share_xml">XML</string>
+  <string name="share_html_file">HTML File</string>
+  <string name="share_html">HTML</string>
+  <string name="share_text_file">Text File</string>
+  <string name="share_text">Text</string>
   <string name="share_xml_message">The XML file can be opened by \'My App List\'.\nYou can send this file to your contacts or save it for a later use.\nRemember, the XML only stores the name and the identification of the application, not the application himself.</string>  
   <string name="share_text_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.</string>  
   <string name="share_text_file_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.\nThis text file can be saved in anywhere or sent by email.\nRemember that \'My App List\' can read the XML file but not the text file.</string>  
   <string name="share_html_message">Sharing the applications in HTML format allows you to send the list in a email with clickeable links to Google Play Store.</string>  
   <string name="share_html_file_message">Sharing the applications in HTML format allows you to send the list in a email with clickeable links to Google Play Store.\nThis HTML file can be saved in anywhere or sent by email.\nRemember that \'My App List\' can read the XML file but not the HTML file, however you can open this file in a browser to see the links.</string>  
+  <string name="share_xml_error">Error sharing XML file</string>
   <string name="ab_title_install_list">Installing Applications</string>
   <string name="ab_title_ignored_list">Ignored Applications</string>
   <string name="ab_title_file_list">File Applications</string>
   <string name="ab_title_share">Share Applications</string>
   <string name="share_check_footer">Add footer to text?</string>  
-  <string name="share_tab_xml">XML</string>  
-  <string name="share_tab_html">HTML</string>  
-  <string name="share_tab_text">Text</string>  
-  <string name="share_button_type_text">Inline Text</string>  
+  <string name="share_button_type_text">Inline Text</string>
   <string name="share_button_type_file">File</string>  
   <string name="share_button_export">Share</string>  
   <string name="play_google">market://details?id=%s</string>

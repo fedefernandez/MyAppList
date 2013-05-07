@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(ARG_DISPLAY_OPT, getActionBar().getDisplayOptions());
+        outState.putInt(ARG_DISPLAY_OPT, getSupportActionBar().getDisplayOptions());
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements
         super.onRestoreInstanceState(savedInstanceState);
         int savedDisplayOpt = savedInstanceState.getInt(ARG_DISPLAY_OPT);
         if(savedDisplayOpt != 0){
-            getActionBar().setDisplayOptions(savedDisplayOpt);
+            getSupportActionBar().setDisplayOptions(savedDisplayOpt);
         }
     }
 
