@@ -117,7 +117,7 @@ public class FileListFragment extends AbstractAppListFragment {
     @Override
     public void actionItemClicked(int id) {
         if (id == R.id.menu_delete) {
-            Set<Long> selection = mAdapter.getSelection();
+            Set<Long> selection = mAdapter.getCheckedItems();
             if (selection != null) {
                 Iterator<AppInfo> it = mAdapter.getData().iterator();
                 long pos = 0;

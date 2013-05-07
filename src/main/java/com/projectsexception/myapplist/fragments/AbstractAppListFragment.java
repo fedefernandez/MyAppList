@@ -96,7 +96,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
             return true;
         }  else if (item.getItemId() == R.id.menu_select_all) {
             for (int i = 0; i < mAdapter.getCount(); ++i) {
-                mAdapter.select(i);
+                mAdapter.setItemChecked(i, true);
             }
             return true;
         } else if (item.getItemId() == R.id.menu_refresh) {

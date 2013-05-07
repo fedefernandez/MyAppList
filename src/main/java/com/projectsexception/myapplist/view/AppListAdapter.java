@@ -147,7 +147,7 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
 
     public ArrayList<AppInfo> getSelectedItems() {
         ArrayList<AppInfo> selectedApps = new ArrayList<AppInfo>();
-        Set<Long> selection = getSelection();
+        Set<Long> selection = getCheckedItems();
         if (selection != null) {
             List<AppInfo> allApps = getData();
             int size = getCount();

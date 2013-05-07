@@ -7,7 +7,6 @@
         <item name="itemStyle">@style/ItemMyAppListTheme</item>
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListTheme</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListTheme</item>
-        <item name="multiChoiceAdapterStyle">@style/MultiChoiceAdapter</item>
     </style>
 
     <style name="MyAppListBaseThemeLight" parent="Theme.Sherlock.Light">
@@ -15,7 +14,6 @@
         <item name="itemStyle">@style/ItemMyAppListThemeLight</item>
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListThemeLight</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListThemeLight</item>
-        <item name="multiChoiceAdapterStyle">@style/MultiChoiceAdapterLight</item>
     </style>
 
     <style name="MyAppListTheme" parent="MyAppListBaseTheme">

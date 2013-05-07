@@ -82,7 +82,7 @@ public class IgnoredListFragment extends AbstractAppListFragment {
             final int count = mAdapter.getCount();
             for ( int i = 0 ; i < count ; i++ ) {
                 if (ignored.contains(data.get(i).getPackageName())) {
-                    mAdapter.select(i, true);
+                    mAdapter.setItemChecked(i, true);
                 }
             }
         }
