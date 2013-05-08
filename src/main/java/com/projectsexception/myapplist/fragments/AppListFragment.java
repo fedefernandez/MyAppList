@@ -3,12 +3,14 @@ package com.projectsexception.myapplist.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.work.AppListLoader;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 public class AppListFragment extends AbstractAppListFragment {
 
     public static interface CallBack {
+        void loadFile();
+        void settings();
         void saveAppList(List<AppInfo> appList);
         void shareAppList(ArrayList<AppInfo> appList);
         void showAppInfo(String name, String packageName);
@@ -70,11 +74,25 @@ public class AppListFragment extends AbstractAppListFragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mCallBack != null) {
+            if (item.getItemId() == R.id.menu_load_file) {
+                mCallBack.loadFile();
+                return true;
+            } else if (item.getItemId() == R.id.menu_settings) {
+                mCallBack.settings();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void actionItemClicked(int id) {
         if (mCallBack != null) {
             ArrayList<AppInfo> appList = mAdapter.getSelectedItems();
             if (appList == null || appList.isEmpty()) {
-                Toast.makeText(getActivity(), R.string.empty_list_error, Toast.LENGTH_SHORT).show();
+                Crouton.makeText(getSherlockActivity(), R.string.empty_list_error, Style.ALERT).show();
             } else if (id == R.id.menu_save) {
                 mCallBack.saveAppList(appList);
             } else if (id == R.id.menu_share) {
@@ -86,7 +104,7 @@ public class AppListFragment extends AbstractAppListFragment {
     @Override 
     public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
         loading(true);
-        return new AppListLoader(getActivity());
+        return new AppListLoader(getSherlockActivity());
     }
 
     @Override

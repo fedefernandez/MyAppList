@@ -60,6 +60,11 @@
             <type>apklib</type>
         </dependency>
         <dependency>
+            <groupId>de.keyboardsurfer.android.widget</groupId>
+            <artifactId>crouton</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>

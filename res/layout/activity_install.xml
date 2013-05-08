@@ -11,6 +11,7 @@
         android:layout_weight="1"/>
 
     <FrameLayout
+        android:id="@+id/cancel_button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/install_cancel_button">

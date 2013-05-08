@@ -13,26 +13,33 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.view.ThemeManager;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 import java.util.ArrayList;
 
-public class ListInstallActivity extends SherlockListActivity {
+public class ListInstallActivity extends SherlockListActivity implements View.OnClickListener {
 
     public static final String ARG_APP_INFO_LIST = "appInfoList";
 
-    private static final String ARG_INSTALLING = "installing";
+    private static final String ARG_STATUS = "status";
+    private static final int STATE_INIT = 0;
+    private static final int STATE_INSTALLING = 1;
+    private static final int STATE_FINISHED = 2;
     private static final int WHAT = 1;
     private static final int SECONDS = 2;
 
-    private boolean mInstallig;
+    private int mStatus;
     private ArrayList<AppInfo> mAppInfoList;
     private AppInstallAdapter mAdapter;
+    private View mCancelButtonLayout;
     private TextView mCancelButton;
     private int mTheme;
 
@@ -43,45 +50,34 @@ public class ListInstallActivity extends SherlockListActivity {
         super.onCreate(savedInstance);
 
         setContentView(R.layout.activity_install);
+        mCancelButtonLayout = findViewById(R.id.cancel_button_layout);
         mCancelButton = (TextView) findViewById(R.id.cancel_button);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finishProcess();
-            }
-        });
-        mCancelButton.setVisibility(View.GONE);
-        
+        mCancelButton.setOnClickListener(this);
+
         final ActionBar ab = getSupportActionBar();        
         ab.setTitle(R.string.ab_title_install_list);
 
-        mInstallig = false;
+        mStatus = STATE_INIT;
         if (savedInstance == null) {
             mAppInfoList = getIntent().getParcelableArrayListExtra(ARG_APP_INFO_LIST);
         } else {
-            mInstallig = savedInstance.getBoolean(ARG_INSTALLING);
+            mStatus = savedInstance.getInt(ARG_STATUS);
             mAppInfoList = savedInstance.getParcelableArrayList(ARG_APP_INFO_LIST);
         }
 
-        if (mAppInfoList == null || mAppInfoList.isEmpty()) {
-            finishProcess();
-        } else {
-            mAdapter = new AppInstallAdapter(this, mAppInfoList);
-            setListAdapter(mAdapter);
-        }
+        mAdapter = new AppInstallAdapter(this, mAppInfoList);
+        setListAdapter(mAdapter);
 
-        if (mInstallig) {
-            mCancelButton.setVisibility(View.VISIBLE);
-            sendMessage();
-        } else {
+        if (mStatus == STATE_INIT) {
+            mCancelButtonLayout.setVisibility(View.GONE);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.dialog_install_title);
             builder.setMessage(R.string.dialog_install_message);
             builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    mCancelButton.setVisibility(View.VISIBLE);
-                    mInstallig = true;
+                    mCancelButtonLayout.setVisibility(View.VISIBLE);
+                    mStatus = STATE_INSTALLING;
                     sendMessage();
                 }
             });
@@ -92,6 +88,11 @@ public class ListInstallActivity extends SherlockListActivity {
                 }
             });
             builder.show();
+        } else if (mStatus == STATE_FINISHED) {
+            finishProcess();
+        } else {
+            // mStatus == STATE_INSTALLING;
+            sendMessage();
         }
     }
 
@@ -110,9 +111,15 @@ public class ListInstallActivity extends SherlockListActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        Crouton.cancelAllCroutons();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mInstallig) {
+        if (mStatus == STATE_INSTALLING) {
             mAdapter.setAppInfoList(mAppInfoList);
             sendMessage();
         }
@@ -125,9 +132,10 @@ public class ListInstallActivity extends SherlockListActivity {
     }
 
     void finishProcess() {
-        Toast.makeText(this, R.string.install_process_finished, Toast.LENGTH_SHORT).show();
         handler.removeMessages(WHAT);
-        finish();
+        mStatus = STATE_FINISHED;
+        mCancelButtonLayout.setBackgroundColor(getResources().getColor(R.color.install_success_button));
+        mCancelButton.setText(R.string.install_process_finished);
     }
 
     private Handler handler = new Handler() {
@@ -151,8 +159,17 @@ public class ListInstallActivity extends SherlockListActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(ARG_INSTALLING, mInstallig);
+        outState.putInt(ARG_STATUS, mStatus);
         outState.putParcelableArrayList(ARG_APP_INFO_LIST, mAppInfoList);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mStatus == STATE_INSTALLING) {
+            finishProcess();
+        } else {
+            finish();
+        }
     }
 
     static class AppInfoView {

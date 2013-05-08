@@ -15,13 +15,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.fragments.*;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.xml.FileUtil;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -42,8 +43,6 @@ public class MainActivity extends BaseActivity implements
 
     private List<AppInfo> mAppList;
     private String mFileStream;
-    private MenuItem mMeunLoad;
-    private MenuItem mMeunSettings;
     private boolean mDualPane;
 
     @Override
@@ -79,6 +78,12 @@ public class MainActivity extends BaseActivity implements
     }
 
     @Override
+    protected void onDestroy() {
+        Crouton.cancelAllCroutons();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(ARG_DISPLAY_OPT, getSupportActionBar().getDisplayOptions());
@@ -104,24 +109,6 @@ public class MainActivity extends BaseActivity implements
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_list, menu);
-        mMeunLoad = menu.findItem(R.id.menu_load_file);
-        mMeunSettings = menu.findItem(R.id.menu_settings);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.app_list);
-        boolean visible = (fragment instanceof AppListFragment);
-        mMeunLoad.setVisible(visible);
-        mMeunSettings.setVisible(visible);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             if (mDualPane) {
@@ -134,12 +121,6 @@ public class MainActivity extends BaseActivity implements
                 }
             }
             return true;
-        } else if (item.getItemId() == R.id.menu_load_file) {
-            new FileListTask(this).execute();
-            return true;
-        } else if (item.getItemId() == R.id.menu_settings) {
-            startActivity(new Intent(this, PreferenceActivity.class));
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -149,6 +130,16 @@ public class MainActivity extends BaseActivity implements
      * AppListFragment.CallBack and FileListFragment.CallBack method
      * ----------------------------
      */
+
+    @Override
+    public void loadFile() {
+        new FileListTask(this).execute();
+    }
+
+    @Override
+    public void settings() {
+        startActivity(new Intent(this, PreferenceActivity.class));
+    }
 
     @Override
     public void showAppInfo(String name, String packageName) {
@@ -258,7 +249,7 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void nameAccepted(String name) {
         if (TextUtils.isEmpty(name)) {
-            Toast.makeText(this, R.string.empty_name_error, Toast.LENGTH_SHORT).show();
+            Crouton.makeText(this, R.string.empty_name_error, Style.ALERT).show();
         } else if (mAppList != null) {
             new AppSaveTask(MainActivity.this, null, mAppList).execute(name);
         } else if (mFileStream != null) {
@@ -291,9 +282,9 @@ public class MainActivity extends BaseActivity implements
              if (operation == AppSaveTask.OP_SAVE_STREAM) {
                  loadFileListFragment(fileName, false);
              } else if (operation == AppSaveTask.OP_SAVE_LIST) {
-                 Toast.makeText(this, R.string.export_successfully_update, Toast.LENGTH_SHORT).show();
+                 Crouton.makeText(this, R.string.export_successfully_update, Style.CONFIRM).show();
              } else {
-                 Toast.makeText(this, R.string.export_successfully, Toast.LENGTH_SHORT).show();
+                 Crouton.makeText(this, R.string.export_successfully, Style.CONFIRM).show();
              }
          } else {
              Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
@@ -346,7 +337,7 @@ public class MainActivity extends BaseActivity implements
         @Override
         protected void onPostExecute(final String[] result) {
             if (result == null || result.length == 0) {
-                Toast.makeText(listActivity, R.string.main_no_files, Toast.LENGTH_SHORT).show();
+                Crouton.makeText(listActivity, R.string.main_no_files, Style.ALERT).show();
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(listActivity);
                 builder.setTitle(R.string.main_select_files);

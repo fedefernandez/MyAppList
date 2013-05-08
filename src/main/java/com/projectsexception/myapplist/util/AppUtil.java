@@ -1,8 +1,5 @@
 package com.projectsexception.myapplist.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
@@ -17,10 +14,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.widget.Toast;
-
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppUtil {
     
@@ -99,8 +99,8 @@ public class AppUtil {
         boolean running = false;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);        
         List<RunningAppProcessInfo> procInfos = am.getRunningAppProcesses();
-        for(int i = 0; i < procInfos.size(); i++){
-            if (procInfos.get(i).processName.equals(packageName)) {
+        for (RunningAppProcessInfo procInfo : procInfos) {
+            if (procInfo.processName.equals(packageName)) {
                 running = true;
                 break;
             }
@@ -151,7 +151,7 @@ public class AppUtil {
     }
     
     private static boolean isSystemPackage(ApplicationInfo pkgInfo) {
-        return ((pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM) ? true : false;
+        return ((pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM);
     }
     
     private static AppInfo createAppInfo(PackageManager mPm, ApplicationInfo applicationInfo) {
@@ -187,7 +187,7 @@ public class AppUtil {
         	    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
 		} catch (Exception e) {
-			Toast.makeText(activity, R.string.problem_no_google_play, Toast.LENGTH_SHORT).show();
+			Crouton.makeText(activity, R.string.problem_no_google_play, Style.ALERT).show();
 		}
     }
     

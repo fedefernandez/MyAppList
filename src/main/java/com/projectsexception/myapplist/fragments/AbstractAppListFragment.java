@@ -89,12 +89,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            return true;
-        }  else if (item.getItemId() == R.id.menu_select_all) {
+        if (item.getItemId() == R.id.menu_select_all) {
             for (int i = 0; i < mAdapter.getCount(); ++i) {
                 mAdapter.setItemChecked(i, true);
             }
@@ -105,7 +100,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
             getLoaderManager().restartLoader(0, args, this);
             return true;
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override 

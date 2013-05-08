@@ -3,7 +3,6 @@ package com.projectsexception.myapplist.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -12,6 +11,8 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.work.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.io.File;
 import java.net.URI;
@@ -104,7 +105,7 @@ public class FileListFragment extends AbstractAppListFragment {
                     }
                 }
                 if (appInfoList.isEmpty()) {
-                    Toast.makeText(getSherlockActivity(), R.string.empty_list_install_error, Toast.LENGTH_SHORT).show();
+                    Crouton.makeText(getSherlockActivity(), R.string.empty_list_install_error, Style.ALERT).show();
                 } else {
                     mCallBack.installAppList(appInfoList);
                 }

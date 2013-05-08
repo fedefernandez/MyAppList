@@ -17,12 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -149,14 +150,14 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                 getView().findViewById(R.id.uninstall_application).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Context ctx = getSherlockActivity();
-                        if (ctx != null) {
+                        final Activity activity = getSherlockActivity();
+                        if (activity != null) {
                             try {
                                 Uri packageUri = Uri.parse("package:" + packageName);
                                 Intent i = new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageUri);
-                                ctx.startActivity(i);
+                                activity.startActivity(i);
                             } catch (Exception e) {
-                                Toast.makeText(ctx, R.string.error_start_application, Toast.LENGTH_SHORT).show();
+                                Crouton.makeText(activity, R.string.error_uninstall_application, Style.ALERT).show();
                             }
                         }
                     }
@@ -171,12 +172,12 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                 getView().findViewById(R.id.start_application).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Context ctx = getSherlockActivity();
-                        if (ctx != null) {
+                        final Activity activity = getSherlockActivity();
+                        if (activity != null) {
                             try {
-                                ctx.startActivity(launchIntent);
+                                activity.startActivity(launchIntent);
                             } catch (Exception e) {
-                                Toast.makeText(ctx, R.string.error_start_application, Toast.LENGTH_SHORT).show();
+                                Crouton.makeText(activity, R.string.error_start_application, Style.ALERT).show();
                             }
                         }
                     }

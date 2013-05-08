@@ -14,6 +14,8 @@ import com.projectsexception.myapplist.fragments.ShareTaskFragment;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -140,6 +142,12 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     }
 
     @Override
+    protected void onDestroy() {
+        Crouton.cancelAllCroutons();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("selection", mSelection);
@@ -166,7 +174,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
         } else if (item.getItemId() == R.id.menu_share) {
             if (mSelection == SECTION_XML) {
                 if (mFile == null) {
-                    Toast.makeText(this, R.string.share_xml_error, Toast.LENGTH_SHORT).show();
+                    Crouton.makeText(this, R.string.share_xml_error, Style.ALERT).show();
                 } else {
                     saveFinished(SECTION_XML, mFile);
                 }

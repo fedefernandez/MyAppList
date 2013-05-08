@@ -27,7 +27,7 @@ public class IgnoredListFragment extends AbstractAppListFragment {
         if (activity instanceof CallBack) {
             mCallBack = (CallBack) activity;
         } else {
-            throw new IllegalStateException(activity.getClass().getName() + " must implement " + CallBack.class.getName());
+            throw new IllegalStateException("activity must implement fragment's callback");
         }
     }
 
@@ -46,10 +46,6 @@ public class IgnoredListFragment extends AbstractAppListFragment {
         super.onActivityCreated(savedInstanceState);
         
         setHasOptionsMenu(true);
-//        getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-        // Prepare the loader.  Either re-connect with an existing one,
-        // or start a new one.
         getLoaderManager().initLoader(0, null, this);
     }
     
