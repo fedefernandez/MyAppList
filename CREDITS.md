@@ -4,6 +4,7 @@
 
 * Jake Wharton for his wonderful library [ActionBarSherlock](http://actionbarsherlock.com)
 * Manuel Peinado for [MultiChoiceAdapter](https://github.com/ManuelPeinado/MultiChoiceAdapter)
+* Benjamin Weiss for [Crouton](https://github.com/keyboardsurfer/Crouton/)
 * AnderWeb and [Androcode](http://androcode.es) for his [selectable elements tutorial](http://androcode.es/2012/03/seleccion-individualmultiple-de-elementos-en-un-listview/)
 
 ## Translators acknowledgments
