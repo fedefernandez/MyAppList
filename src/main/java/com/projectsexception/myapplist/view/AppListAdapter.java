@@ -40,15 +40,21 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
     private int mNotInstalledColor;
     private int mInstalledColor;
     private int mMenu;
+    private boolean mShowCheckBox;
     private ActionListener mListener;
 
     public AppListAdapter(Context context, Bundle savedInstance, int menu) {
+        this(context, savedInstance, menu, true);
+    }
+
+    public AppListAdapter(Context context, Bundle savedInstance, int menu, boolean showCheckBox) {
         super(savedInstance);
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mPm = context.getPackageManager();
         this.mAppList = new ArrayList<AppInfo>();
         this.mNotInstalledColor = context.getResources().getColor(R.color.app_not_installed);
         this.mMenu = menu;
+        this.mShowCheckBox = showCheckBox;
     }
 
     public void setListener(ActionListener mListener) {
@@ -74,6 +80,9 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
             appInfoView.title = (TextView) view.findViewById(android.R.id.text1);
             mInstalledColor = appInfoView.title.getCurrentTextColor();
             appInfoView.icon = (ImageView) view.findViewById(android.R.id.icon1);
+            if (!mShowCheckBox) {
+                view.findViewById(android.R.id.checkbox).setVisibility(View.GONE);
+            }
             view.setTag(appInfoView);
         } else {
             view = convertView;

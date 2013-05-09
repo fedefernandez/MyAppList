@@ -15,10 +15,6 @@
         <item name="android:background">@drawable/btn_default_holo_dark</item>
     </style>
 
-    <style name="ItemDetailsMyAppListTheme" parent="ImageButtonMyAppListTheme">
-        <item name="android:src">@drawable/ic_ab_back_holo_dark</item>
-    </style>
-
     <style name="ListViewMyAppListTheme" parent="android:Widget.ListView">
         <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
     </style>
@@ -64,11 +60,6 @@
 
     <style name="ImageButtonMyAppListThemeLight" parent="android:Widget.ImageButton">
         <item name="android:background">@drawable/btn_default_holo_light</item>
-    </style>
-
-    <style name="ItemDetailsMyAppListThemeLight" parent="ImageButtonMyAppListThemeLight">
-        <item name="android:background">@drawable/list_selector_holo_light</item>
-        <item name="android:src">@drawable/ic_ab_back_holo_light</item>
     </style>
 
     <style name="ListViewMyAppListThemeLight" parent="android:Widget.ListView">

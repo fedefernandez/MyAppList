@@ -1,14 +1,14 @@
 package com.projectsexception.myapplist.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyAppListDbHelper extends SQLiteOpenHelper {
     
@@ -71,6 +71,11 @@ public class MyAppListDbHelper extends SQLiteOpenHelper {
                 db.insert(AppInfoIgnored.TABLE_NAME, null, values);
             }
         }
+    }
+
+    public void deletePackages() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(AppInfoIgnored.TABLE_NAME, null, null);
     }
 
 }

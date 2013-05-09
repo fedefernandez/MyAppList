@@ -1,6 +1,5 @@
 package com.projectsexception.myapplist.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
-import com.projectsexception.myapplist.MainActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -40,7 +38,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         setEmptyText(getSherlockActivity().getString(R.string.fragment_list_empty));
 
         // Create an empty adapter we will use to display the loaded data.
-        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter());
+        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter(), showCheckBox());
         mAdapter.setOnItemClickListener(this);
         mAdapter.setAdapterView(getListView());
         mAdapter.setListener(this);
@@ -140,5 +138,9 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
                 mRefreshItem.setActionView(null);
             }           
         }
+    }
+
+    boolean showCheckBox() {
+        return true;
     }
 }

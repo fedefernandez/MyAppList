@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="itemDetailsStyle" format="reference" />
     <attr name="itemStyle" format="reference" />
     <attr name="cancelButtonStyle" format="reference" />
     <attr name="appInfoButtonStyle" format="reference" />

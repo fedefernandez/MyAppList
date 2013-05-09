@@ -3,8 +3,11 @@ package com.projectsexception.myapplist.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.view.View;
+import android.widget.AdapterView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
@@ -38,7 +41,12 @@ public class IgnoredListFragment extends AbstractAppListFragment {
 
     @Override
     void showAppInfo(String name, String packageName) {
+        //
+    }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mAdapter.setItemChecked(position, true);
     }
 
     @Override
@@ -53,6 +61,15 @@ public class IgnoredListFragment extends AbstractAppListFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_ign, menu);
         mRefreshItem = menu.findItem(R.id.menu_refresh);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_save) {
+            saveSelectedItems(mAdapter.getSelectedItems());
+            getSherlockActivity().finish(); return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -84,8 +101,15 @@ public class IgnoredListFragment extends AbstractAppListFragment {
         }
     }
 
+    @Override
+    boolean showCheckBox() {
+        return false;
+    }
+
     private void saveSelectedItems(List<AppInfo> selectedItems) {
-        if (selectedItems != null && !selectedItems.isEmpty()) {
+        if (selectedItems == null || selectedItems.isEmpty()) {
+            mCallBack.getHelper().deletePackages();
+        } else {
             List<String> packages = new ArrayList<String>();
             for (AppInfo appInfo : selectedItems) {
                 packages.add(appInfo.getPackageName());

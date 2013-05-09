@@ -3,14 +3,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="MyAppListBaseTheme" parent="Theme.Sherlock">
-        <item name="itemDetailsStyle">@style/ItemDetailsMyAppListTheme</item>
         <item name="itemStyle">@style/ItemMyAppListTheme</item>
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListTheme</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListTheme</item>
     </style>
 
     <style name="MyAppListBaseThemeLight" parent="Theme.Sherlock.Light">
-        <item name="itemDetailsStyle">@style/ItemDetailsMyAppListThemeLight</item>
         <item name="itemStyle">@style/ItemMyAppListThemeLight</item>
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListThemeLight</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListThemeLight</item>
