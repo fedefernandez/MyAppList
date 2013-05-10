@@ -11,13 +11,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/share_form_padding">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/share_form_margin"
-            android:layout_marginLeft="@dimen/share_form_margin"
             android:layout_marginTop="@dimen/share_form_margin"
             android:paddingRight="@dimen/share_form_padding"
             android:gravity="right"
@@ -28,17 +27,16 @@
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/share_form_margin"
-            android:padding="@dimen/share_form_padding"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1.8"
         android:layout_margin="10dp"
+        android:layout_gravity="center_vertical"
         android:padding="@dimen/share_msg_padding" >
 
         <TextView

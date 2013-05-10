@@ -24,6 +24,9 @@
         <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListTheme</item>
         <item name="android:buttonStyleToggle">@style/ToggleMyAppListTheme</item>
         <item name="android:checkboxStyle">@style/CheckBoxMyAppListTheme</item>
+        <item name="android:spinnerStyle">@style/SpinnerMyAppList</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppList.DropDown</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppList</item>
     </style>
 
     <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
@@ -34,6 +37,9 @@
         <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListThemeLight</item>
         <item name="android:buttonStyleToggle">@style/ToggleMyAppListThemeLight</item>
         <item name="android:checkboxStyle">@style/CheckBoxMyAppListThemeLight</item>
+        <item name="android:spinnerStyle">@style/SpinnerMyAppListLight</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppListLight.DropDown</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppListLight</item>
     </style>
 
 </resources>

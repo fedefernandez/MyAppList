@@ -110,8 +110,8 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         if (spinner != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, com.actionbarsherlock.R.layout.sherlock_spinner_item, itemList);
-            adapter.setDropDownViewResource(com.actionbarsherlock.R.layout.sherlock_spinner_dropdown_item);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemList);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setSelection(mSelection - mStartIndex);
             spinner.setOnItemSelectedListener(this);
@@ -120,7 +120,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_option, itemList);
             listView.setAdapter(adapter);
             listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-            listView.setSelection(mSelection - mStartIndex);
+            listView.setItemChecked(mSelection - mStartIndex, true);
             listView.setOnItemClickListener(this);
         }
 

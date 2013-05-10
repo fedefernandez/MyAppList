@@ -38,7 +38,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         setEmptyText(getSherlockActivity().getString(R.string.fragment_list_empty));
 
         // Create an empty adapter we will use to display the loaded data.
-        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter(), showCheckBox());
+        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter());
         mAdapter.setOnItemClickListener(this);
         mAdapter.setAdapterView(getListView());
         mAdapter.setListener(this);
@@ -138,9 +138,5 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
                 mRefreshItem.setActionView(null);
             }           
         }
-    }
-
-    boolean showCheckBox() {
-        return true;
     }
 }

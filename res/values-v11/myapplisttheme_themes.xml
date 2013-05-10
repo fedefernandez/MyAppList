@@ -9,6 +9,7 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
         <item name="android:buttonStyleToggle">@style/ToggleMyAppListTheme</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppList</item>
     </style>
 
     <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
@@ -18,6 +19,7 @@
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
         <item name="android:buttonStyleToggle">@style/ToggleMyAppListThemeLight</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppListLight</item>
     </style>
 
 </resources>

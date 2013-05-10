@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements
     private static final String ARG_DISPLAY_OPT = "display_options";
 
     private static final String NUM_EXECUTIONS = "num_executions";
-    private static final int MAX_EXECUTIONS = 1;
+    private static final int MAX_EXECUTIONS = 20;
 
     private List<AppInfo> mAppList;
     private String mFileStream;

@@ -17,8 +17,9 @@ public class ListIgnoredActivity extends BaseActivity implements IgnoredListFrag
         super.onCreate(args);
         
         final ActionBar ab = getSupportActionBar();        
-        FragmentManager fm = getSupportFragmentManager();
         ab.setTitle(R.string.ab_title_ignored_list);
+        ab.setDisplayHomeAsUpEnabled(true);
+        FragmentManager fm = getSupportFragmentManager();
         if (fm.findFragmentById(android.R.id.content) == null) {
             fm.beginTransaction().add(android.R.id.content, new IgnoredListFragment()).commit();
         }
