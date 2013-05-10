@@ -99,7 +99,7 @@
   <string name="app_info_version">Version %1$s (%2$d)</string>
   <string name="app_info_date">Installed on %1$s. Updated on %2$s</string>
   <string name="configuration_theme">Theme</string>
-  <string name="rate_dialog_title">Rate My App List</string>
+  <string name="rate_dialog_title">Rate My App List!</string>
   <string name="rate_dialog_msg">My App List is a free application with no ads. If you enjoy using it, please take a moment to rate it. Thanks for your support!</string>
   <string name="rate_dialog_negative">No thanks</string>
   <string name="rate_dialog_neutral">Remind me later</string>

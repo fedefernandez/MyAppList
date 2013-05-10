@@ -21,6 +21,7 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.xml.FileUtil;
+import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -34,22 +35,25 @@ public class MainActivity extends BaseActivity implements
         FileListFragment.CallBack,
         AppInfoFragment.CallBack,
         FileDialogFragment.CallBack,
-        AppSaveTask.Listener, FragmentManager.OnBackStackChangedListener {
+        AppSaveTask.Listener, FragmentManager.OnBackStackChangedListener, View.OnClickListener {
 
     public static final String ARG_FILE = "fileName";
     private static final String ARG_DISPLAY_OPT = "display_options";
 
-    private static final int MAX_EXECUTIONS = 50;
+    private static final String NUM_EXECUTIONS = "num_executions";
+    private static final int MAX_EXECUTIONS = 20;
 
     private List<AppInfo> mAppList;
     private String mFileStream;
     private boolean mDualPane;
+    private Crouton mCroutonRate;
 
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
         
         setContentView(R.layout.activity_list);
+
         checkRateApp();
         
         String fileName = getIntent().getStringExtra(ARG_FILE);
@@ -102,9 +106,16 @@ public class MainActivity extends BaseActivity implements
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int numExecutions = sp.getInt(RateAppDialogFragment.NUM_EXECUTIONS, 0);
         if (numExecutions >= MAX_EXECUTIONS) {
-            new RateAppDialogFragment().show(getSupportFragmentManager(), "rate_app_dialog");
+            sp.edit().putInt(NUM_EXECUTIONS, 0).commit();
+            View view = getLayoutInflater().inflate(R.layout.crouton_rate, null);
+            view.findViewById(android.R.id.text1).setOnClickListener(this);
+            view.findViewById(android.R.id.button1).setOnClickListener(this);
+            Configuration configuration = new Configuration.Builder().setDuration(Configuration.DURATION_LONG).build();
+            mCroutonRate = Crouton.make(this, view);
+            mCroutonRate.setConfiguration(configuration);
+            mCroutonRate.show();
         } else if (numExecutions >= 0) {
-            sp.edit().putInt(RateAppDialogFragment.NUM_EXECUTIONS, numExecutions + 1).commit();
+            sp.edit().putInt(NUM_EXECUTIONS, numExecutions + 1).commit();
         }
     }
 
@@ -319,6 +330,24 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void onBackStackChanged() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == android.R.id.button1 || v.getId() == android.R.id.text1) {
+            if (mCroutonRate != null) {
+                Crouton.hide(mCroutonRate);
+            }
+            final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            editor.putInt(NUM_EXECUTIONS, -1).commit();
+            if (v.getId() == android.R.id.text1) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+                } catch (Exception e) {
+                    CustomLog.error("MainActivity", e);
+                }
+            }
+        }
     }
 
     static class FileListTask extends AsyncTask<Void, Void, String[]> {
