@@ -21,7 +21,7 @@
         android:id="@android:id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="@dimen/share_close_padding"
         android:src="@drawable/crouton_close"
         style="?itemStyle"/>
 

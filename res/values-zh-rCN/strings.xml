@@ -32,8 +32,6 @@
   <string name="source_url">https://github.com/projectsexception/MyAppList</string>
   <string name="translate_url">http://crowdin.net/project/my-app-list/invite</string>
   <string name="credits_url">https://github.com/projectsexception/MyAppList/blob/master/CREDITS.md</string>
-  <string name="load_list">加载列表</string>
-  <string name="new_list">应用程序</string>
   <string name="new_file_dialog_title">文件名称</string>
   <string name="new_file_dialog_msg">选择文件的名称。如果具有相同名称的文件存在，它将被覆盖 ！</string>
   <string name="new_file_dialog_name">myapplist-%s.xml</string>
@@ -44,7 +42,6 @@
   <string name="empty_list_install_error">所有应用程序都已安装</string>
   <string name="empty_name_error">名称不能为空</string>
   <string name="empty_list_post_error">没有应用程序被选定</string>
-  <string name="export_init">开始导出</string>
   <string name="export_successfully">已成功创建文件</string>
   <string name="export_successfully_update">已成功更新文件</string>
   <string name="export_failed">创建文件时出错:%s</string>
@@ -52,7 +49,6 @@
   <string name="menu_save">保存</string>
   <string name="menu_refresh">刷新</string>
   <string name="menu_select_all">全选</string>
-  <string name="menu_unselect_all">取消全选</string>
   <string name="menu_settings">设置</string>
   <string name="menu_share">共享</string>
   <string name="menu_delete">删除</string>
@@ -64,22 +60,26 @@
   <string name="share_text_send_failed">没有找到要共享内容的项目</string>
   <string name="share_file_failed">创建文件时出错</string>
   <string name="share_file_send_failed">没有项目可以打开此文件。在：%s检查它</string>
+  <string name="mail_send_failed">No mail client found</string>
+  <string name="share_title">选择格式</string>
+  <string name="share_xml">XML</string>
+  <string name="share_html_file">HTML File</string>
+  <string name="share_html">HTML</string>
+  <string name="share_text_file">Text File</string>
+  <string name="share_text">Text</string>
   <string name="share_xml_message">XML文件可以由”我的应用列表“打开。\n你可以将此文件发送给您的联系人，或将其保存以便日后使用。\n谨记，XML文件只存储应用的名称和鉴别标识，而不是应用程序本身。</string>
   <string name="share_text_message">以文本格式共享应用程序，将允许您发送带有谷歌商店链接列表的邮件或信息。</string>
   <string name="share_text_file_message">以文本格式共享应用程序允许您发送包含有谷歌Play商店链接列表的邮件或者信息。\n这个文本文件可以保存至任何地方或用电子邮件发送。\n谨记“ 我的应用列表”可以读取XML文件，而并非文本文件。</string>
   <string name="share_html_message">以HTML格式共享应用程序将允许您发送一封包含可点击的谷歌Play商店的链接列表的电子邮件。</string>
   <string name="share_html_file_message">以HTML格式共享应用程序允许您发送一封包含可点击链接至谷歌Play商店的电子邮件。\n这个HTML文件可以保存至任何地方或用电子邮件发送。\n谨记“ 我的应用列表”可以读取XML文件，并非HTML文件，但是您可以在浏览器中打开此文件来查看链接。</string>
+  <string name="share_xml_error">Error sharing XML file</string>
   <string name="ab_title_install_list">安装应用程序中</string>
   <string name="ab_title_ignored_list">被忽略的应用程序</string>
   <string name="ab_title_file_list">文件应用程序</string>
   <string name="ab_title_share">共享应用程序</string>
-  <string name="share_check_footer">向文本添加页脚吗？</string>
-  <string name="share_tab_xml">XML</string>
-  <string name="share_tab_html">HTML</string>
-  <string name="share_tab_text">文本</string>
-  <string name="share_button_type_text">嵌入式文本</string>
-  <string name="share_button_type_file">文件</string>
-  <string name="share_button_export">共享</string>
+  <string name="share_check_footer"></string>
+  <string name="share_button_type_text"></string>
+  <string name="share_button_type_file"></string>
   <string name="play_google">market://details?id=%s</string>
   <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
   <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
@@ -89,8 +89,6 @@
   <string name="application_information">系统信息</string>
   <string name="application_play">谷歌Play</string>
   <string name="content_desc_application_icon">应用程序图标</string>
-  <string name="content_desc_application_title">应用程序标题</string>
-  <string name="content_desc_button_details">按下按钮以查看应用程序的详细信息</string>
   <string name="cancel_install">在%d秒内重定向至谷歌Play商店\n点击以完成进程</string>
   <string name="app_info_not_installed">应用程序未安装</string>
   <string name="app_info_local_installed">应用程序已安装</string>
@@ -101,20 +99,16 @@
   <string name="app_info_no_permissions">无任何已声明的权限</string>
   <string name="app_info_version">版本%1$s (%2$d)</string>
   <string name="app_info_date">在%1$s上安装。更新至%2$s</string>
-  <string name="content_desc_item_details">查看应用程序的详细信息</string>
   <string name="configuration_theme">主题</string>
   <string name="rate_dialog_title">评价“我的应用列表”</string>
-  <string name="rate_dialog_msg">我的应用列表是一个没有广告的免费应用程序。如果您喜欢使用它，请花点时间评价它。感谢您的支持 ！</string>
-  <string name="rate_dialog_negative">不，谢谢</string>
-  <string name="rate_dialog_neutral">以后提醒我</string>
-  <string name="rate_dialog_positive">评价它 ！</string>
   <string name="fragment_list_empty">空列表</string>
   <string name="backup_dialog_title">备份服务已启用</string>
   <string name="backup_dialog_message">备份服务现在已启用。当您安装或卸载应用程序，“我的应用列表”将生成一个新的XML文件。你想立即生成一个新的文件吗？如果您最近创建过的备份文件，请单击取消。</string>
   <string name="error_start_application">无法启动应用程序</string>
+  <string name="error_uninstall_application">Can\'t uninstall application</string>
   <string name="dialog_install_title">安装应用程序</string>
   <string name="dialog_install_message">此页面可以帮助您安装选定的应用程序。它将会为在此列表中的每个应用程序打开谷歌Play。您可以在任何时候停止这一进程。请记住在每次安装后按后退按钮。</string>
-  <string name="install_process_finished">进程完成</string>
+  <string name="install_process_finished">Process finished\nPress to exit</string>
   <string name="start_application">开始</string>
   <string name="uninstall_application">卸载</string>
   <string name="stop_application">停止</string>

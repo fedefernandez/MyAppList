@@ -21,6 +21,8 @@
   <string name="about_twitter_summary">Seguimi!</string>
   <string name="about_translate_title">Traduci</string>
   <string name="about_translate_summary">Aiuta a tradurre My App List</string>
+  <string name="about_credits_title">Credits</string>
+  <string name="about_credits_summary">See the credits and acknowledgments</string>
   <string name="about_email">info@projectsexception.com</string>
   <string name="about_subject">[My App List] - </string>
   <string name="about_source_title">Codice sorgente</string>
@@ -29,8 +31,7 @@
   <string name="twitter_url">http://twitter.com/ProException</string>
   <string name="source_url">https://github.com/projectsexception/MyAppList</string>
   <string name="translate_url">http://crowdin.net/project/my-app-list/invite</string>
-  <string name="load_list">Carica la lista</string>
-  <string name="new_list">Applicazioni</string>
+  <string name="credits_url">https://github.com/projectsexception/MyAppList/blob/master/CREDITS.md</string>
   <string name="new_file_dialog_title">Nome file</string>
   <string name="new_file_dialog_msg">Seleziona il nome del file. Se esiste già un file con lo stesso nome, questo verrà sovrascritto!.</string>
   <string name="new_file_dialog_name">myapplist-%s.xml</string>
@@ -41,7 +42,6 @@
   <string name="empty_list_install_error">All applications are installed</string>
   <string name="empty_name_error">Il Nome non può essere vuoto</string>
   <string name="empty_list_post_error">Nessun applicazione selezionata</string>
-  <string name="export_init">Inizio esportazione</string>
   <string name="export_successfully">File creato con successo</string>
   <string name="export_successfully_update">File aggiornato con successo</string>
   <string name="export_failed">Errore durante la creazione del file: %s</string>
@@ -49,7 +49,6 @@
   <string name="menu_save">Salva</string>
   <string name="menu_refresh">Aggiorna</string>
   <string name="menu_select_all">Seleziona tutto</string>
-  <string name="menu_unselect_all">Deseleziona tutto</string>
   <string name="menu_settings">Impostazioni</string>
   <string name="menu_share">Condividi</string>
   <string name="menu_delete">Delete</string>
@@ -61,33 +60,35 @@
   <string name="share_text_send_failed">Non è stata riscontrata nessuna attività per condividere il contenuto</string>
   <string name="share_file_failed">Errore nella creazione del file</string>
   <string name="share_file_send_failed">Nessuna attività può aprire questo file. Controllalo in: %s</string>
+  <string name="mail_send_failed">No mail client found</string>
+  <string name="share_title">SELECT FORMAT</string>
+  <string name="share_xml">XML</string>
+  <string name="share_html_file">HTML File</string>
+  <string name="share_html">HTML</string>
+  <string name="share_text_file">Text File</string>
+  <string name="share_text">Text</string>
   <string name="share_xml_message">il file XML può essere aperto da \'My App List\'.\nPuoi inviare questo file ai tuoi contatti o salvarlo per usarlo in seguito.\nRicorda, il file XML memorizza solo il nome e il l\'identificazione dell\'applicazione, non l\'applicazione stessa.</string>
   <string name="share_text_message">Condividere le applicazioni in formato text ti permette di inviare la lista in un\'email o un messaggio con l\'url di Google Play Store.</string>
   <string name="share_text_file_message">Condividere le applicazioni in formato text ti permette di inviare la lista in un\'email o un messaggio con l\'url di Google Play Store.\nQuesto file text può essere salvato dovunque o inviato via email.\nRicorda che \'My App List\' può leggere il file XML ma non il file text.</string>
   <string name="share_html_message">Condividere le applicazioni in formato HTML ti permette di inviare la lista in un\'email con link cliccabili al Google Play Store.</string>
   <string name="share_html_file_message">Condividere le applicazioni in formato HTML ti permette di inviare la lista in un email con link cliccabili al Google Play Store.\nQuesto file HTML può essere salvato dovunque o inviato via email.\nRicorda che \'My App List\' può leggere i file XML ma non i file HTML, tuttavia puoi aprire questo file in un browser per vedere i link.</string>
+  <string name="share_xml_error">Error sharing XML file</string>
   <string name="ab_title_install_list">Installing Applications</string>
   <string name="ab_title_ignored_list">Applicazioni ignorate</string>
   <string name="ab_title_file_list">Archivia Applicazioni</string>
   <string name="ab_title_share">Condividi Applicazioni</string>
-  <string name="share_check_footer">Aggiungi piè di pagina al testo?</string>
-  <string name="share_tab_xml">XML</string>
-  <string name="share_tab_html">HTML</string>
-  <string name="share_tab_text">Testo</string>
-  <string name="share_button_type_text">Testo inline</string>
-  <string name="share_button_type_file">Archivia</string>
-  <string name="share_button_export">Condividi</string>
+  <string name="share_check_footer"></string>
+  <string name="share_button_type_text"></string>
+  <string name="share_button_type_file"></string>
   <string name="play_google">market://details?id=%s</string>
   <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
   <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
   <string name="error_creating_dir">Impossibile accedere a %s sulla sdcard</string>
   <string name="error_creating_file">Impossibile scrivere sul file %s</string>
   <string name="problem_no_google_play">Google Play non trovato</string>
-  <string name="application_information">System intormation</string>
+  <string name="application_information">System information</string>
   <string name="application_play">Google Play</string>
   <string name="content_desc_application_icon">Icona applicazione</string>
-  <string name="content_desc_application_title">Titolo applicazione</string>
-  <string name="content_desc_button_details">Premi per i dettagli applicazione</string>
   <string name="cancel_install">Redirecting to Google Play in %d seconds\nPress to finish process</string>
   <string name="app_info_not_installed">Applicazione non installata</string>
   <string name="app_info_local_installed">Applicazione installata</string>
@@ -98,22 +99,18 @@
   <string name="app_info_no_permissions">Permessi non dichiarati</string>
   <string name="app_info_version">Versione %1$s (%2$d)</string>
   <string name="app_info_date">Installato al %1$s. Aggiornato al %2$s</string>
-  <string name="content_desc_item_details">Vedi dettagli applicazioni</string>
   <string name="configuration_theme">Tema</string>
   <string name="rate_dialog_title">Vota My App List</string>
-  <string name="rate_dialog_msg">My App List è un\'applicazione gratuita senza pubblicità. Se ne sei soddisfatto, ti preghiamo di votarla. Grazie per il supporto!</string>
-  <string name="rate_dialog_negative">No grazie</string>
-  <string name="rate_dialog_neutral">Più tardi</string>
-  <string name="rate_dialog_positive">Vota!</string>
   <string name="fragment_list_empty">Lista vuota</string>
   <string name="backup_dialog_title">Servizio di backup abilitato</string>
   <string name="backup_dialog_message">Il servizio di backup è ora attivo. Quando si installa o disinstallano applicazioni nuove \'My App List\' genererà un nuovo file XML. Si desidera generare un nuovo file ora?. Fare clic su \'Annulla\' se è stato creato un file di backup recente.</string>
   <string name="error_start_application">Impossibile avviare l\'applicazione</string>
+  <string name="error_uninstall_application">Can\'t uninstall application</string>
   <string name="dialog_install_title">Install applications</string>
   <string name="dialog_install_message">This screen can help you to install the selected applications. It will open
         Google Play with every application in this list. You can stop this process at any time. Remember to press back button after each installation.
     </string>
-  <string name="install_process_finished">Process finished</string>
+  <string name="install_process_finished">Process finished\nPress to exit</string>
   <string name="start_application">Start</string>
   <string name="uninstall_application">Uninstall</string>
   <string name="stop_application">Stop</string>

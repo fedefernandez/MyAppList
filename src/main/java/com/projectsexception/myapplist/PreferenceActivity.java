@@ -13,6 +13,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.util.BackupReceiver;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.work.SaveListService;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class PreferenceActivity extends SherlockPreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     
@@ -41,6 +43,12 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         mBackupIgnoredPreference = findPreference(KEY_BACKUP_IGNORED_APPS);
         mBackupIgnoredPreference.setOnPreferenceClickListener(this);
         mBackupIgnoredPreference.setEnabled(check.isChecked());
+    }
+
+    @Override
+    protected void onDestroy() {
+        Crouton.cancelAllCroutons();
+        super.onDestroy();
     }
 
     @Override
@@ -98,7 +106,11 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
             intent.putExtra(Intent.EXTRA_EMAIL, new String[] { ctx.getString(R.string.about_email) });     
             intent.putExtra(Intent.EXTRA_SUBJECT, ctx.getString(R.string.about_subject));     
             intent.putExtra(Intent.EXTRA_TEXT, "");
-            ctx.startActivity(intent);
+            try {
+                ctx.startActivity(intent);
+            } catch (android.content.ActivityNotFoundException e) {
+                Crouton.makeText(this, R.string.mail_send_failed, Style.ALERT).show();
+            }
             return true;
         } else if (KEY_BACKUP_IGNORED_APPS.equals(preference.getKey())) {
             ctx.startActivity(new Intent(ctx, ListIgnoredActivity.class));

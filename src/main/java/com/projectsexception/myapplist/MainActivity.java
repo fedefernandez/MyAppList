@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements
     private static final String ARG_DISPLAY_OPT = "display_options";
 
     private static final String NUM_EXECUTIONS = "num_executions";
-    private static final int MAX_EXECUTIONS = 20;
+    private static final int MAX_EXECUTIONS = 1;
 
     private List<AppInfo> mAppList;
     private String mFileStream;
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements
 
     private void checkRateApp() {
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        int numExecutions = sp.getInt(RateAppDialogFragment.NUM_EXECUTIONS, 0);
+        int numExecutions = sp.getInt(NUM_EXECUTIONS, 0);
         if (numExecutions >= MAX_EXECUTIONS) {
             sp.edit().putInt(NUM_EXECUTIONS, 0).commit();
             View view = getLayoutInflater().inflate(R.layout.crouton_rate, null);

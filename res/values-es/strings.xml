@@ -32,8 +32,6 @@
   <string name="source_url">https://github.com/projectsexception/MyAppList</string>
   <string name="translate_url">Mira este fichero de \'My App List\'</string>
   <string name="credits_url">https://github.com/projectsexception/MyAppList/blob/master/CREDITS.md</string>
-  <string name="load_list">Cargar lista</string>
-  <string name="new_list">Aplicaciones</string>
   <string name="new_file_dialog_title">Nombre del fichero</string>
   <string name="new_file_dialog_msg">Seleccione el nombre del fichero. ¡Si ya existe uno con el mismo nombre, éste será sobrescrito!.</string>
   <string name="new_file_dialog_name">myapplist-%s.xml</string>
@@ -44,7 +42,6 @@
   <string name="empty_list_install_error">Todas las aplicaciones están instaladas</string>
   <string name="empty_name_error">El nombre no puede estar vacío</string>
   <string name="empty_list_post_error">No hay aplicaciones seleccionadas</string>
-  <string name="export_init">Iniciando la exportación</string>
   <string name="export_successfully">Fichero creado correctamente</string>
   <string name="export_successfully_update">Fichero actualizado correctamente</string>
   <string name="export_failed">Error creando fichero: %s</string>
@@ -52,7 +49,6 @@
   <string name="menu_save">Guardar</string>
   <string name="menu_refresh">Actualizar</string>
   <string name="menu_select_all">Seleccionar todas</string>
-  <string name="menu_unselect_all">Deseleccionar todas</string>
   <string name="menu_settings">Ajustes</string>
   <string name="menu_share">Compartir</string>
   <string name="menu_delete">Eliminar</string>
@@ -64,22 +60,26 @@
   <string name="share_text_send_failed">No se encontró ninguna actividad para compartir el contenido</string>
   <string name="share_file_failed">Error creando fichero</string>
   <string name="share_file_send_failed">Ninguna activiedad puede abrir el fichero. Compruébalo en: %s</string>
+  <string name="mail_send_failed">No se encontró ningún cliente de correo</string>
+  <string name="share_title">SELECCIONE FORMATO</string>
+  <string name="share_xml">XML</string>
+  <string name="share_html_file">Archivo HTML</string>
+  <string name="share_html">HTML</string>
+  <string name="share_text_file">Archivo de texto</string>
+  <string name="share_text">Texto</string>
   <string name="share_xml_message">El fichero XML puede ser abierto por \'My App List\'.\nPuedes enviar este fichero a tus contactos o salvarlo para utilizarlo más adelante.\nRecuerda que el fichero XML sólo almacena el nombre y el identificador de la aplicación, no la aplicación en sí misma.</string>
   <string name="share_text_message">Compartir las aplicaciones en formato de texto le permite enviar la lista en un correo electrónico o mensaje con la url a la tienda de Google Play.</string>
   <string name="share_text_file_message">Compartir las aplicaciones en formato de texto le permite enviar la lista en un email o mensaje con la url en Google Play Store.\nEste archivo de texto puede ser guardado en cualquier lugar o enviado por correo electrónico. \nRecuerda que \'My App List\' puede leer el archivo XML, pero no el archivo de texto.</string>
   <string name="share_html_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda Google Play.</string>
-  <string name="share_html_file_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda de Google Play.\nEste archivo HTML puede ser guardado en cualquier lugar o enviado por correo electrónico.\nRecuerde que \'My App List\' puede leer archivos XML, pero no el archivo HTML, sin embargo puede abrir este archivo en un navegador para ver los enlaces.</string>
+  <string name="share_html_file_message">Compartir las aplicaciones en formato HTML le permite enviar la lista en un correo electrónico con enlaces a la tienda de Google Play.\nEste archivo HTML puede ser guardado en cualquier lugar o enviado por correo electrónico.\nRecuerde que\'My App List puede leer archivos XML, pero no el archivo HTML, sin embargo puede abrir este archivo en un navegador para ver los enlaces.</string>
+  <string name="share_xml_error">Error compartiendo fichero XML</string>
   <string name="ab_title_install_list">Instalando aplicaciones</string>
   <string name="ab_title_ignored_list">Aplicaciones ignoradas</string>
   <string name="ab_title_file_list">Aplicaciones en el fichero</string>
   <string name="ab_title_share">Compartir aplicaciones</string>
-  <string name="share_check_footer">¿Añadir el pie de página a texto?</string>
-  <string name="share_tab_xml">XML</string>
-  <string name="share_tab_html">HTML</string>
-  <string name="share_tab_text">Texto</string>
-  <string name="share_button_type_text">Texto en línea</string>
-  <string name="share_button_type_file">Archivo</string>
-  <string name="share_button_export">Compartir</string>
+  <string name="share_check_footer"></string>
+  <string name="share_button_type_text"></string>
+  <string name="share_button_type_file"></string>
   <string name="play_google">market://details?id=%s</string>
   <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
   <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
@@ -89,8 +89,6 @@
   <string name="application_information">Información del sistema</string>
   <string name="application_play">Google Play</string>
   <string name="content_desc_application_icon">Icono de la aplicación</string>
-  <string name="content_desc_application_title">Título de la Aplicación</string>
-  <string name="content_desc_button_details">Botón para ver los detalles de la aplicación</string>
   <string name="cancel_install">Redirigiendo a Google Play en %d segundas\nPulse aquí para terminar el proceso</string>
   <string name="app_info_not_installed">Aplicación no instalada</string>
   <string name="app_info_local_installed">Aplicación Instalada</string>
@@ -101,20 +99,16 @@
   <string name="app_info_no_permissions">No hay permisos declarados</string>
   <string name="app_info_version">Versión %1$s (%2$d)</string>
   <string name="app_info_date">Instalada el %1$s. actualizada el %2$s</string>
-  <string name="content_desc_item_details">Ver detalles de la aplicación</string>
   <string name="configuration_theme">Tema</string>
   <string name="rate_dialog_title">Puntúa My App List</string>
-  <string name="rate_dialog_msg">My App List es una aplicación gratuita sin anuncios. Si te ha gustado, por favor, tómate unos minutos para punturarla. ¡Gracias por tu apoyo!</string>
-  <string name="rate_dialog_negative">No gracias</string>
-  <string name="rate_dialog_neutral">Recuérdamelo más tarde</string>
-  <string name="rate_dialog_positive">¡Puntuar!</string>
   <string name="fragment_list_empty">Lista vacía</string>
   <string name="backup_dialog_title">Servicio de copia de seguridad activado</string>
   <string name="backup_dialog_message">Se ha habilitado el servicio de backup. Al instalar o desinstalar aplicaciones nuevas \"My App List\" generará un nuevo archivo XML. ¿Desea generar un nuevo archivo ahora?. Haga clic en \"Cancelar\" si ha creado un archivo de copia de seguridad recientemente.</string>
   <string name="error_start_application">No se puede iniciar la aplicación</string>
+  <string name="error_uninstall_application">No se puede desinstalar la aplicación</string>
   <string name="dialog_install_title">Instalar aplicaciones</string>
   <string name="dialog_install_message">Esta pantalla puede ayudarle a instalar las aplicaciones seleccionadas. Abrirá Google Play con cada aplicación en esta lista. Puede detener este proceso en cualquier momento. Recuerde presionar el botón de retroceso después de cada instalación.</string>
-  <string name="install_process_finished">Proceso terminado</string>
+  <string name="install_process_finished">Proceso terminado\nPulse para salir</string>
   <string name="start_application">Iniciar</string>
   <string name="uninstall_application">Desinstalar</string>
   <string name="stop_application">Parar</string>

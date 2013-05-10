@@ -8,9 +8,14 @@
     tools:context=".ShareActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/share_form_margin"
+        android:layout_marginRight="@dimen/share_form_margin"
+        android:layout_marginLeft="@dimen/share_form_margin"
+        android:layout_marginTop="@dimen/share_form_margin"
+        android:paddingRight="@dimen/share_form_padding"
+        android:gravity="right"
+        style="?underlineStyle"
         android:text="@string/share_title"
         android:textSize="@dimen/share_title_size"/>
 
@@ -18,7 +23,8 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/share_form_margin"/>
+        android:layout_margin="@dimen/share_form_margin"
+        android:padding="@dimen/share_form_padding"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +32,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:padding="@dimen/share_padding" >
+        android:padding="@dimen/share_msg_padding" >
 
         <TextView
             android:id="@android:id/text1"

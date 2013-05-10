@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="share_padding">30dp</dimen>
+    <dimen name="share_msg_padding">30dp</dimen>
     <dimen name="share_form_margin">30dp</dimen>
     <dimen name="item_icon_size">48dp</dimen>
     <dimen name="item_min_height">80dp</dimen>
     <dimen name="app_icon_size">64dp</dimen>
     <dimen name="share_title_size">24sp</dimen>
+    <dimen name="share_options_size">20sp</dimen>
+    <dimen name="share_form_padding">15sp</dimen>
     <dimen name="share_msg_size">20sp</dimen>
+    <dimen name="share_close_padding">20dp</dimen>
 </resources>

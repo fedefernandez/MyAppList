@@ -14,60 +14,32 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/share_form_margin"
             android:layout_marginLeft="@dimen/share_form_margin"
             android:layout_marginTop="@dimen/share_form_margin"
+            android:paddingRight="@dimen/share_form_padding"
+            android:gravity="right"
+            style="?underlineStyle"
             android:text="@string/share_title"
             android:textSize="@dimen/share_title_size"/>
 
-        <RadioGroup
-            android:id="@+id/radio"
-            android:layout_width="wrap_content"
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/share_form_margin">
-
-            <RadioButton
-                android:id="@+id/share_xml"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/share_xml" />
-
-            <RadioButton
-                android:id="@+id/share_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/share_text" />
-
-            <RadioButton
-                android:id="@+id/share_text_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/share_text_file" />
-
-            <RadioButton
-                android:id="@+id/share_html"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/share_html" />
-
-            <RadioButton
-                android:id="@+id/share_html_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/share_html_file" />
-
-        </RadioGroup>
+            android:layout_marginRight="@dimen/share_form_margin"
+            android:padding="@dimen/share_form_padding"/>
 
     </LinearLayout>
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.8"
         android:layout_margin="10dp"
-        android:padding="@dimen/share_padding" >
+        android:padding="@dimen/share_msg_padding" >
 
         <TextView
             android:id="@android:id/text1"

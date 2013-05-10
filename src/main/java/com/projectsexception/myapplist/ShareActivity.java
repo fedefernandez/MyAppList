@@ -1,11 +1,13 @@
 package com.projectsexception.myapplist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -21,17 +23,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShareActivity extends BaseActivity implements ShareTaskFragment.CallBack, RadioGroup.OnCheckedChangeListener, AdapterView.OnItemSelectedListener {
+public class ShareActivity extends BaseActivity implements ShareTaskFragment.CallBack, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     
     private static final String TAG_TASK_FRAGMENT = "task_fragment";
-
-    private static final int[] OPTIONS_IDS = {
-            R.id.share_xml,
-            R.id.share_text,
-            R.id.share_text_file,
-            R.id.share_html,
-            R.id.share_html_file,
-    };
 
     private static final int[] OPTIONS = {
             R.string.share_xml,
@@ -110,6 +104,10 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             mSelection = savedInstanceState.getInt("selection", 0);
         }
 
+        if (mSelection - mStartIndex < 0) {
+            mSelection = 1;
+        }
+
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         if (spinner != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, com.actionbarsherlock.R.layout.sherlock_spinner_item, itemList);
@@ -118,14 +116,12 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             spinner.setSelection(mSelection - mStartIndex);
             spinner.setOnItemSelectedListener(this);
         } else {
-            RadioGroup radio = (RadioGroup) findViewById(R.id.radio);
-            if (radio != null) {
-                if (mStartIndex > 0) {
-                    radio.removeViewAt(0);
-                }
-                radio.check(OPTIONS_IDS[mSelection]);
-                radio.setOnCheckedChangeListener(this);
-            }
+            ListView listView = (ListView) findViewById(R.id.list);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_option, itemList);
+            listView.setAdapter(adapter);
+            listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            listView.setSelection(mSelection - mStartIndex);
+            listView.setOnItemClickListener(this);
         }
 
         mTextView = (TextView) findViewById(android.R.id.text1);
@@ -246,17 +242,6 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        for (int i = 0 ; i < OPTIONS_IDS.length ; i++) {
-            if (OPTIONS_IDS[i] == checkedId) {
-                mSelection = i;
-                mTextView.setText(OPTIONS_MSG[mSelection]);
-                break;
-            }
-        }
-    }
-
-    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mSelection = position + mStartIndex;
         mTextView.setText(OPTIONS_MSG[mSelection]);
@@ -265,5 +250,10 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        onItemSelected(adapterView, view, position, id);
     }
 }

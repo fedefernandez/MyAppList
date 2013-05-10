@@ -57,18 +57,19 @@
   <string name="share_chooser">Share with…</string>
   <string name="share_file_text">Shared by \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Shared by \'My App List\'&lt;/a&gt;</string>
-  <string name="share_text_send_failed">No activity was found to share the content</string>  
+  <string name="share_text_send_failed">No activity was found to share the content</string>
   <string name="share_file_failed">Error creating file</string>
   <string name="share_file_send_failed">No activity can open this file. Check it at: %s</string>
-  <string name="share_title">Select format</string>
+  <string name="mail_send_failed">No mail client found</string>
+  <string name="share_title">SELECT FORMAT</string>
   <string name="share_xml">XML</string>
   <string name="share_html_file">HTML File</string>
   <string name="share_html">HTML</string>
   <string name="share_text_file">Text File</string>
   <string name="share_text">Text</string>
-  <string name="share_xml_message">The XML file can be opened by \'My App List\'.\nYou can send this file to your contacts or save it for a later use.\nRemember, the XML only stores the name and the identification of the application, not the application himself.</string>  
-  <string name="share_text_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.</string>  
-  <string name="share_text_file_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.\nThis text file can be saved in anywhere or sent by email.\nRemember that \'My App List\' can read the XML file but not the text file.</string>  
+  <string name="share_xml_message">The XML file can be opened by \'My App List\'.\nYou can send this file to your contacts or save it for a later use.\nRemember, the XML only stores the name and the identification of the application, not the application himself.</string>
+  <string name="share_text_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.</string>
+  <string name="share_text_file_message">Sharing the applications in text format allows you to send the list in a email or message with the url to Google Play Store.\nThis text file can be saved in anywhere or sent by email.\nRemember that \'My App List\' can read the XML file but not the text file.</string>
   <string name="share_html_message">Sharing the applications in HTML format allows you to send the list in a email with clickable links to Google Play Store.</string>
   <string name="share_html_file_message">Sharing the applications in HTML format allows you to send the list in a email with clickable links to Google Play Store.\nThis HTML file can be saved in anywhere or sent by email.\nRemember that \'My App List\' can read the XML file but not the HTML file, however you can open this file in a browser to see the links.</string>
   <string name="share_xml_error">Error sharing XML file</string>
@@ -76,9 +77,9 @@
   <string name="ab_title_ignored_list">Ignored Applications</string>
   <string name="ab_title_file_list">File Applications</string>
   <string name="ab_title_share">Share Applications</string>
-  <string name="share_check_footer">Add footer to text?</string>  
-  <string name="share_button_type_text">Inline Text</string>
-  <string name="share_button_type_file">File</string>
+  <string name="share_check_footer"></string>
+  <string name="share_button_type_text"></string>
+  <string name="share_button_type_file"></string>
   <string name="play_google">market://details?id=%s</string>
   <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
   <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
@@ -100,23 +101,19 @@
   <string name="app_info_date">Installed on %1$s. Updated on %2$s</string>
   <string name="configuration_theme">Theme</string>
   <string name="rate_dialog_title">Rate My App List!</string>
-  <string name="rate_dialog_msg">My App List is a free application with no ads. If you enjoy using it, please take a moment to rate it. Thanks for your support!</string>
-  <string name="rate_dialog_negative">No thanks</string>
-  <string name="rate_dialog_neutral">Remind me later</string>
-  <string name="rate_dialog_positive">Rate it!</string>  
-  <string name="fragment_list_empty">Empty list</string>  
-  <string name="backup_dialog_title">Backup service enabled</string>  
-  <string name="backup_dialog_message">The backup service is now enabled. When you install or uninstall new applications \'My App List\' will generate a new XML file. Do you want to generate a new file now?. Click \'Cancel\' if you created a backup file recently.</string>  
+  <string name="fragment_list_empty">Empty list</string>
+  <string name="backup_dialog_title">Backup service enabled</string>
+  <string name="backup_dialog_message">The backup service is now enabled. When you install or uninstall new applications \'My App List\' will generate a new XML file. Do you want to generate a new file now?. Click \'Cancel\' if you created a backup file recently.</string>
   <string name="error_start_application">Can\'t start application</string>
   <string name="error_uninstall_application">Can\'t uninstall application</string>
-    <string name="dialog_install_title">Install applications</string>
-    <string name="dialog_install_message">This screen can help you to install the selected applications. It will open
+  <string name="dialog_install_title">Install applications</string>
+  <string name="dialog_install_message">This screen can help you to install the selected applications. It will open
         Google Play with every application in this list. You can stop this process at any time. Remember to press back button after each installation.
     </string>
-    <string name="install_process_finished">Process finished\nPress to exit</string>
-    <string name="start_application">Start</string>
-    <string name="uninstall_application">Uninstall</string>
-    <string name="stop_application">Stop</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_light">Light</string>
+  <string name="install_process_finished">Process finished\nPress to exit</string>
+  <string name="start_application">Start</string>
+  <string name="uninstall_application">Uninstall</string>
+  <string name="stop_application">Stop</string>
+  <string name="theme_dark">Dark</string>
+  <string name="theme_light">Light</string>
 </resources>
