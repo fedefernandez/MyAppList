@@ -143,7 +143,7 @@ public class FileListFragment extends AbstractAppListFragment {
         } else {
             lst = mAdapter.getData();
         }
-        return new FileListLoader(getActivity(), mFile, lst);
+        return new FileListLoader(getSherlockActivity(), mFile, lst);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class FileListFragment extends AbstractAppListFragment {
                     CustomLog.error("FileListFragment", e);
                 }
             } else {
-                mFile = FileUtil.loadFile(fileName);
+                mFile = FileUtil.loadFile(getSherlockActivity(), fileName);
             }
             if (mFile == null || !mFile.exists() || !mFile.canRead()) {
                 // If file not exists or can't read

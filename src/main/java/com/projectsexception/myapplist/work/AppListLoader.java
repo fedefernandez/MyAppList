@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import com.projectsexception.myapplist.PreferenceActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 
@@ -22,7 +23,7 @@ public class AppListLoader extends AbstractListLoader {
         // context returned by getContext().
         mPm = getContext().getPackageManager();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mHideSystemApps = prefs.getBoolean("hide_system_apps", true);
+        mHideSystemApps = prefs.getBoolean(PreferenceActivity.KEY_HIDE_SYSTEM_APPS, true);
     }
 
     @Override

@@ -360,7 +360,7 @@ public class MainActivity extends BaseActivity implements
 
         @Override
         protected String[] doInBackground(Void... params) {
-            return FileUtil.loadFiles();
+            return FileUtil.loadFiles(listActivity);
         }
 
         @Override

@@ -14,6 +14,11 @@
             android:entries="@array/themes"
             android:entryValues="@array/themes_values"
             android:title="@string/configuration_theme" />
+
+        <ListPreference
+            android:key="sdcard"
+            android:defaultValue=""
+            android:title="@string/configuration_sdcard" />
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/backup_title" >

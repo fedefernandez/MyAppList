@@ -6,25 +6,34 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 
+import android.text.TextUtils;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.util.BackupReceiver;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.work.SaveListService;
+import com.projectsexception.myapplist.xml.FileUtil;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+
+import java.io.File;
+import java.util.List;
 
 public class PreferenceActivity extends SherlockPreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     
     private static final String KEY_EMAIL = "mail";
+    public static final String KEY_HIDE_SYSTEM_APPS = "hide_system_apps";
     public static final String KEY_THEME = "theme";
+    public static final String KEY_SDCARD = "sdcard";
     public static final String KEY_BACKUP_CHECK = "backup_check";
     public static final String KEY_BACKUP_IGNORED_APPS = "backup_ignored";
-    
+
+    private ListPreference mSdcardPreference;
     private Preference mBackupIgnoredPreference;
-    
+
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +48,30 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         
         CheckBoxPreference check = (CheckBoxPreference) findPreference(KEY_BACKUP_CHECK);
         check.setOnPreferenceChangeListener(this);
-        
+
+        mSdcardPreference = (ListPreference) findPreference(KEY_SDCARD);
+        String value = mSdcardPreference.getValue();
+        if (TextUtils.isEmpty(value)) {
+            File folder = FileUtil.prepareApplicationDir(this, false);
+            if (folder == null) {
+                mSdcardPreference.setSummary(R.string.configuration_sdcard_no_access);
+            } else {
+                mSdcardPreference.setSummary(folder.getAbsolutePath());
+            }
+        } else {
+            File file = new File(value);
+            if (file.canWrite()) {
+                mSdcardPreference.setSummary(value);
+            } else {
+                mSdcardPreference.setSummary(R.string.configuration_sdcard_no_access);
+            }
+        }
+        List<CharSequence> folderList = FileUtil.getSdcardFolders();
+        CharSequence[] array = folderList.toArray(new CharSequence[folderList.size()]);
+        mSdcardPreference.setEntries(array);
+        mSdcardPreference.setEntryValues(array);
+        mSdcardPreference.setOnPreferenceChangeListener(this);
+
         mBackupIgnoredPreference = findPreference(KEY_BACKUP_IGNORED_APPS);
         mBackupIgnoredPreference.setOnPreferenceClickListener(this);
         mBackupIgnoredPreference.setEnabled(check.isChecked());
@@ -93,6 +125,8 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
                 BackupReceiver.disableReceiver(this);
                 SaveListService.cancelService(this);
             }
+        } else if (KEY_SDCARD.equals(preference.getKey())) {
+            mSdcardPreference.setSummary(mSdcardPreference.getValue());
         }
         return true;
     }

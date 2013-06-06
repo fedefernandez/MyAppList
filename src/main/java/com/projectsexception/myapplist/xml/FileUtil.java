@@ -1,8 +1,11 @@
 package com.projectsexception.myapplist.xml;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Xml;
+import com.projectsexception.myapplist.PreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -27,23 +30,63 @@ public class FileUtil {
     
     public static final String APPLICATION_DIR = "MyAppList";
 
-    public static File prepareApplicationDir() {
+    private static File prepareApplicationDir(Context context) {
+        return prepareApplicationDir(context, true);
+    }
+
+    public static File prepareApplicationDir(Context context, boolean checkPreferences) {
+        File applicationFolder = null;
+        if (checkPreferences) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            String prefPath = prefs.getString(PreferenceActivity.KEY_SDCARD, null);
+            if (prefPath != null) {
+                applicationFolder = new File(prefPath);
+            }
+        }
+
+        if (applicationFolder == null) {
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                File sdcard = Environment.getExternalStorageDirectory();
+                if (sdcard != null) {
+                    applicationFolder = new File(sdcard, APPLICATION_DIR);
+                }
+            }
+        }
+
+        if (applicationFolder != null) {
+            if (!applicationFolder.exists()) {
+                if (!applicationFolder.mkdir()) {
+                    applicationFolder = null;
+                }
+            }
+        }
+
+        return applicationFolder;
+    }
+
+    public static List<CharSequence> getSdcardFolders() {
+        List<CharSequence> folders = new ArrayList<CharSequence>();
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             File sdcard = Environment.getExternalStorageDirectory();
-            File applicationFolder = new File(sdcard, APPLICATION_DIR);
-            if (!applicationFolder.exists()) {
-                if (!applicationFolder.mkdir()) {
-                    return null;
+            if (sdcard != null) {
+                File mount = sdcard.getParentFile();
+                File[] files = mount.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.isDirectory() && !file.isHidden() && file.canWrite()) {
+                            folders.add(file.getAbsolutePath() + "/" + APPLICATION_DIR);
+                        }
+                    }
                 }
             }
-            return applicationFolder;
         }
-        return null;
+        return folders;
     }
     
     public static String writeFile(Context context, List<AppInfo> appList, String fileName) {
-        File dir = prepareApplicationDir();
+        File dir = prepareApplicationDir(context);
         if (dir == null && context != null) {
             return context.getString(R.string.error_creating_dir, APPLICATION_DIR);
         }
@@ -53,7 +96,7 @@ public class FileUtil {
     }
     
     public static File writeShareFile(Context context, List<AppInfo> appList, int formatFile) {
-        File dir = prepareApplicationDir();
+        File dir = prepareApplicationDir(context);
         if (dir == null && context != null) {
             return null;
         }
@@ -71,7 +114,7 @@ public class FileUtil {
     }
     
     public static String writeInputStreamFile(Context context, InputStream stream, String fileName) {
-        File dir = prepareApplicationDir();
+        File dir = prepareApplicationDir(context);
         if (dir == null && context != null) {
             return context.getString(R.string.error_creating_dir, APPLICATION_DIR);
         }
@@ -174,8 +217,8 @@ public class FileUtil {
         return success;
     }
     
-    public static String[] loadFiles() {
-        File dir = prepareApplicationDir();
+    public static String[] loadFiles(Context context) {
+        File dir = prepareApplicationDir(context);
         if (dir != null && dir.exists() && dir.isDirectory()) {
             XMLFilenameFilter filter = new XMLFilenameFilter();
             String[] files = dir.list(filter);
@@ -185,8 +228,8 @@ public class FileUtil {
         return null;
     }
     
-    public static File loadFile(String fileName) {
-        File dir = prepareApplicationDir();
+    public static File loadFile(Context context, String fileName) {
+        File dir = prepareApplicationDir(context);
         if (dir != null && dir.exists() && dir.isDirectory()) {
             return new File(dir, fileName);
         }
@@ -214,10 +257,12 @@ public class FileUtil {
             
             return lst;
         } catch (IOException e) {
-            
+            CustomLog.error("FileUtil", e);
         } finally {
             try {
-                br.close();
+                if (br != null) {
+                    br.close();
+                }
             } catch (IOException e) {
                 // No problem
             }

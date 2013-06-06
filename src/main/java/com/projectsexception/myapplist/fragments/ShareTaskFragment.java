@@ -1,20 +1,19 @@
 package com.projectsexception.myapplist.fragments;
 
-import java.io.File;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.projectsexception.myapplist.ShareActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.work.ShareAppSaveTask;
 import com.projectsexception.myapplist.xml.FileUtil;
+
+import java.io.File;
+import java.util.List;
 
 public class ShareTaskFragment extends SherlockFragment implements ShareAppSaveTask.Listener {
     
@@ -75,7 +74,7 @@ public class ShareTaskFragment extends SherlockFragment implements ShareAppSaveT
             if (appInfoList != null) {
                 mSection = section;
                 mTask = new ShareAppSaveTask(getSherlockActivity(), this);
-                int format = (section == ShareActivity.SECTION_HTML) ? FileUtil.FILE_HTML : FileUtil.FILE_TEXT;
+                int format = (section == ShareActivity.SECTION_HTML_FILE) ? FileUtil.FILE_HTML : FileUtil.FILE_TEXT;
                 ShareAppSaveTask.Data data = new ShareAppSaveTask.Data(appInfoList, format);
                 mTask.execute(data);
             }
