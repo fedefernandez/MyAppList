@@ -25,12 +25,19 @@
         <CheckBoxPreference
             android:key="backup_check"
             android:summary="@string/backup_check_summary"
-            android:title="@string/backup_check_title" />
+            android:title="@string/backup_check_title"
+            android:defaultValue="false"/>
 
         <Preference
             android:key="backup_ignored"
             android:summary="@string/backup_ignored_apps_summary"
             android:title="@string/backup_ignored_apps_title" />
+
+        <CheckBoxPreference
+            android:key="backup_uninstalled"
+            android:summary="@string/backup_uninstalled_apps_summary"
+            android:title="@string/backup_uninstalled_apps_title"
+            android:defaultValue="false"/>
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/about_title" >

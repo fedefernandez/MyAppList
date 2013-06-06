@@ -30,9 +30,11 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
     public static final String KEY_SDCARD = "sdcard";
     public static final String KEY_BACKUP_CHECK = "backup_check";
     public static final String KEY_BACKUP_IGNORED_APPS = "backup_ignored";
+    public static final String KEY_BACKUP_UNINSTALLED_APPS = "backup_uninstalled";
 
     private ListPreference mSdcardPreference;
     private Preference mBackupIgnoredPreference;
+    private Preference mBackupInstalledPreference;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -57,6 +59,7 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
                 mSdcardPreference.setSummary(R.string.configuration_sdcard_no_access);
             } else {
                 mSdcardPreference.setSummary(folder.getAbsolutePath());
+                mSdcardPreference.setValue(folder.getAbsolutePath());
             }
         } else {
             File file = new File(value);
@@ -75,6 +78,9 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         mBackupIgnoredPreference = findPreference(KEY_BACKUP_IGNORED_APPS);
         mBackupIgnoredPreference.setOnPreferenceClickListener(this);
         mBackupIgnoredPreference.setEnabled(check.isChecked());
+
+        mBackupInstalledPreference = findPreference(KEY_BACKUP_UNINSTALLED_APPS);
+        mBackupInstalledPreference.setEnabled(check.isChecked());
     }
 
     @Override
@@ -107,6 +113,7 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         } else if (KEY_BACKUP_CHECK.equals(preference.getKey())) {
             boolean backup = (Boolean) newValue;
             mBackupIgnoredPreference.setEnabled(backup);
+            mBackupInstalledPreference.setEnabled(backup);
             if (backup) {
                 BackupReceiver.enableReceiver(this); 
                 final Context ctx = this;
@@ -126,7 +133,7 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
                 SaveListService.cancelService(this);
             }
         } else if (KEY_SDCARD.equals(preference.getKey())) {
-            mSdcardPreference.setSummary(mSdcardPreference.getValue());
+            mSdcardPreference.setSummary((String) newValue);
         }
         return true;
     }

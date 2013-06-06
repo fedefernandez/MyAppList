@@ -1,7 +1,7 @@
 package com.projectsexception.myapplist.work;
 
-import java.util.Iterator;
-import java.util.List;
+import java.io.File;
+import java.util.*;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -9,12 +9,19 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.SparseArray;
+import com.projectsexception.myapplist.PreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.myapplist.xml.AppXMLHandler;
 import com.projectsexception.myapplist.xml.FileUtil;
+import com.projectsexception.myapplist.xml.ParserException;
+import com.projectsexception.myapplist.xml.ParserUtil;
 
 public class SaveListService extends IntentService {
 
@@ -29,8 +36,34 @@ public class SaveListService extends IntentService {
         CustomLog.info("SaveListService", "Running service");
         // Filename
         String fileName = getString(R.string.backup_filename);
-        // Get app list
+        // Get app list from system
         List<AppInfo> list = AppUtil.loadAppInfoList(getPackageManager(), true);
+        File file = FileUtil.loadFile(this, fileName);
+        if (file != null && file.exists()) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean uninstalledApps = prefs.getBoolean(PreferenceActivity.KEY_BACKUP_UNINSTALLED_APPS, false);
+            if (uninstalledApps) {
+                // Get app list from backup file
+                AppXMLHandler xmlHandler = new AppXMLHandler();
+                try {
+                    ParserUtil.launchParser(file, xmlHandler);
+                    ArrayList<AppInfo> appInfoList = xmlHandler.getAppInfoList();
+                    if (appInfoList != null && !appInfoList.isEmpty()) {
+                        Set<String> packages = new HashSet<String>();
+                        for (AppInfo appInfo : list) {
+                            packages.add(appInfo.getPackageName());
+                        }
+                        for (AppInfo appInfo : appInfoList) {
+                            if (!packages.contains(appInfo.getPackageName())) {
+                                list.add(appInfo);
+                            }
+                        }
+                    }
+                } catch (ParserException e) {
+                    CustomLog.error("SaveListService", e);
+                }
+            }
+        }
         // Remove ignored apps
         MyAppListDbHelper dbHelper = new MyAppListDbHelper(this);
         List<String> packages = dbHelper.getPackages();

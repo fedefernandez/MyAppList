@@ -13,9 +13,7 @@ import com.projectsexception.myapplist.util.CustomLog;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,7 +74,7 @@ public class FileUtil {
                 if (files != null) {
                     for (File file : files) {
                         if (file.isDirectory() && !file.isHidden() && file.canWrite()) {
-                            folders.add(file.getAbsolutePath() + "/" + APPLICATION_DIR);
+                            folders.add(file + "/" + APPLICATION_DIR);
                         }
                     }
                 }

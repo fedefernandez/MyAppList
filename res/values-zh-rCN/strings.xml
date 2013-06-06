@@ -9,7 +9,7 @@
   <string name="configuration_system_apps_msg">隐藏系统应用程序吗？</string>
   <string name="backup_title">备份</string>
   <string name="backup_ignored_apps_title">被忽略的应用</string>
-  <string name="backup_ignored_apps_summary">选择被忽略的应用</string>
+  <string name="backup_ignored_apps_summary">选择要被忽略的应用</string>
   <string name="backup_check_title">备份活动</string>
   <string name="backup_check_summary">激活自动备份</string>
   <string name="about_title">关于</string>
@@ -60,26 +60,23 @@
   <string name="share_text_send_failed">没有找到要共享内容的项目</string>
   <string name="share_file_failed">创建文件时出错</string>
   <string name="share_file_send_failed">没有项目可以打开此文件。在：%s检查它</string>
-  <string name="mail_send_failed">No mail client found</string>
+  <string name="mail_send_failed">未找到邮件客户端</string>
   <string name="share_title">选择格式</string>
   <string name="share_xml">XML</string>
-  <string name="share_html_file">HTML File</string>
+  <string name="share_html_file">HTML文件</string>
   <string name="share_html">HTML</string>
-  <string name="share_text_file">Text File</string>
-  <string name="share_text">Text</string>
+  <string name="share_text_file">文本文件</string>
+  <string name="share_text">文本</string>
   <string name="share_xml_message">XML文件可以由”我的应用列表“打开。\n你可以将此文件发送给您的联系人，或将其保存以便日后使用。\n谨记，XML文件只存储应用的名称和鉴别标识，而不是应用程序本身。</string>
   <string name="share_text_message">以文本格式共享应用程序，将允许您发送带有谷歌商店链接列表的邮件或信息。</string>
   <string name="share_text_file_message">以文本格式共享应用程序允许您发送包含有谷歌Play商店链接列表的邮件或者信息。\n这个文本文件可以保存至任何地方或用电子邮件发送。\n谨记“ 我的应用列表”可以读取XML文件，而并非文本文件。</string>
   <string name="share_html_message">以HTML格式共享应用程序将允许您发送一封包含可点击的谷歌Play商店的链接列表的电子邮件。</string>
   <string name="share_html_file_message">以HTML格式共享应用程序允许您发送一封包含可点击链接至谷歌Play商店的电子邮件。\n这个HTML文件可以保存至任何地方或用电子邮件发送。\n谨记“ 我的应用列表”可以读取XML文件，并非HTML文件，但是您可以在浏览器中打开此文件来查看链接。</string>
-  <string name="share_xml_error">Error sharing XML file</string>
+  <string name="share_xml_error">共享XML文件时出错</string>
   <string name="ab_title_install_list">安装应用程序中</string>
   <string name="ab_title_ignored_list">被忽略的应用程序</string>
   <string name="ab_title_file_list">文件应用程序</string>
   <string name="ab_title_share">共享应用程序</string>
-  <string name="share_check_footer"></string>
-  <string name="share_button_type_text"></string>
-  <string name="share_button_type_file"></string>
   <string name="play_google">market://details?id=%s</string>
   <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
   <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
@@ -98,17 +95,17 @@
   <string name="app_info_permissions">权限</string>
   <string name="app_info_no_permissions">无任何已声明的权限</string>
   <string name="app_info_version">版本%1$s (%2$d)</string>
-  <string name="app_info_date">在%1$s上安装。更新至%2$s</string>
+  <string name="app_info_date">安装于%1$s。更新于%2$s。</string>
   <string name="configuration_theme">主题</string>
   <string name="rate_dialog_title">评价“我的应用列表”</string>
   <string name="fragment_list_empty">空列表</string>
   <string name="backup_dialog_title">备份服务已启用</string>
   <string name="backup_dialog_message">备份服务现在已启用。当您安装或卸载应用程序，“我的应用列表”将生成一个新的XML文件。你想立即生成一个新的文件吗？如果您最近创建过的备份文件，请单击取消。</string>
   <string name="error_start_application">无法启动应用程序</string>
-  <string name="error_uninstall_application">Can\'t uninstall application</string>
+  <string name="error_uninstall_application">不能卸载应用程序</string>
   <string name="dialog_install_title">安装应用程序</string>
   <string name="dialog_install_message">此页面可以帮助您安装选定的应用程序。它将会为在此列表中的每个应用程序打开谷歌Play。您可以在任何时候停止这一进程。请记住在每次安装后按后退按钮。</string>
-  <string name="install_process_finished">Process finished\nPress to exit</string>
+  <string name="install_process_finished">进程完成\n按下以退出</string>
   <string name="start_application">开始</string>
   <string name="uninstall_application">卸载</string>
   <string name="stop_application">停止</string>

@@ -77,9 +77,6 @@
   <string name="ab_title_ignored_list">Ignorierte Apps</string>
   <string name="ab_title_file_list">Datei Apps</string>
   <string name="ab_title_share">Apps teilen</string>
-  <string name="share_check_footer"></string>
-  <string name="share_button_type_text"></string>
-  <string name="share_button_type_file"></string>
   <string name="play_google">market://details?id=%s</string>
   <string name="play_google_web_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%1$s\"&gt;%2$s&lt;/a&gt;</string>
   <string name="play_google_web_text">%2$s https://play.google.com/store/apps/details?id=%1$s</string>
