@@ -1,15 +1,14 @@
 package com.projectsexception.myapplist.work;
 
-import java.io.InputStream;
-import java.util.List;
-
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.xml.FileUtil;
+
+import java.io.InputStream;
+import java.util.List;
 
 public class AppSaveTask extends AsyncTask<String, Void, String> {
 

@@ -1,17 +1,13 @@
 package com.projectsexception.myapplist.work;
 
-import java.io.File;
-import java.util.*;
-
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.SparseArray;
+
 import com.projectsexception.myapplist.PreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
@@ -22,6 +18,13 @@ import com.projectsexception.myapplist.xml.AppXMLHandler;
 import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.myapplist.xml.ParserException;
 import com.projectsexception.myapplist.xml.ParserUtil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class SaveListService extends IntentService {
 

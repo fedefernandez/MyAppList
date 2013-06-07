@@ -23,11 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.InjectView;
+import butterknife.Views;
+
 public class AppListAdapter extends MultiChoiceBaseAdapter {
 
-    static class AppInfoView {
-        TextView title;
-        ImageView icon;
+    static class ViewHolder {
+        @InjectView(android.R.id.text1) TextView title;
+        @InjectView(android.R.id.icon1) ImageView icon;
+        ViewHolder(View view) {
+            Views.inject(this, view);
+        }
     }
 
     public static interface ActionListener {
@@ -67,35 +73,33 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
     @Override
     public View getViewImpl(int position, View convertView, ViewGroup parent) {
         View view;
-        AppInfoView appInfoView;
+        ViewHolder viewHolder;
         if (convertView == null) {
             view = mInflater.inflate(R.layout.list_item, parent, false);
-            appInfoView = new AppInfoView();
-            appInfoView.title = (TextView) view.findViewById(android.R.id.text1);
-            mInstalledColor = appInfoView.title.getCurrentTextColor();
-            appInfoView.icon = (ImageView) view.findViewById(android.R.id.icon1);
-            view.setTag(appInfoView);
+            viewHolder = new ViewHolder(view);
+            mInstalledColor = viewHolder.title.getCurrentTextColor();
+            view.setTag(viewHolder);
         } else {
             view = convertView;
-            appInfoView = (AppInfoView) view.getTag();
+            viewHolder = (ViewHolder) view.getTag();
         }
 
         AppInfo item = (AppInfo) getItem(position);
-        appInfoView.title.setText(item.getName());
+        viewHolder.title.setText(item.getName());
         Drawable icon = null;
         if (item.isInstalled()) {
-            appInfoView.title.setTypeface(Typeface.DEFAULT_BOLD);
-            appInfoView.title.setTextColor(mInstalledColor);
+            viewHolder.title.setTypeface(Typeface.DEFAULT_BOLD);
+            viewHolder.title.setTextColor(mInstalledColor);
             icon = AppUtil.loadApplicationIcon(mPm, item.getPackageName());
         } else {
-            appInfoView.title.setTypeface(Typeface.DEFAULT);
-            appInfoView.title.setTextColor(mNotInstalledColor);
+            viewHolder.title.setTypeface(Typeface.DEFAULT);
+            viewHolder.title.setTextColor(mNotInstalledColor);
         }
         
         if (icon == null) {
-            appInfoView.icon.setImageResource(R.drawable.ic_default_launcher);
+            viewHolder.icon.setImageResource(R.drawable.ic_default_launcher);
         } else {
-            appInfoView.icon.setImageDrawable(icon);
+            viewHolder.icon.setImageDrawable(icon);
         }
         return view;
     }
@@ -152,7 +156,7 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
             List<AppInfo> allApps = getData();
             int size = getCount();
             for (int i = 0 ; i < size ; i++) {
-                if (selection.contains(new Long(i))) {
+                if (selection.contains(Long.valueOf(i))) {
                     selectedApps.add(allApps.get(i));
                 }
             }

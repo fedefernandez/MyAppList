@@ -9,18 +9,19 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class AppUtil {
     
@@ -31,7 +32,7 @@ public class AppUtil {
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
     
     public static ArrayList<AppInfo> loadAppInfoList(PackageManager packageManager, boolean hideSystemApps) {
-        List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+        List<ApplicationInfo> apps = packageManager.getInstalledApplications(0);
         if (apps == null) {
             apps = new ArrayList<ApplicationInfo>();
         }
@@ -99,55 +100,15 @@ public class AppUtil {
         boolean running = false;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);        
         List<RunningAppProcessInfo> procInfos = am.getRunningAppProcesses();
-        for (RunningAppProcessInfo procInfo : procInfos) {
-            if (procInfo.processName.equals(packageName)) {
-                running = true;
-                break;
+        if (procInfos != null) {
+            for (RunningAppProcessInfo procInfo : procInfos) {
+                if (procInfo.processName.equals(packageName)) {
+                    running = true;
+                    break;
+                }
             }
         }
         return running;
-    }
-    
-    public static Intent getApplicationIntent(PackageManager pm, PackageInfo packageInfo) {
-        Intent intent = null;
-        intent = pm.getLaunchIntentForPackage(packageInfo.packageName);
-        if (intent != null) {
-            intent = intent.cloneFilter();
-            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            return intent;
-        }
-        if (packageInfo.activities.length == 1) {
-            intent = new Intent(Intent.ACTION_MAIN);
-            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            intent.setClassName(packageInfo.packageName, packageInfo.activities[0].name);
-            return intent;
-        }
-        intent = getIntent(packageInfo.packageName, pm);
-        if (intent != null) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            return intent;
-        }
-        return null;
-    }
-    
-    private static Intent getIntent(String packageName, PackageManager pm) {
-        List<ResolveInfo> list = getRunableList(pm, false);
-        for (ResolveInfo info : list) {
-            // System.out.println(packageName + " == " + info.activityInfo.packageName);
-            if (packageName.equals(info.activityInfo.packageName)) {
-                Intent i = new Intent(Intent.ACTION_MAIN);
-                i.addCategory(Intent.CATEGORY_LAUNCHER);
-                i.setClassName(packageName, info.activityInfo.name);
-                return i;
-            }
-        }
-        return null;
-    }
-    
-    private static synchronized List<ResolveInfo> getRunableList(PackageManager pm, boolean reload) {
-        Intent baseIntent = new Intent(Intent.ACTION_MAIN);
-        baseIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        return pm.queryIntentActivities(baseIntent, 0);
     }
     
     private static boolean isSystemPackage(ApplicationInfo pkgInfo) {
@@ -157,7 +118,11 @@ public class AppUtil {
     private static AppInfo createAppInfo(PackageManager mPm, ApplicationInfo applicationInfo) {
         AppInfo entry = new AppInfo();
         entry.setPackageName(applicationInfo.packageName);
-        entry.setName(applicationInfo.loadLabel(mPm).toString());
+        CharSequence label = applicationInfo.loadLabel(mPm);
+        if (label == null) {
+            label = applicationInfo.name == null ? "" : applicationInfo.name;
+        }
+        entry.setName(label.toString());
         entry.setInstalled(true);
         return entry;
     }
@@ -191,8 +156,11 @@ public class AppUtil {
 		}
     }
     
-    public static String appInfoToHTML(Context ctx, List<AppInfo> lst, boolean footer) {
+    public static String appInfoToHTML(Context ctx, List<AppInfo> lst, boolean footer, boolean htmlTags) {
         final StringBuilder sb = new StringBuilder();
+        if (htmlTags) {
+            sb.append("<html><body>");
+        }
         if (lst != null) {
             boolean first = true;
             for (AppInfo appInfo : lst) {
@@ -207,6 +175,9 @@ public class AppUtil {
         if (footer) {
             sb.append("<br/>\n<br/>\n"); 
             sb.append(ctx.getString(R.string.share_file_html, ctx.getPackageName()));
+        }
+        if (htmlTags) {
+            sb.append("</body></html>");
         }
         return sb.toString();
     }

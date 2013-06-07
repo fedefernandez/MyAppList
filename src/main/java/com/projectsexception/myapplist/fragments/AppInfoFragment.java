@@ -22,6 +22,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
+
+import butterknife.InjectView;
+import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -50,8 +53,23 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
     
     private CallBack mCallBack;
     private String mName;
-    private String mPackage;    
-    
+    private String mPackage;
+    @InjectView(R.id.icon) ImageView mIcon;
+    @InjectView(R.id.title) TextView mTitle;
+    @InjectView(R.id.package_name) TextView mPackageName;
+    @InjectView(R.id.status) TextView mStatus;
+    @InjectView(R.id.info) View mInfo;
+    @InjectView(R.id.play) View mPlay;
+    @InjectView(R.id.version) TextView mVersion;
+    @InjectView(R.id.app_data) View mApplicationData;
+    @InjectView(R.id.play_linked) TextView mPlayLinked;
+    @InjectView(R.id.stop_application) TextView mStopApplication;
+    @InjectView(R.id.uninstall_application) TextView mUninstallApplication;
+    @InjectView(R.id.start_application) TextView mStartApplication;
+    @InjectView(R.id.app_date) TextView mApplicationDate;
+    @InjectView(R.id.app_date_sep) View mApplicationDateSeparator;
+    @InjectView(R.id.permissions) TextView mApplicationPermissions;
+
     public String getShownPackage() {
         return mPackage;
     }
@@ -84,7 +102,11 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.app_info, container, false);
+        View view = inflater.inflate(R.layout.app_info, container, false);
+        Views.inject(this, view);
+        mInfo.setOnClickListener(this);
+        mPlay.setOnClickListener(this);
+        return view;
     }
     
     @Override
@@ -103,51 +125,49 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
 
     @TargetApi(9)
     private void populateView(PackageManager pManager, PackageInfo packageInfo, boolean isFromGPlay) {
-        TextView textView = (TextView) getView().findViewById(R.id.status);        
         if (packageInfo == null) {
             // Not installed
-            ((ImageView) getView().findViewById(R.id.icon)).setImageResource(R.drawable.ic_default_launcher);
-            ((TextView) getView().findViewById(R.id.title)).setText(mName);
-            ((TextView) getView().findViewById(R.id.package_name)).setText(mPackage);
-            getView().findViewById(R.id.info).setEnabled(false);
-            textView.setText(R.string.app_info_not_installed);
-            getView().findViewById(R.id.version).setVisibility(View.INVISIBLE);
-            getView().findViewById(R.id.app_data).setVisibility(View.GONE);
-            getView().findViewById(R.id.play_linked).setVisibility(View.GONE);
-            getView().findViewById(R.id.stop_application).setEnabled(false);
+            mIcon.setImageResource(R.drawable.ic_default_launcher);
+            mTitle.setText(mName);
+            mPackageName.setText(mPackage);
+            mInfo.setEnabled(false);
+            mVersion.setVisibility(View.INVISIBLE);
+            mStatus.setText(R.string.app_info_not_installed);
+            mApplicationData.setVisibility(View.GONE);
+            mPlayLinked.setVisibility(View.GONE);
+            mStopApplication.setEnabled(false);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                getView().findViewById(R.id.uninstall_application).setEnabled(false);
+                mUninstallApplication.setEnabled(false);
             } else {
-                getView().findViewById(R.id.uninstall_application).setVisibility(View.GONE);
+                mUninstallApplication.setVisibility(View.GONE);
             }
-            getView().findViewById(R.id.start_application).setEnabled(false);
+            mStartApplication.setEnabled(false);
         } else {
             final ApplicationInfo applicationInfo = packageInfo.applicationInfo;
-            
             final String packageName = packageInfo.packageName;
             final Intent launchIntent = pManager.getLaunchIntentForPackage(packageName);
             
-            ((ImageView) getView().findViewById(R.id.icon)).setImageDrawable(applicationInfo.loadIcon(pManager));
-            ((TextView) getView().findViewById(R.id.title)).setText(applicationInfo.loadLabel(pManager));
-            ((TextView) getView().findViewById(R.id.package_name)).setText(packageName);
-            ((TextView) getView().findViewById(R.id.version)).setText(getString(R.string.app_info_version, packageInfo.versionName, packageInfo.versionCode));            
-            
+            mIcon.setImageDrawable(applicationInfo.loadIcon(pManager));
+            mTitle.setText(applicationInfo.loadLabel(pManager));
+            mPackageName.setText(packageName);
+            mInfo.setEnabled(true);
+            mVersion.setText(getString(R.string.app_info_version, packageInfo.versionName, packageInfo.versionCode));
             if ((applicationInfo.flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) == ApplicationInfo.FLAG_EXTERNAL_STORAGE) {
-                textView.setText(R.string.app_info_sd_installed);
+                mStatus.setText(R.string.app_info_sd_installed);
             } else {
-                textView.setText(R.string.app_info_local_installed);
+                mStatus.setText(R.string.app_info_local_installed);
             }
             
             if (isFromGPlay) {
-                ((TextView) getView().findViewById(R.id.play_linked)).setText(R.string.app_info_play_linked);
+                mPlayLinked.setText(R.string.app_info_play_linked);
             } else {
-                ((TextView) getView().findViewById(R.id.play_linked)).setText(R.string.app_info_play_not_linked);                
+                mPlayLinked.setText(R.string.app_info_play_not_linked);
             }
             
             checkStopButton();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                getView().findViewById(R.id.uninstall_application).setOnClickListener(new View.OnClickListener() {
+                mUninstallApplication.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         final Activity activity = getSherlockActivity();
@@ -163,13 +183,13 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                     }
                 });
             } else {
-                getView().findViewById(R.id.uninstall_application).setVisibility(View.GONE);
+                mUninstallApplication.setVisibility(View.GONE);
             }
             
             if (launchIntent == null) {
-                getView().findViewById(R.id.start_application).setEnabled(false);
+                mStartApplication.setEnabled(false);
             } else {                
-                getView().findViewById(R.id.start_application).setOnClickListener(new View.OnClickListener() {
+                mStartApplication.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         final Activity activity = getSherlockActivity();
@@ -184,21 +204,20 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                 });
             }
             
-            textView = (TextView) getView().findViewById(R.id.app_date);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
                 final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault());
-                textView.setText(getString(R.string.app_info_date, 
-                        dateFormat.format(new Date(packageInfo.firstInstallTime)), 
-                        dateFormat.format(new Date(packageInfo.lastUpdateTime))));                
+                mApplicationDate.setText(getString(R.string.app_info_date,
+                        dateFormat.format(new Date(packageInfo.firstInstallTime)),
+                        dateFormat.format(new Date(packageInfo.lastUpdateTime))));
+                mApplicationDateSeparator.setVisibility(View.VISIBLE);
             } else {
-                textView.setVisibility(View.GONE);
-                getView().findViewById(R.id.app_date_sep).setVisibility(View.GONE);
+                mApplicationDate.setVisibility(View.GONE);
+                mApplicationDateSeparator.setVisibility(View.GONE);
             }
             
-            textView = (TextView) getView().findViewById(R.id.permissions);
             String[] permissions = packageInfo.requestedPermissions;
             if (permissions == null || permissions.length == 0) {
-                textView.setText(R.string.app_info_no_permissions);
+                mApplicationPermissions.setText(R.string.app_info_no_permissions);
             } else {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < permissions.length; i++) {
@@ -207,21 +226,17 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                     }
                     sb.append(permissions[i]);
                 }
-                textView.setText(sb);
+                mApplicationPermissions.setText(sb);
             }
-            
-            getView().findViewById(R.id.info).setOnClickListener(this);
         }
-        getView().findViewById(R.id.play).setOnClickListener(this);
     }
 
     private void checkStopButton() {
         final boolean isRunning = AppUtil.isRunning(getActivity(), mPackage);
-        final View button = getView().findViewById(R.id.stop_application);
-        if (button != null) {
-            button.setEnabled(isRunning);
+        if (mStopApplication != null) {
+            mStopApplication.setEnabled(isRunning);
             if (isRunning) {
-                button.setOnClickListener(new View.OnClickListener() {                    
+                mStopApplication.setOnClickListener(new View.OnClickListener() {
                     @SuppressLint("NewApi")
                     @SuppressWarnings("deprecation")
                     @Override
@@ -243,9 +258,9 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.info) {
+        if (v == mInfo) {
             AppUtil.showInstalledAppDetails(getActivity(), mPackage);
-        } else if (v.getId() == R.id.play) {
+        } else if (v == mPlay) {
             AppUtil.showPlayGoogleApp(getActivity(), mPackage, false);
         }
     }

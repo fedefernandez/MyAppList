@@ -14,16 +14,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.view.ThemeManager;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 import java.util.ArrayList;
+
+import butterknife.InjectView;
+import butterknife.Views;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class ListInstallActivity extends SherlockListActivity implements View.OnClickListener {
 
@@ -39,8 +44,8 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
     private int mStatus;
     private ArrayList<AppInfo> mAppInfoList;
     private AppInstallAdapter mAdapter;
-    private View mCancelButtonLayout;
-    private TextView mCancelButton;
+    @InjectView(R.id.cancel_button_layout) View mCancelButtonLayout;
+    @InjectView(R.id.cancel_button) TextView mCancelButton;
     private int mTheme;
 
     @Override
@@ -50,8 +55,8 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
         super.onCreate(savedInstance);
 
         setContentView(R.layout.activity_install);
-        mCancelButtonLayout = findViewById(R.id.cancel_button_layout);
-        mCancelButton = (TextView) findViewById(R.id.cancel_button);
+        Views.inject(this);
+
         mCancelButton.setOnClickListener(this);
 
         final ActionBar ab = getSupportActionBar();        
@@ -172,9 +177,13 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
         }
     }
 
-    static class AppInfoView {
-        TextView title;
-        ImageView icon;
+    static class ViewHolder {
+        @InjectView(android.R.id.text1) TextView title;
+        @InjectView(android.R.id.icon1) ImageView icon;
+        @InjectView(android.R.id.checkbox) CheckBox checkBox;
+        ViewHolder(View view) {
+            Views.inject(this, view);
+        }
     }
 
     static class AppInstallAdapter extends BaseAdapter {
@@ -212,33 +221,31 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view;
-            AppInfoView appInfoView;
+            ViewHolder viewHolder;
             if (convertView == null) {
                 view = inflater.inflate(R.layout.list_item, parent, false);
-                appInfoView = new AppInfoView();
-                appInfoView.title = (TextView) view.findViewById(android.R.id.text1);
-                appInfoView.icon = (ImageView) view.findViewById(android.R.id.icon1);
-                view.findViewById(android.R.id.checkbox).setVisibility(View.GONE);
-                view.setTag(appInfoView);
+                viewHolder = new ViewHolder(view);
+                viewHolder.checkBox.setVisibility(View.GONE);
+                view.setTag(viewHolder);
             } else {
                 view = convertView;
-                appInfoView = (AppInfoView) view.getTag();
+                viewHolder = (ViewHolder) view.getTag();
             }
 
             AppInfo item = (AppInfo) getItem(position);
-            appInfoView.title.setText(item.getName());
+            viewHolder.title.setText(item.getName());
             Drawable icon = null;
             if (item.isInstalled()) {
-                appInfoView.title.setTypeface(Typeface.DEFAULT_BOLD);
+                viewHolder.title.setTypeface(Typeface.DEFAULT_BOLD);
                 icon = AppUtil.loadApplicationIcon(packageManager, item.getPackageName());
             } else {
-                appInfoView.title.setTypeface(Typeface.DEFAULT);
+                viewHolder.title.setTypeface(Typeface.DEFAULT);
             }
 
             if (icon == null) {
-                appInfoView.icon.setImageResource(R.drawable.ic_default_launcher);
+                viewHolder.icon.setImageResource(R.drawable.ic_default_launcher);
             } else {
-                appInfoView.icon.setImageDrawable(icon);
+                viewHolder.icon.setImageDrawable(icon);
             }
             return view;
         }

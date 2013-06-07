@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -16,7 +17,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
-import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.AppListIgnoredAdapter;
 import com.projectsexception.myapplist.work.AppListLoader;
 

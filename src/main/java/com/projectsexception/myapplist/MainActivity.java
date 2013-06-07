@@ -21,6 +21,9 @@ import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.CustomLog;
 import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.xml.FileUtil;
+
+import butterknife.InjectView;
+import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -47,19 +50,20 @@ public class MainActivity extends BaseActivity implements
     private String mFileStream;
     private boolean mDualPane;
     private Crouton mCroutonRate;
+    @InjectView(R.id.app_info) View mDetailsFrame;
 
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
         
         setContentView(R.layout.activity_list);
+        Views.inject(this);
 
         checkRateApp();
         
         String fileName = getIntent().getStringExtra(ARG_FILE);
 
-        View detailsFrame = findViewById(R.id.app_info);
-        mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+        mDualPane = mDetailsFrame != null && mDetailsFrame.getVisibility() == View.VISIBLE;
         
         if (fileName == null) {
             if (getIntent().getData() != null) {

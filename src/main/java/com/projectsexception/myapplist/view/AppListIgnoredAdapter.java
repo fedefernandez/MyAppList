@@ -4,31 +4,30 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.manuelpeinado.multichoiceadapter.MultiChoiceBaseAdapter;
+
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+
+import butterknife.InjectView;
+import butterknife.Views;
 
 public class AppListIgnoredAdapter extends BaseAdapter {
 
-    static class AppInfoView {
-        TextView title;
-        ImageView icon;
+    static class ViewHolder {
+        @InjectView(android.R.id.text1) TextView title;
+        @InjectView(android.R.id.icon1) ImageView icon;
+        ViewHolder(View view) {
+            Views.inject(this, view);
+        }
     }
 
     private final LayoutInflater mInflater;
@@ -49,27 +48,25 @@ public class AppListIgnoredAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
-        AppInfoView appInfoView;
+        ViewHolder viewHolder;
         if (convertView == null) {
             view = mInflater.inflate(R.layout.list_item_ignored, parent, false);
-            appInfoView = new AppInfoView();
-            appInfoView.title = (TextView) view.findViewById(android.R.id.text1);
-            appInfoView.icon = (ImageView) view.findViewById(android.R.id.icon1);
-            view.setTag(appInfoView);
+            viewHolder = new ViewHolder(view);
+            view.setTag(viewHolder);
         } else {
             view = convertView;
-            appInfoView = (AppInfoView) view.getTag();
+            viewHolder = (ViewHolder) view.getTag();
         }
 
         AppInfo item = (AppInfo) getItem(position);
-        appInfoView.title.setText(item.getName());
-        appInfoView.title.setTypeface(Typeface.DEFAULT_BOLD);
+        viewHolder.title.setText(item.getName());
+        viewHolder.title.setTypeface(Typeface.DEFAULT_BOLD);
 
         Drawable icon = AppUtil.loadApplicationIcon(mPm, item.getPackageName());
         if (icon == null) {
-            appInfoView.icon.setImageResource(R.drawable.ic_default_launcher);
+            viewHolder.icon.setImageResource(R.drawable.ic_default_launcher);
         } else {
-            appInfoView.icon.setImageDrawable(icon);
+            viewHolder.icon.setImageDrawable(icon);
         }
         return view;
     }

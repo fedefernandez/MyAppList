@@ -19,13 +19,16 @@ import java.util.regex.Pattern;
 
 public class FileUtil {
     
-    public static final int FILE_XML = 0;
     public static final int FILE_TEXT = 1;
     public static final int FILE_HTML = 2;
     
     private static final String PATTERN_PACKAGE_NAME = "<app\\s+package=\"([^\"]+)\"\\s+name=\"([^\"]+)\"\\s*\\/>";
     private static final String PATTERN_NAME_PACKAGE = "<app\\s+name=\"([^\"]+)\"\\s+package=\"([^\"]+)\"\\s*\\/>";
-    
+
+    private static final String HTML_FILENAME = "myapplist-backup.html";
+    private static final String TEXT_FILENAME = "myapplist-backup.txt";
+    private static final String ERROR_CREATING_FILE = "Error creating file";
+
     public static final String APPLICATION_DIR = "MyAppList";
 
     private static File prepareApplicationDir(Context context) {
@@ -100,9 +103,9 @@ public class FileUtil {
         }
         final String fileName;
         if (formatFile == FileUtil.FILE_HTML) {
-            fileName = context.getString(R.string.share_html_filename);
+            fileName = context == null ? HTML_FILENAME : context.getString(R.string.share_html_filename);
         } else {
-            fileName = context.getString(R.string.share_text_filename);
+            fileName = context == null ? TEXT_FILENAME : context.getString(R.string.share_text_filename);
         }
         File file = new File(dir, fileName);
         if (!writeShareFile(context, appList, file, formatFile)) {
@@ -144,7 +147,7 @@ public class FileUtil {
                 CustomLog.error("FileUtil", e);
             }
         }
-        return context.getString(R.string.error_creating_file, file.getAbsolutePath());
+        return context == null ? ERROR_CREATING_FILE : context.getString(R.string.error_creating_file, file.getAbsolutePath());
     }
     
     public static String writeFile(Context context, List<AppInfo> appList, File file) {
@@ -152,7 +155,9 @@ public class FileUtil {
         final File backupFile;
         if (file.exists()) {
             backupFile = new File(file.getAbsolutePath() + ".bak");
-            file.renameTo(backupFile);
+            if (!file.renameTo(backupFile)) {
+                CustomLog.warn("FileUtil", "Error renaming " + file.getAbsolutePath() + " to " + backupFile.getAbsolutePath());
+            }
         } else {
             backupFile = null;
         }
@@ -178,15 +183,21 @@ public class FileUtil {
             serializer.endDocument();
             writer.close();
             if (backupFile != null && backupFile.exists()) {
-                backupFile.delete();
+                if (!backupFile.delete()) {
+                    CustomLog.warn("FileUtil", "Error deleting file " + backupFile.getAbsolutePath());
+                }
             }
             return null;
         } catch (Exception e) {
             if (backupFile != null && backupFile.exists()) {
                 if (file.exists()) {
-                    file.delete();
+                    if (!file.delete()) {
+                        CustomLog.warn("FileUtil", "Error deleting file " + file.getAbsolutePath());
+                    }
                 }
-                backupFile.renameTo(file);
+                if (!backupFile.renameTo(file)) {
+                    CustomLog.warn("FileUtil", "Error renaming " + backupFile.getAbsolutePath() + " to " + file.getAbsolutePath());
+                }
             }
             if (context != null) {
                 return context.getString(R.string.error_creating_file, file.getAbsolutePath());
@@ -202,7 +213,7 @@ public class FileUtil {
             FileWriter writer = new FileWriter(file);
             String content;
             if (formatFile == FILE_HTML) {
-                content = "<html><body>" + AppUtil.appInfoToHTML(context, appList, true) + "</body></html>";
+                content = AppUtil.appInfoToHTML(context, appList, true, true);
             } else {
                 content = AppUtil.appInfoToText(context, appList, true);
             }
@@ -239,7 +250,7 @@ public class FileUtil {
         try {
             // Read file
             br = new BufferedReader(new FileReader(from));
-            String line = null;
+            String line;
             StringBuilder buffer = new StringBuilder();
             while ((line = br.readLine()) != null) {                
                 buffer.append(line);

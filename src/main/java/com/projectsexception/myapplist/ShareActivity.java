@@ -1,14 +1,19 @@
 package com.projectsexception.myapplist;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -16,12 +21,15 @@ import com.projectsexception.myapplist.fragments.ShareTaskFragment;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.InjectView;
+import butterknife.Views;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class ShareActivity extends BaseActivity implements ShareTaskFragment.CallBack, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     
@@ -75,12 +83,24 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     /**
      * Store the message textView
      */
-    TextView mTextView;
+    @InjectView(android.R.id.text1) TextView mTextView;
+
+    /**
+     * Store the share type spinner
+     */
+    @InjectView(R.id.spinner) Spinner mSpinner;
+
+    /**
+     * Store the list with the share types (only in big screens)
+     */
+    @InjectView(R.id.list) ListView mListView;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_share);
+        Views.inject(this);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -108,23 +128,20 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             mSelection = 1;
         }
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        if (spinner != null) {
+        if (mSpinner != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemList);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
-            spinner.setSelection(mSelection - mStartIndex);
-            spinner.setOnItemSelectedListener(this);
-        } else {
-            ListView listView = (ListView) findViewById(R.id.list);
+            mSpinner.setAdapter(adapter);
+            mSpinner.setSelection(mSelection - mStartIndex);
+            mSpinner.setOnItemSelectedListener(this);
+        } else if (mListView != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_option, itemList);
-            listView.setAdapter(adapter);
-            listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-            listView.setItemChecked(mSelection - mStartIndex, true);
-            listView.setOnItemClickListener(this);
+            mListView.setAdapter(adapter);
+            mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            mListView.setItemChecked(mSelection - mStartIndex, true);
+            mListView.setOnItemClickListener(this);
         }
 
-        mTextView = (TextView) findViewById(android.R.id.text1);
         mTextView.setText(OPTIONS_MSG[mSelection]);
         
         FragmentManager fm = getSupportFragmentManager();
@@ -220,16 +237,16 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     private void shareAppListText(int section, boolean footer) {
         if (mAppList != null && !mAppList.isEmpty()) {
             Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_SUBJECT, 
-                    getResources().getQuantityString(R.plurals.share_title, mAppList.size()));
             final CharSequence text;
             if (section == SECTION_HTML) {
                 intent.setType("text/html");
-                text = Html.fromHtml(AppUtil.appInfoToHTML(this, mAppList, footer));
+                text = Html.fromHtml(AppUtil.appInfoToHTML(this, mAppList, footer, false));
             } else {
-                intent.setType("text/plain");                    
+                intent.setType("text/plain");
                 text = AppUtil.appInfoToText(this, mAppList, footer);
             }
+            intent.putExtra(Intent.EXTRA_SUBJECT,
+                    getResources().getQuantityString(R.plurals.share_title, mAppList.size()));
             intent.putExtra(Intent.EXTRA_TEXT, text);
             try {
                 startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                

@@ -50,27 +50,11 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<ArrayList<AppIn
      */
     @Override
     public void deliverResult(ArrayList<AppInfo> apps) {
-        if (isReset()) {
-            // An async query came in while the loader is stopped. We
-            // don't need the result.
-            if (apps != null) {
-                onReleaseResources(apps);
-            }
-        }
-        List<AppInfo> oldApps = apps;
         mApps = apps;
-
         if (isStarted()) {
             // If the Loader is currently started, we can immediately
             // deliver its results.
             super.deliverResult(apps);
-        }
-
-        // At this point we can release the resources associated with
-        // 'oldApps' if needed; now that the new result is delivered we
-        // know that it is no longer in use.
-        if (oldApps != null) {
-            onReleaseResources(oldApps);
         }
     }
 
@@ -112,10 +96,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<ArrayList<AppIn
     @Override
     public void onCanceled(ArrayList<AppInfo> apps) {
         super.onCanceled(apps);
-
-        // At this point we can release the resources associated with 'apps'
-        // if needed.
-        onReleaseResources(apps);
     }
 
     /**
@@ -131,7 +111,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<ArrayList<AppIn
         // At this point we can release the resources associated with 'apps'
         // if needed.
         if (mApps != null) {
-            onReleaseResources(mApps);
             mApps = null;
         }
 
@@ -140,15 +119,6 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<ArrayList<AppIn
             getContext().unregisterReceiver(mPackageObserver);
             mPackageObserver = null;
         }
-    }
-
-    /**
-     * Helper function to take care of releasing resources associated with an
-     * actively loaded data set.
-     */
-    protected void onReleaseResources(List<AppInfo> apps) {
-        // For a simple List<> there is nothing to do. For something
-        // like a Cursor, we would close it here.
     }
     
     /**

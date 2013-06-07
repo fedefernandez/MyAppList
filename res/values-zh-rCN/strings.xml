@@ -111,4 +111,8 @@
   <string name="stop_application">停止</string>
   <string name="theme_dark">深色</string>
   <string name="theme_light">淡色</string>
+  <string name="configuration_sdcard">SDCard Path</string>
+  <string name="configuration_sdcard_no_access">No sdcard found</string>
+  <string name="backup_uninstalled_apps_title">Keep uninstalled apps</string>
+  <string name="backup_uninstalled_apps_summary">Check for keep uninstalled apps in backup file</string>
 </resources>
