@@ -5,8 +5,6 @@ import java.text.Collator;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.sun.istack.internal.NotNull;
-
 public class AppInfo implements Comparable<AppInfo>, Parcelable {
     
     private final Collator sCollator = Collator.getInstance();
@@ -40,7 +38,7 @@ public class AppInfo implements Comparable<AppInfo>, Parcelable {
     }
 
     @Override
-    public int compareTo(@NotNull AppInfo another) {
+    public int compareTo(AppInfo another) {
         if (!installed && another.installed) {
             return -1;
         } else  if (installed && !another.installed) {

@@ -1,0 +1,1 @@
+include 'contrib:ActionBarSherlock:actionbarsherlock', 'contrib:MultiChoiceAdapter:library', 'application'
