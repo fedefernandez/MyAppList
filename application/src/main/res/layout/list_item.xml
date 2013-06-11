@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.projectsexception.myapplist.view.CheckedLinearLayout
+<com.projectsexception.myapplist.view.CheckedLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="@dimen/item_min_height"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
     android:baselineAligned="false"
     style="?itemStyle">
 
-    <CheckBox
-        android:id="@android:id/checkbox"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="false"
-        android:layout_margin="@dimen/item_checkbox_margin"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <ImageView
-        android:id="@android:id/icon1"
-        android:layout_width="@dimen/item_icon_size"
-        android:layout_height="@dimen/item_icon_size"
-        android:layout_margin="@dimen/item_icon_margin"
-        android:contentDescription="@string/content_desc_application_icon" />
+        <CheckBox
+            android:id="@android:id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:layout_margin="@dimen/item_checkbox_margin"/>
 
-    <TextView
-        android:id="@android:id/text1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:layout_weight="1"/>
+        <com.projectsexception.myapplist.iconloader.IconView
+            android:id="@android:id/icon1"
+            android:layout_width="@dimen/item_icon_size"
+            android:layout_height="@dimen/item_icon_size"
+            android:layout_marginRight="@dimen/item_icon_margin"
+            android:src="@drawable/ic_default_launcher"
+            android:contentDescription="@string/content_desc_application_icon" />
 
-</com.projectsexception.myapplist.view.CheckedLinearLayout>
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:text="@string/app_name"/>
+
+    </LinearLayout>
+
+</com.projectsexception.myapplist.view.CheckedLayout>

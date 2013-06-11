@@ -4,4 +4,5 @@
     <attr name="underlineStyle" format="reference" />
     <attr name="cancelButtonStyle" format="reference" />
     <attr name="appInfoButtonStyle" format="reference" />
+    <attr name="listBackground" format="reference" />
 </resources>

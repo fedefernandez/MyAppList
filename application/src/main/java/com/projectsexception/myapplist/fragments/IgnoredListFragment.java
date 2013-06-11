@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,6 +25,9 @@ import com.projectsexception.myapplist.work.AppListLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.InjectView;
+import butterknife.Views;
+
 public class IgnoredListFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>,
         AdapterView.OnItemClickListener {
@@ -34,8 +39,11 @@ public class IgnoredListFragment extends SherlockListFragment implements
     private CallBack mCallBack;
     private MenuItem mRefreshItem;
     private AppListIgnoredAdapter mAdapter;
-    private ListView mListView;
     private SparseBooleanArray mCheckItems;
+    private boolean mListShown;
+    @InjectView(android.R.id.list) ListView mListView;
+    @InjectView(android.R.id.empty) View mEmptyView;
+    @InjectView(android.R.id.progress) View mProgress;
     
     @Override
     public void onAttach(Activity activity) {
@@ -48,12 +56,17 @@ public class IgnoredListFragment extends SherlockListFragment implements
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        Views.inject(this, view);
+        return view;
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         mCheckItems = new SparseBooleanArray();
-
-        setEmptyText(getSherlockActivity().getString(R.string.fragment_list_empty));
 
         // Create an empty adapter we will use to display the loaded data.
         mAdapter = new AppListIgnoredAdapter(getSherlockActivity());
@@ -116,11 +129,8 @@ public class IgnoredListFragment extends SherlockListFragment implements
         mAdapter.setData(data);
 
         // The list should now be shown.
-        if (isResumed()) {
-            setListShown(true);
-        } else {
-            setListShownNoAnimation(true);
-        }
+        setListShown(true);
+
         if (data != null) {
             // Check ignored items
             final List<String> ignored = mCallBack.getHelper().getPackages();
@@ -147,7 +157,29 @@ public class IgnoredListFragment extends SherlockListFragment implements
         mCheckItems.put(position, actual);
     }
 
+    public void setListShown(boolean shown) {
+        if (mListShown == shown) {
+            return;
+        }
+        mListShown = shown;
+        if (shown) {
+            mProgress.setVisibility(View.INVISIBLE);
+            mListView.setVisibility(View.VISIBLE);
+        } else {
+            mProgress.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.INVISIBLE);
+        }
+    }
+
     private void loading(boolean loading) {
+        if (mEmptyView != null) {
+            if (loading) {
+                mEmptyView.setVisibility(View.INVISIBLE);
+            } else {
+                mEmptyView.setVisibility(View.VISIBLE);
+            }
+        }
+
         if (mRefreshItem != null) {
             if(loading) {
                 mRefreshItem.setEnabled(false);

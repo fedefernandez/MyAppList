@@ -3,17 +3,15 @@ package com.projectsexception.myapplist.view;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.projectsexception.myapplist.R;
+import com.projectsexception.myapplist.iconloader.IconView;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.AppUtil;
 
 import java.util.ArrayList;
 
@@ -24,7 +22,7 @@ public class AppListIgnoredAdapter extends BaseAdapter {
 
     static class ViewHolder {
         @InjectView(android.R.id.text1) TextView title;
-        @InjectView(android.R.id.icon1) ImageView icon;
+        @InjectView(android.R.id.icon1) IconView icon;
         ViewHolder(View view) {
             Views.inject(this, view);
         }
@@ -61,13 +59,8 @@ public class AppListIgnoredAdapter extends BaseAdapter {
         AppInfo item = (AppInfo) getItem(position);
         viewHolder.title.setText(item.getName());
         viewHolder.title.setTypeface(Typeface.DEFAULT_BOLD);
+        viewHolder.icon.setPackageName(mPm, item.getPackageName(), R.drawable.ic_default_launcher, true);
 
-        Drawable icon = AppUtil.loadApplicationIcon(mPm, item.getPackageName());
-        if (icon == null) {
-            viewHolder.icon.setImageResource(R.drawable.ic_default_launcher);
-        } else {
-            viewHolder.icon.setImageDrawable(icon);
-        }
         return view;
     }
 

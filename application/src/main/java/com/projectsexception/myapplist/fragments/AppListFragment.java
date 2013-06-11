@@ -102,8 +102,7 @@ public class AppListFragment extends AbstractAppListFragment {
     }
 
     @Override 
-    public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
-        loading(true);
+    public Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args) {
         return new AppListLoader(getSherlockActivity());
     }
 

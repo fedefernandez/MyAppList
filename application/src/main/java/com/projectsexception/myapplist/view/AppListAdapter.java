@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.actionbarsherlock.view.ActionMode;
@@ -16,6 +17,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.manuelpeinado.multichoiceadapter.MultiChoiceBaseAdapter;
 import com.projectsexception.myapplist.R;
+import com.projectsexception.myapplist.iconloader.IconView;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 
@@ -30,7 +32,8 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
 
     static class ViewHolder {
         @InjectView(android.R.id.text1) TextView title;
-        @InjectView(android.R.id.icon1) ImageView icon;
+        @InjectView(android.R.id.icon1) IconView icon;
+        @InjectView(android.R.id.checkbox) CheckBox checkBox;
         ViewHolder(View view) {
             Views.inject(this, view);
         }
@@ -86,21 +89,19 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
 
         AppInfo item = (AppInfo) getItem(position);
         viewHolder.title.setText(item.getName());
-        Drawable icon = null;
         if (item.isInstalled()) {
             viewHolder.title.setTypeface(Typeface.DEFAULT_BOLD);
             viewHolder.title.setTextColor(mInstalledColor);
-            icon = AppUtil.loadApplicationIcon(mPm, item.getPackageName());
         } else {
             viewHolder.title.setTypeface(Typeface.DEFAULT);
             viewHolder.title.setTextColor(mNotInstalledColor);
         }
-        
-        if (icon == null) {
-            viewHolder.icon.setImageResource(R.drawable.ic_default_launcher);
-        } else {
-            viewHolder.icon.setImageDrawable(icon);
-        }
+
+        viewHolder.icon.setPackageName(mPm, item.getPackageName(), R.drawable.ic_default_launcher, true);
+
+        // FIXME For MultiChoiceAdapter
+        viewHolder.checkBox.setTag(position);
+
         return view;
     }
 

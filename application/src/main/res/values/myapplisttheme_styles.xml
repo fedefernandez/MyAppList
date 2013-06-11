@@ -28,7 +28,8 @@
     </style>
 
     <style name="ItemMyAppListTheme">
-        <item name="android:background">@drawable/list_selector_holo_dark</item>
+        <item name="android:foreground">@drawable/list_selector_holo_dark</item>
+        <item name="android:background">@drawable/background_list_item_dark</item>
     </style>
 
     <style name="UnderlineMyAppListTheme" parent="android:Widget.TextView">
@@ -92,7 +93,8 @@
     </style>
 
     <style name="ItemMyAppListThemeLight">
-        <item name="android:background">@drawable/list_selector_holo_light</item>
+        <item name="android:foreground">@drawable/list_selector_holo_light</item>
+        <item name="android:background">@drawable/background_list_item_light</item>
     </style>
 
     <style name="UnderlineMyAppListThemeLight" parent="android:Widget.TextView">

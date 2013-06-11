@@ -7,6 +7,7 @@
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListTheme</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListTheme</item>
         <item name="underlineStyle">@style/UnderlineMyAppListTheme</item>
+        <item name="listBackground">@drawable/list_selector_holo_dark</item>
     </style>
 
     <style name="MyAppListBaseThemeLight" parent="Theme.Sherlock.Light">
@@ -14,6 +15,7 @@
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListThemeLight</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListThemeLight</item>
         <item name="underlineStyle">@style/UnderlineMyAppListThemeLight</item>
+        <item name="listBackground">@drawable/list_selector_holo_light</item>
     </style>
 
     <style name="MyAppListTheme" parent="MyAppListBaseTheme">

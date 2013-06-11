@@ -7,11 +7,12 @@
     <dimen name="item_min_height">64dp</dimen>
     <dimen name="item_icon_size">32dp</dimen>
     <dimen name="item_icon_margin">10dp</dimen>
+    <dimen name="item_text_margin">50dp</dimen>
     <dimen name="item_checkbox_margin">10dp</dimen>
     <dimen name="app_icon_size">48dp</dimen>
     <dimen name="share_title_size">20sp</dimen>
     <dimen name="share_form_padding">5sp</dimen>
     <dimen name="share_options_size">16sp</dimen>
     <dimen name="share_msg_size">16sp</dimen>
-    <dimen name="share_close_padding">10dp</dimen>
+    <dimen name="share_close_padding">15dp</dimen>
 </resources>

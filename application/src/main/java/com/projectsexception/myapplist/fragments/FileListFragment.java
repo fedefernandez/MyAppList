@@ -135,8 +135,7 @@ public class FileListFragment extends AbstractAppListFragment {
     }
     
     @Override 
-    public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
-        loading(true);
+    public Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args) {
         ArrayList<AppInfo> lst;
         if (args == null || args.getBoolean(ARG_RELOAD, false)) {
             lst = null;

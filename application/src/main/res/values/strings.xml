@@ -113,7 +113,7 @@
   <string name="stop_application">Stop</string>
   <string name="theme_dark">Dark</string>
   <string name="theme_light">Light</string>
-  <string name="configuration_sdcard">SDCard Path</string>
+  <string name="configuration_sdcard">External card path</string>
   <string name="configuration_sdcard_no_access">No sdcard found</string>
   <string name="backup_uninstalled_apps_title">Keep uninstalled apps</string>
   <string name="backup_uninstalled_apps_summary">Check for keep uninstalled apps in backup file</string>

@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
+
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.R;
@@ -15,6 +19,9 @@ import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.AppListAdapter;
 
 import java.util.ArrayList;
+
+import butterknife.InjectView;
+import butterknife.Views;
 
 public abstract class AbstractAppListFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>,
@@ -27,26 +34,37 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     
     protected MenuItem mRefreshItem;
     protected AppListAdapter mAdapter;
+    private boolean mListShown;
+    @InjectView(android.R.id.list) ListView mListView;
+    @InjectView(android.R.id.empty) View mEmptyView;
+    @InjectView(android.R.id.progress) View mProgress;
 
     abstract int getMenuAdapter();
     abstract void showAppInfo(String name, String packageName);
+    abstract Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        Views.inject(this, view);
+        return view;
+    }
     
     @Override 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setEmptyText(getSherlockActivity().getString(R.string.fragment_list_empty));
-
         // Create an empty adapter we will use to display the loaded data.
         mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter());
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setAdapterView(getListView());
+        mAdapter.setAdapterView(mListView);
         mAdapter.setListener(this);
+
+        mListView.setFastScrollEnabled(true);
+        mListView.setEmptyView(mEmptyView);
 
         // Start out with a progress indicator.
         setListShown(false);
-
-        getListView().setFastScrollEnabled(true);
     }
 
     @Override
@@ -102,7 +120,10 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     }
 
     @Override 
-    public abstract Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args);
+    public Loader<ArrayList<AppInfo>> onCreateLoader(int id, Bundle args) {
+        loading(true);
+        return createLoader(id, args);
+    }
 
     @Override 
     public void onLoadFinished(Loader<ArrayList<AppInfo>> loader, ArrayList<AppInfo> data) {
@@ -114,11 +135,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         mAdapter.setData(data);
 
         // The list should now be shown.
-        if (isResumed()) {
-            setListShown(true);
-        } else {
-            setListShownNoAnimation(true);
-        }
+        setListShown(true);
     }
 
     @Override 
@@ -127,8 +144,30 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
         // Clear the data in the adapter.
         mAdapter.setData(null);
     }
+
+    public void setListShown(boolean shown) {
+        if (mListShown == shown) {
+            return;
+        }
+        mListShown = shown;
+        if (shown) {
+            mProgress.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+        } else {
+            mProgress.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.INVISIBLE);
+        }
+    }
     
     protected void loading(boolean loading) {
+        if (mEmptyView != null) {
+            if (loading) {
+                mEmptyView.setVisibility(View.INVISIBLE);
+            } else {
+                mEmptyView.setVisibility(View.VISIBLE);
+            }
+        }
+
         if (mRefreshItem != null) {
             if(loading) {
                 mRefreshItem.setEnabled(false);
