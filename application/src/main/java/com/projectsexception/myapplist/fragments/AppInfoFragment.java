@@ -17,20 +17,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
+import com.projectsexception.myapplist.view.ThemeManager;
+import com.projectsexception.myapplist.view.TypefaceProvider;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.InjectView;
 import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class AppInfoFragment extends SherlockFragment implements View.OnClickListener {
     
@@ -38,9 +41,11 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
         void removeAppInfoFragment();
     }
     
-    private static final String KEY_LISTENER = "AppInfoFragment";
-    private static final String NAME_ARG = "nameArg";
-    private static final String PACKAGE_ARG = "packageArg";
+    static final String KEY_LISTENER = "AppInfoFragment";
+    static final String NAME_ARG = "nameArg";
+    static final String PERMISSION_PREFIX = "android.permission.";
+
+    static final String PACKAGE_ARG = "packageArg";
 
     public static AppInfoFragment newInstance(String name, String packageName) {
         AppInfoFragment frg = new AppInfoFragment();
@@ -224,10 +229,27 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                     if (i > 0) {
                         sb.append('\n');
                     }
-                    sb.append(permissions[i]);
+                    if (permissions[i].startsWith(PERMISSION_PREFIX)) {
+                        sb.append(permissions[i].substring(PERMISSION_PREFIX.length()));
+                    } else {
+                        sb.append(permissions[i]);
+                    }
                 }
                 mApplicationPermissions.setText(sb);
             }
+        }
+
+        if (ThemeManager.isFlavoredTheme(getSherlockActivity())) {
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mTitle, TypefaceProvider.FONT_BOLD);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mPackageName, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mStatus, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mVersion, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mPlayLinked, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mStopApplication, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mUninstallApplication, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mStartApplication, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mApplicationDate, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getSherlockActivity(), mApplicationPermissions, TypefaceProvider.FONT_REGULAR);
         }
     }
 

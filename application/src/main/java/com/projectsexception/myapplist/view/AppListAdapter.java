@@ -3,14 +3,13 @@ package com.projectsexception.myapplist.view;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -19,7 +18,6 @@ import com.manuelpeinado.multichoiceadapter.MultiChoiceBaseAdapter;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.iconloader.IconView;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.AppUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ import java.util.Set;
 import butterknife.InjectView;
 import butterknife.Views;
 
-public class AppListAdapter extends MultiChoiceBaseAdapter {
+public class AppListAdapter extends MultiChoiceBaseAdapter implements View.OnClickListener {
 
     static class ViewHolder {
         @InjectView(android.R.id.text1) TextView title;
@@ -42,7 +40,8 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
     public static interface ActionListener {
         void actionItemClicked(int id);
     }
-    
+
+    private final Context mContext;
     private final LayoutInflater mInflater;
     private final PackageManager mPm;
     private ArrayList<AppInfo> mAppList;
@@ -50,14 +49,19 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
     private int mInstalledColor;
     private int mMenu;
     private ActionListener mListener;
+    private boolean mAnimations;
+    private int mLastAnimatedPosition;
 
-    public AppListAdapter(Context context, Bundle savedInstance, int menu) {
+    public AppListAdapter(Context context, Bundle savedInstance, int menu, boolean animations) {
         super(savedInstance);
+        this.mContext = context;
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mPm = context.getPackageManager();
         this.mAppList = new ArrayList<AppInfo>();
         this.mNotInstalledColor = context.getResources().getColor(R.color.app_not_installed);
         this.mMenu = menu;
+        this.mAnimations = animations;
+        this.mLastAnimatedPosition = -1;
     }
 
     public void setListener(ActionListener mListener) {
@@ -71,6 +75,10 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
     
     public ArrayList<AppInfo> getData() {
         return mAppList;
+    }
+
+    public void setAnimations(boolean animations) {
+        mAnimations = animations;
     }
 
     @Override
@@ -99,8 +107,18 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
 
         viewHolder.icon.setPackageName(mPm, item.getPackageName(), R.drawable.ic_default_launcher, true);
 
-        // FIXME For MultiChoiceAdapter
-        viewHolder.checkBox.setTag(position);
+        if (viewHolder.checkBox.getVisibility() == View.GONE) {
+            viewHolder.icon.setTag(position);
+            viewHolder.icon.setOnClickListener(this);
+        }
+
+        if (ThemeManager.isFlavoredTheme(mContext)) {
+            TypefaceProvider.setTypeFace(mContext, viewHolder.title, TypefaceProvider.FONT_BOLD);
+            if (mAnimations && position > mLastAnimatedPosition) {
+                AnimationUtil.animateIn(view);
+                mLastAnimatedPosition = position;
+            }
+        }
 
         return view;
     }
@@ -148,6 +166,14 @@ public class AppListAdapter extends MultiChoiceBaseAdapter {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Integer position = (Integer) v.getTag();
+        if (v.getTag() != null) {
+            setItemChecked(position, !isChecked(position));
+        }
     }
 
     public ArrayList<AppInfo> getSelectedItems() {

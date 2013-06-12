@@ -9,18 +9,20 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.fragments.ShareTaskFragment;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.myapplist.view.ThemeManager;
+import com.projectsexception.myapplist.view.TypefaceProvider;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,9 +83,14 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     ArrayList<AppInfo> mAppList;
 
     /**
+     * Store the title textView
+     */
+    @InjectView(android.R.id.title) TextView mTitle;
+
+    /**
      * Store the message textView
      */
-    @InjectView(android.R.id.text1) TextView mTextView;
+    @InjectView(android.R.id.text1) TextView mMessage;
 
     /**
      * Store the share type spinner
@@ -94,6 +101,11 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
      * Store the list with the share types (only in big screens)
      */
     @InjectView(R.id.list) ListView mListView;
+
+    /**
+     * Store the share button
+     */
+    @InjectView(android.R.id.button1) ImageButton mShare;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +154,33 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             mListView.setOnItemClickListener(this);
         }
 
-        mTextView.setText(OPTIONS_MSG[mSelection]);
+        mMessage.setText(OPTIONS_MSG[mSelection]);
+
+        if (ThemeManager.isFlavoredTheme(this)) {
+            TypefaceProvider.setTypeFace(this, mTitle, TypefaceProvider.FONT_BOLD);
+            TypefaceProvider.setTypeFace(this, mMessage, TypefaceProvider.FONT_REGULAR);
+        }
+
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSelection == SECTION_XML) {
+                    if (mFile == null) {
+                        Crouton.makeText(ShareActivity.this, R.string.share_xml_error, Style.ALERT).show();
+                    } else {
+                        saveFinished(SECTION_XML, mFile);
+                    }
+                } else if (mSelection == SECTION_TEXT || mSelection == SECTION_HTML) {
+                    shareAppListText(mSelection, true);
+                } else if (mSelection == SECTION_TEXT_FILE || mSelection == SECTION_HTML_FILE) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    ShareTaskFragment taskFragment = (ShareTaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
+                    if (taskFragment != null) {
+                        taskFragment.startTask(mSelection, mAppList);
+                    }
+                }
+            }
+        });
         
         FragmentManager fm = getSupportFragmentManager();
         ShareTaskFragment frg = (ShareTaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
@@ -165,12 +203,6 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
         super.onSaveInstanceState(outState);
         outState.putInt("selection", mSelection);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_share, menu);
-        return true;
-    }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -183,24 +215,6 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
                     Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(parentActivityIntent);
             finish();
-            return true;
-        } else if (item.getItemId() == R.id.menu_share) {
-            if (mSelection == SECTION_XML) {
-                if (mFile == null) {
-                    Crouton.makeText(this, R.string.share_xml_error, Style.ALERT).show();
-                } else {
-                    saveFinished(SECTION_XML, mFile);
-                }
-            } else if (mSelection == SECTION_TEXT || mSelection == SECTION_HTML) {
-                // Always add footer
-                shareAppListText(mSelection, true);
-            } else if (mSelection == SECTION_TEXT_FILE || mSelection == SECTION_HTML_FILE) {
-                FragmentManager fm = getSupportFragmentManager();
-                ShareTaskFragment taskFragment = (ShareTaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
-                if (taskFragment != null) {
-                    taskFragment.startTask(mSelection, mAppList);
-                }
-            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -261,7 +275,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mSelection = position + mStartIndex;
-        mTextView.setText(OPTIONS_MSG[mSelection]);
+        mMessage.setText(OPTIONS_MSG[mSelection]);
     }
 
     @Override

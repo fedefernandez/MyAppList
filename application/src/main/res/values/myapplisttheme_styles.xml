@@ -2,6 +2,13 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Themes -->
+    <style name="IconViewMyAppListTheme">
+        <item name="android:layout_width">@dimen/item_icon_size</item>
+        <item name="android:layout_height">@dimen/item_icon_size</item>
+        <item name="android:layout_margin">@dimen/item_icon_margin</item>
+    </style>
+
     <!-- Dark Theme -->
 
     <style name="ButtonMyAppListTheme" parent="android:Widget.Button">
@@ -29,7 +36,6 @@
 
     <style name="ItemMyAppListTheme">
         <item name="android:foreground">@drawable/list_selector_holo_dark</item>
-        <item name="android:background">@drawable/background_list_item_dark</item>
     </style>
 
     <style name="UnderlineMyAppListTheme" parent="android:Widget.TextView">
@@ -67,6 +73,11 @@
         <item name="android:checkMark">@drawable/btn_radio_holo_dark</item>
     </style>
 
+    <style name="ShareButtonMyAppListTheme" parent="ImageButtonMyAppListTheme">
+        <item name="android:background">@drawable/list_selector_holo_dark</item>
+        <item name="android:src">@drawable/custom_share_dark</item>
+    </style>
+
     <!-- Light Theme -->
 
     <style name="ButtonMyAppListThemeLight" parent="android:Widget.Button">
@@ -94,7 +105,6 @@
 
     <style name="ItemMyAppListThemeLight">
         <item name="android:foreground">@drawable/list_selector_holo_light</item>
-        <item name="android:background">@drawable/background_list_item_light</item>
     </style>
 
     <style name="UnderlineMyAppListThemeLight" parent="android:Widget.TextView">
@@ -131,17 +141,59 @@
         <item name="android:checkMark">@drawable/btn_radio_holo_light</item>
     </style>
 
+    <style name="ShareButtonMyAppListThemeLight" parent="ImageButtonMyAppListThemeLight">
+        <item name="android:background">@drawable/list_selector_holo_light</item>
+        <item name="android:src">@drawable/custom_share_light</item>
+    </style>
+
+    <!-- Flavored Themes -->
+    <style name="IconViewFlavoredMyAppListTheme">
+        <item name="android:layout_width">@dimen/item_big_icon_size</item>
+        <item name="android:layout_height">@dimen/item_big_icon_size</item>
+        <item name="android:layout_margin">@dimen/item_big_icon_margin</item>
+        <item name="android:focusable">false</item>
+    </style>
+
+    <!-- Flavored Dark Theme -->
+
+    <style name="ItemFlavoredMyAppListTheme">
+        <item name="android:foreground">@drawable/list_selector_holo_dark</item>
+        <item name="android:background">@drawable/background_list_item_dark</item>
+    </style>
+
+    <style name="ListFlavoredMyAppListTheme" parent="ListViewMyAppListTheme">
+        <item name="android:dividerHeight">8dp</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="CheckBoxItemFlavoredMyAppListTheme" parent="CheckBoxMyAppListTheme">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- Flavored Light Theme -->
+
+    <style name="ItemFlavoredMyAppListThemeLight">
+        <item name="android:foreground">@drawable/list_selector_holo_light</item>
+        <item name="android:background">@drawable/background_list_item_light</item>
+    </style>
+
+    <style name="ListFlavoredMyAppListThemeLight" parent="ListViewMyAppListThemeLight">
+        <item name="android:dividerHeight">8dp</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="CheckBoxItemFlavoredMyAppListThemeLight" parent="CheckBoxMyAppListThemeLight">
+        <item name="android:visibility">gone</item>
+    </style>
+
     <!-- Custom Base Styles -->
     <style name="appInfoButton" parent="android:Widget.TextView">
         <item name="android:drawablePadding">5dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:padding">10dp</item>
         <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="ShareFragmentLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
     </style>
 
 </resources>

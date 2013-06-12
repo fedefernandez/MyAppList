@@ -1,6 +1,8 @@
 package com.projectsexception.myapplist.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
+import com.projectsexception.myapplist.PreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -35,7 +38,9 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     protected MenuItem mRefreshItem;
     protected AppListAdapter mAdapter;
     private boolean mListShown;
-    @InjectView(android.R.id.list) ListView mListView;
+    private boolean mAnimations;
+    @InjectView(android.R.id.list)
+    ListView mListView;
     @InjectView(android.R.id.empty) View mEmptyView;
     @InjectView(android.R.id.progress) View mProgress;
 
@@ -54,8 +59,9 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Create an empty adapter we will use to display the loaded data.
-        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter());
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
+        mAnimations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
+        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter(), mAnimations);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setAdapterView(mListView);
         mAdapter.setListener(this);
@@ -82,6 +88,12 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
             Bundle args = new Bundle();
             args.putBoolean(ARG_RELOAD, true);
             getLoaderManager().restartLoader(0, args, this);
+        }
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
+        boolean animations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
+        if (mAnimations != animations) {
+            mAnimations = animations;
+            mAdapter.setAnimations(animations);
         }
     }
 

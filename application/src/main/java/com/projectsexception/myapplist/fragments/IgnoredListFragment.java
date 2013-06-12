@@ -1,7 +1,9 @@
 package com.projectsexception.myapplist.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.SparseBooleanArray;
@@ -16,6 +18,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.projectsexception.myapplist.PreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
@@ -41,6 +44,7 @@ public class IgnoredListFragment extends SherlockListFragment implements
     private AppListIgnoredAdapter mAdapter;
     private SparseBooleanArray mCheckItems;
     private boolean mListShown;
+    private boolean mAnimations;
     @InjectView(android.R.id.list) ListView mListView;
     @InjectView(android.R.id.empty) View mEmptyView;
     @InjectView(android.R.id.progress) View mProgress;
@@ -68,8 +72,9 @@ public class IgnoredListFragment extends SherlockListFragment implements
 
         mCheckItems = new SparseBooleanArray();
 
-        // Create an empty adapter we will use to display the loaded data.
-        mAdapter = new AppListIgnoredAdapter(getSherlockActivity());
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
+        mAnimations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
+        mAdapter = new AppListIgnoredAdapter(getSherlockActivity(), mAnimations);
         mListView = getListView();
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setAdapter(mAdapter);
@@ -81,7 +86,18 @@ public class IgnoredListFragment extends SherlockListFragment implements
         setHasOptionsMenu(true);
         getLoaderManager().initLoader(0, null, this);
     }
-    
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
+        boolean animations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
+        if (mAnimations != animations) {
+            mAnimations = animations;
+            mAdapter.setAnimations(animations);
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_ign, menu);

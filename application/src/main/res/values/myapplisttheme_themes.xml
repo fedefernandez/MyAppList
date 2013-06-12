@@ -8,6 +8,8 @@
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListTheme</item>
         <item name="underlineStyle">@style/UnderlineMyAppListTheme</item>
         <item name="listBackground">@drawable/list_selector_holo_dark</item>
+        <item name="iconViewStyle">@style/IconViewMyAppListTheme</item>
+        <item name="shareButtonStyle">@style/ShareButtonMyAppListTheme</item>
     </style>
 
     <style name="MyAppListBaseThemeLight" parent="Theme.Sherlock.Light">
@@ -16,6 +18,8 @@
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListThemeLight</item>
         <item name="underlineStyle">@style/UnderlineMyAppListThemeLight</item>
         <item name="listBackground">@drawable/list_selector_holo_light</item>
+        <item name="iconViewStyle">@style/IconViewMyAppListTheme</item>
+        <item name="shareButtonStyle">@style/ShareButtonMyAppListThemeLight</item>
     </style>
 
     <style name="MyAppListTheme" parent="MyAppListBaseTheme">
@@ -31,6 +35,13 @@
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppList</item>
     </style>
 
+    <style name="MyAppListThemeFlavored" parent="MyAppListTheme">
+        <item name="itemStyle">@style/ItemFlavoredMyAppListTheme</item>
+        <item name="listViewStyle">@style/ListFlavoredMyAppListTheme</item>
+        <item name="iconViewStyle">@style/IconViewFlavoredMyAppListTheme</item>
+        <item name="checkBoxItemStyle">@style/CheckBoxItemFlavoredMyAppListTheme</item>
+    </style>
+
     <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
         <item name="android:buttonStyle">@style/ButtonMyAppListThemeLight</item>
         <item name="android:imageButtonStyle">@style/ImageButtonMyAppListThemeLight</item>
@@ -42,6 +53,13 @@
         <item name="android:spinnerStyle">@style/SpinnerMyAppListLight</item>
         <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppListLight.DropDown</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppListLight</item>
+    </style>
+
+    <style name="MyAppListThemeLightFlavored" parent="MyAppListThemeLight">
+        <item name="itemStyle">@style/ItemFlavoredMyAppListThemeLight</item>
+        <item name="listViewStyle">@style/ListFlavoredMyAppListThemeLight</item>
+        <item name="iconViewStyle">@style/IconViewFlavoredMyAppListTheme</item>
+        <item name="checkBoxItemStyle">@style/CheckBoxItemFlavoredMyAppListThemeLight</item>
     </style>
 
 </resources>

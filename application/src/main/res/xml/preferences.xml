@@ -15,6 +15,12 @@
             android:entryValues="@array/themes_values"
             android:title="@string/configuration_theme" />
 
+        <CheckBoxPreference
+            android:key="animations"
+            android:defaultValue="true"
+            android:summary="@string/configuration_animations_msg"
+            android:title="@string/configuration_animations" />
+
         <ListPreference
             android:key="sdcard"
             android:defaultValue=""

@@ -3,9 +3,13 @@
     <string-array name="themes">
         <item>@string/theme_dark</item>
         <item>@string/theme_light</item>
+        <item>@string/theme_dark_flavored</item>
+        <item>@string/theme_light_flavored</item>
     </string-array>
     <string-array name="themes_values">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 </resources>

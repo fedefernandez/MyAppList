@@ -24,13 +24,14 @@ import java.util.List;
 
 public class PreferenceActivity extends SherlockPreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     
-    private static final String KEY_EMAIL = "mail";
+    static final String KEY_EMAIL = "mail";
     public static final String KEY_HIDE_SYSTEM_APPS = "hide_system_apps";
     public static final String KEY_THEME = "theme";
     public static final String KEY_SDCARD = "sdcard";
     public static final String KEY_BACKUP_CHECK = "backup_check";
     public static final String KEY_BACKUP_IGNORED_APPS = "backup_ignored";
     public static final String KEY_BACKUP_UNINSTALLED_APPS = "backup_uninstalled";
+    public static final String KEY_ANIMATIONS = "animations";
 
     private ListPreference mThemePreference;
     private ListPreference mSdcardPreference;
@@ -47,7 +48,7 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mThemePreference = (ListPreference) findPreference(KEY_THEME);
-        setThemePreferenceSummary(mThemePreference.getValue());
+        mThemePreference.setSummary(ThemeManager.getThemeName(mThemePreference.getValue()));
         
         findPreference(KEY_EMAIL).setOnPreferenceClickListener(this);
         findPreference(KEY_THEME).setOnPreferenceChangeListener(this);
@@ -114,7 +115,7 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         if (KEY_THEME.equals(preference.getKey())) {
             ThemeManager.changeTheme((String) newValue);
             ThemeManager.restartActivity(this);
-            setThemePreferenceSummary((String) newValue);
+            mThemePreference.setSummary(ThemeManager.getThemeName((String) newValue));
         } else if (KEY_BACKUP_CHECK.equals(preference.getKey())) {
             boolean backup = (Boolean) newValue;
             mBackupIgnoredPreference.setEnabled(backup);
@@ -162,20 +163,6 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
             ctx.startActivity(new Intent(ctx, ListIgnoredActivity.class));
         }
         return false;
-    }
-
-    void setThemePreferenceSummary(String themeValue) {
-        int value;
-        try {
-            value = Integer.parseInt(themeValue);
-        } catch (Exception e) {
-            value = 0;
-        }
-        if (value == 0) {
-            mThemePreference.setSummary(R.string.theme_dark);
-        } else {
-            mThemePreference.setSummary(R.string.theme_light);
-        }
     }
 
 }

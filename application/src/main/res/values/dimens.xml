@@ -7,6 +7,8 @@
     <dimen name="item_min_height">64dp</dimen>
     <dimen name="item_icon_size">32dp</dimen>
     <dimen name="item_icon_margin">10dp</dimen>
+    <dimen name="item_big_icon_size">48dp</dimen>
+    <dimen name="item_big_icon_margin">12dp</dimen>
     <dimen name="item_text_margin">50dp</dimen>
     <dimen name="item_checkbox_margin">10dp</dimen>
     <dimen name="app_icon_size">48dp</dimen>

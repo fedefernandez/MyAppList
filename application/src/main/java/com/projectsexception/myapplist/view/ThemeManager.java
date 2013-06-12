@@ -11,10 +11,24 @@ import com.projectsexception.myapplist.R;
 
 public class ThemeManager {
     
-    private static int THEME = 0;
+    private static int THEME = -1;
+
+    private static final int[] THEMES = {
+            R.style.MyAppListTheme,
+            R.style.MyAppListThemeLight,
+            R.style.MyAppListThemeFlavored,
+            R.style.MyAppListThemeLightFlavored
+    };
+
+    private static final int[] THEME_NAMES = {
+            R.string.theme_dark,
+            R.string.theme_light,
+            R.string.theme_dark_flavored,
+            R.string.theme_light_flavored
+    };
     
     public static int getTheme(Context context) {
-        if (THEME == 0) {
+        if (THEME < 0) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             changeTheme(prefs.getString(PreferenceActivity.KEY_THEME, "0"));
         }
@@ -22,12 +36,7 @@ public class ThemeManager {
     }
 
     public static void changeTheme(String themeString) {
-        int theme = Integer.parseInt(themeString);
-        if (theme == 0) {
-            THEME = R.style.MyAppListTheme;
-        } else {
-            THEME = R.style.MyAppListThemeLight;
-        }
+        THEME = THEMES[parseThemeValue(themeString)];
     }
 
     public static void restartActivity(Activity activity) {
@@ -36,6 +45,25 @@ public class ThemeManager {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+    }
+
+    public static int getThemeName(String themeValue) {
+        return THEME_NAMES[parseThemeValue(themeValue)];
+    }
+
+    public static boolean isFlavoredTheme(Context context) {
+        int actualTheme = getTheme(context);
+        return actualTheme == R.style.MyAppListThemeFlavored || actualTheme == R.style.MyAppListThemeLightFlavored;
+    }
+
+    static int parseThemeValue(String themeValue) {
+        int value;
+        try {
+            value = Integer.parseInt(themeValue);
+        } catch (Exception e) {
+            value = 0;
+        }
+        return value % THEMES.length;
     }
 
 }

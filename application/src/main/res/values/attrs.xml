@@ -5,4 +5,8 @@
     <attr name="cancelButtonStyle" format="reference" />
     <attr name="appInfoButtonStyle" format="reference" />
     <attr name="listBackground" format="reference" />
+    <attr name="listViewStyle" format="reference" />
+    <attr name="iconViewStyle" format="reference" />
+    <attr name="checkBoxItemStyle" format="reference" />
+    <attr name="shareButtonStyle" format="reference" />
 </resources>
