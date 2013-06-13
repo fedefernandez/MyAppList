@@ -21,7 +21,7 @@
             android:summary="@string/configuration_animations_msg"
             android:title="@string/configuration_animations" />
 
-        <ListPreference
+        <Preference
             android:key="sdcard"
             android:defaultValue=""
             android:title="@string/configuration_sdcard" />

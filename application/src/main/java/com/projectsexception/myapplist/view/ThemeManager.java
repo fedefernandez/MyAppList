@@ -11,7 +11,7 @@ import com.projectsexception.myapplist.R;
 
 public class ThemeManager {
     
-    private static int THEME = -1;
+    private static int THEME = 0;
 
     private static final int[] THEMES = {
             R.style.MyAppListTheme,
@@ -28,7 +28,7 @@ public class ThemeManager {
     };
     
     public static int getTheme(Context context) {
-        if (THEME < 0) {
+        if (THEME == 0) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             changeTheme(prefs.getString(PreferenceActivity.KEY_THEME, "0"));
         }

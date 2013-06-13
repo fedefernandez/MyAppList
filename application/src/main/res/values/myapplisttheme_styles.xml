@@ -78,6 +78,11 @@
         <item name="android:src">@drawable/custom_share_dark</item>
     </style>
 
+    <style name="NavigationUpButtonMyAppListTheme" parent="ImageButtonMyAppListTheme">
+        <item name="android:background">@drawable/list_selector_holo_dark</item>
+        <item name="android:src">@drawable/ic_find_previous_holo_dark</item>
+    </style>
+
     <!-- Light Theme -->
 
     <style name="ButtonMyAppListThemeLight" parent="android:Widget.Button">
@@ -144,6 +149,11 @@
     <style name="ShareButtonMyAppListThemeLight" parent="ImageButtonMyAppListThemeLight">
         <item name="android:background">@drawable/list_selector_holo_light</item>
         <item name="android:src">@drawable/custom_share_light</item>
+    </style>
+
+    <style name="NavigationUpButtonMyAppListThemeLight" parent="ImageButtonMyAppListThemeLight">
+        <item name="android:background">@drawable/list_selector_holo_light</item>
+        <item name="android:src">@drawable/ic_find_previous_holo_light</item>
     </style>
 
     <!-- Flavored Themes -->

@@ -4,39 +4,43 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 
-import android.text.TextUtils;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.projectsexception.myapplist.util.BackupReceiver;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.work.SaveListService;
 import com.projectsexception.myapplist.xml.FileUtil;
+
+import java.io.File;
+
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-import java.io.File;
-import java.util.List;
-
 public class PreferenceActivity extends SherlockPreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-    
+
     static final String KEY_EMAIL = "mail";
     public static final String KEY_HIDE_SYSTEM_APPS = "hide_system_apps";
     public static final String KEY_THEME = "theme";
-    public static final String KEY_SDCARD = "sdcard";
+    private static final String KEY_SDCARD = "sdcard";
+    public static final String PREF_FOLDER = "pref_folder";
     public static final String KEY_BACKUP_CHECK = "backup_check";
     public static final String KEY_BACKUP_IGNORED_APPS = "backup_ignored";
     public static final String KEY_BACKUP_UNINSTALLED_APPS = "backup_uninstalled";
     public static final String KEY_ANIMATIONS = "animations";
+    public static final int REQUEST_CODE_FOLDER = 1;
 
     private ListPreference mThemePreference;
-    private ListPreference mSdcardPreference;
+    private Preference mSdcardPreference;
     private Preference mBackupIgnoredPreference;
     private Preference mBackupInstalledPreference;
+    private Preference mAnimationsPreference;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -56,29 +60,14 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         CheckBoxPreference check = (CheckBoxPreference) findPreference(KEY_BACKUP_CHECK);
         check.setOnPreferenceChangeListener(this);
 
-        mSdcardPreference = (ListPreference) findPreference(KEY_SDCARD);
-        String value = mSdcardPreference.getValue();
-        if (TextUtils.isEmpty(value)) {
-            File folder = FileUtil.prepareApplicationDir(this, false);
-            if (folder == null) {
-                mSdcardPreference.setSummary(R.string.configuration_sdcard_no_access);
-            } else {
-                mSdcardPreference.setSummary(folder.getAbsolutePath());
-                mSdcardPreference.setValue(folder.getAbsolutePath());
-            }
+        mSdcardPreference = findPreference(KEY_SDCARD);
+        File folder = FileUtil.prepareApplicationDir(this, true);
+        if (folder == null) {
+            mSdcardPreference.setSummary(R.string.configuration_sdcard_no_access);
         } else {
-            File file = new File(value);
-            if (file.canWrite()) {
-                mSdcardPreference.setSummary(value);
-            } else {
-                mSdcardPreference.setSummary(R.string.configuration_sdcard_no_access);
-            }
+            mSdcardPreference.setSummary(folder.getAbsolutePath());
         }
-        List<CharSequence> folderList = FileUtil.getSdcardFolders();
-        CharSequence[] array = folderList.toArray(new CharSequence[folderList.size()]);
-        mSdcardPreference.setEntries(array);
-        mSdcardPreference.setEntryValues(array);
-        mSdcardPreference.setOnPreferenceChangeListener(this);
+        mSdcardPreference.setOnPreferenceClickListener(this);
 
         mBackupIgnoredPreference = findPreference(KEY_BACKUP_IGNORED_APPS);
         mBackupIgnoredPreference.setOnPreferenceClickListener(this);
@@ -86,6 +75,9 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
 
         mBackupInstalledPreference = findPreference(KEY_BACKUP_UNINSTALLED_APPS);
         mBackupInstalledPreference.setEnabled(check.isChecked());
+
+        mAnimationsPreference = findPreference(KEY_ANIMATIONS);
+        mAnimationsPreference.setEnabled(ThemeManager.isFlavoredTheme(this));
     }
 
     @Override
@@ -114,6 +106,7 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (KEY_THEME.equals(preference.getKey())) {
             ThemeManager.changeTheme((String) newValue);
+            mAnimationsPreference.setEnabled(ThemeManager.isFlavoredTheme(this));
             ThemeManager.restartActivity(this);
             mThemePreference.setSummary(ThemeManager.getThemeName((String) newValue));
         } else if (KEY_BACKUP_CHECK.equals(preference.getKey())) {
@@ -138,8 +131,6 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
                 BackupReceiver.disableReceiver(this);
                 SaveListService.cancelService(this);
             }
-        } else if (KEY_SDCARD.equals(preference.getKey())) {
-            mSdcardPreference.setSummary((String) newValue);
         }
         return true;
     }
@@ -161,8 +152,24 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
             return true;
         } else if (KEY_BACKUP_IGNORED_APPS.equals(preference.getKey())) {
             ctx.startActivity(new Intent(ctx, ListIgnoredActivity.class));
+        } else if (KEY_SDCARD.equals(preference.getKey())) {
+            startActivityForResult(new Intent(this, FolderPickerActivity.class), REQUEST_CODE_FOLDER);
         }
         return false;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_FOLDER && resultCode == RESULT_OK) {
+            String path = data.getStringExtra(FolderPickerActivity.FOLDER_PATH);
+            File folder = new File(path);
+            if (folder.canWrite()) {
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                editor.putString(PreferenceActivity.PREF_FOLDER, path);
+                editor.commit();
+                mSdcardPreference.setSummary(path);
+            }
+        }
+    }
 }

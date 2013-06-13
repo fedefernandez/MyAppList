@@ -3,4 +3,6 @@
     <color name="app_not_installed">#ffff4444</color>
     <color name="install_cancel_button">#FF4444</color>
     <color name="install_success_button">#99CC00</color>
+    <color name="separator_dark">#33B5E5</color>
+    <color name="separator_light">#0099CC</color>
 </resources>

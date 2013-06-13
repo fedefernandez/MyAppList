@@ -14,7 +14,7 @@ public class AnimationUtil {
 //        anim.start();
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
-                ObjectAnimator.ofFloat(view, "rotationX", 90, 0),
+                ObjectAnimator.ofFloat(view, "rotationX", -30, 0),
                 ObjectAnimator.ofFloat(view, "alpha", 1, 0.25f, 1)
         );
         set.setDuration(600);

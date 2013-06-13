@@ -9,4 +9,6 @@
     <attr name="iconViewStyle" format="reference" />
     <attr name="checkBoxItemStyle" format="reference" />
     <attr name="shareButtonStyle" format="reference" />
+    <attr name="navigationUpButtonStyle" format="reference" />
+    <attr name="separatorColor" format="reference" />
 </resources>

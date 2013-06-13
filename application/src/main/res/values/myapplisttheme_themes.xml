@@ -10,6 +10,8 @@
         <item name="listBackground">@drawable/list_selector_holo_dark</item>
         <item name="iconViewStyle">@style/IconViewMyAppListTheme</item>
         <item name="shareButtonStyle">@style/ShareButtonMyAppListTheme</item>
+        <item name="navigationUpButtonStyle">@style/NavigationUpButtonMyAppListTheme</item>
+        <item name="separatorColor">@color/separator_dark</item>
     </style>
 
     <style name="MyAppListBaseThemeLight" parent="Theme.Sherlock.Light">
@@ -20,6 +22,8 @@
         <item name="listBackground">@drawable/list_selector_holo_light</item>
         <item name="iconViewStyle">@style/IconViewMyAppListTheme</item>
         <item name="shareButtonStyle">@style/ShareButtonMyAppListThemeLight</item>
+        <item name="navigationUpButtonStyle">@style/NavigationUpButtonMyAppListThemeLight</item>
+        <item name="separatorColor">@color/separator_dark</item>
     </style>
 
     <style name="MyAppListTheme" parent="MyAppListBaseTheme">

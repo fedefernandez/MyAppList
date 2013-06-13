@@ -39,7 +39,7 @@ public class FileUtil {
         File applicationFolder = null;
         if (checkPreferences) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            String prefPath = prefs.getString(PreferenceActivity.KEY_SDCARD, null);
+            String prefPath = prefs.getString(PreferenceActivity.PREF_FOLDER, null);
             if (prefPath != null) {
                 applicationFolder = new File(prefPath);
             }

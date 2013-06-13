@@ -83,6 +83,7 @@
         <activity android:name=".ShareActivity"
                   android:uiOptions="splitActionBarWhenNarrow" />
         <activity android:name=".ListInstallActivity" />
+        <activity android:name=".FolderPickerActivity" />
 
         <service android:name=".work.SaveListService" />
 

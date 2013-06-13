@@ -12,7 +12,7 @@ import java.util.WeakHashMap;
 
 public class TypefaceProvider {
 
-    public static final String FONT_REGULAR = "Roboto-Thin";
+    public static final String FONT_REGULAR = "Roboto-Light";
     public static final String FONT_BOLD = "Roboto-BoldCondensed";
 
     static final String TYPEFACE_FOLDER = "fonts";
