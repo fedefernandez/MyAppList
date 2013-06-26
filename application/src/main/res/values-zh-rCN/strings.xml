@@ -111,8 +111,22 @@
   <string name="stop_application">停止</string>
   <string name="theme_dark">深色</string>
   <string name="theme_light">淡色</string>
-  <string name="configuration_sdcard">SDCard Path</string>
-  <string name="configuration_sdcard_no_access">No sdcard found</string>
-  <string name="backup_uninstalled_apps_title">Keep uninstalled apps</string>
-  <string name="backup_uninstalled_apps_summary">Check for keep uninstalled apps in backup file</string>
+  <string name="configuration_sdcard">SD卡路径</string>
+  <string name="configuration_sdcard_no_access">没有找到SD卡</string>
+  <string name="backup_uninstalled_apps_title">保存已卸载的应用</string>
+  <string name="backup_uninstalled_apps_summary">检查备份文件中保存的已卸载应用</string>
+  <string name="theme_dark_flavored">深色搭配的</string>
+  <string name="theme_light_flavored">浅色搭配的</string>
+  <string name="configuration_animations">动画开启</string>
+  <string name="configuration_animations_msg">显示列表中的动画</string>
+  <string name="selected_folder">选定的文件夹：</string>
+  <string name="parent_folder_inaccessible">父文件夹不能访问</string>
+  <string name="folder_inaccessible">文件夹不可访问</string>
+  <string name="folder_not_writable">不能在所选的文件夹上写入</string>
+  <string name="create_folder">创建文件夹</string>
+  <string name="file_exists">存在具有相同的名称的文件或文件夹</string>
+  <string name="cant_create_folder">无法创建文件夹</string>
+  <string name="empty_folder">文件夹没有子目录</string>
+  <string name="dialog_new_folder_title">文件夹名称</string>
+  <string name="dialog_new_folder_msg">选择文件夹的名称。</string>
 </resources>

@@ -111,8 +111,22 @@
   <string name="stop_application">Parar</string>
   <string name="theme_dark">Oscuro</string>
   <string name="theme_light">Claro</string>
-  <string name="configuration_sdcard">SDCard Path</string>
-  <string name="configuration_sdcard_no_access">No sdcard found</string>
-  <string name="backup_uninstalled_apps_title">Keep uninstalled apps</string>
-  <string name="backup_uninstalled_apps_summary">Check for keep uninstalled apps in backup file</string>
+  <string name="configuration_sdcard">Ruta donde guardar ficheros</string>
+  <string name="configuration_sdcard_no_access">No se encontró la tarjeta SD</string>
+  <string name="backup_uninstalled_apps_title">Mantener aplicaciones desinstaladas</string>
+  <string name="backup_uninstalled_apps_summary">Activar para mantener las aplicaciones desinstaladas en el el fichero de backup</string>
+  <string name="theme_dark_flavored">Oscuro con extras</string>
+  <string name="theme_light_flavored">Claro con extras</string>
+  <string name="configuration_animations">Animaciones activas</string>
+  <string name="configuration_animations_msg">Mostrar animaciones en listas</string>
+  <string name="selected_folder">Seleccionar directorio:</string>
+  <string name="parent_folder_inaccessible">El directorio superior no es accesible</string>
+  <string name="folder_inaccessible">El directorio no es accesible</string>
+  <string name="folder_not_writable">No es posible escribir en el directorio seleccionado</string>
+  <string name="create_folder">Crear directorio</string>
+  <string name="file_exists">Hay un fichero o directorio con el mismo nombre</string>
+  <string name="cant_create_folder">No es posible crear el directorio</string>
+  <string name="empty_folder">La carpeta no tiene subdirectorios</string>
+  <string name="dialog_new_folder_title">Nombre de la carpeta</string>
+  <string name="dialog_new_folder_msg">Seleccione el nombre de la carpeta.</string>
 </resources>

@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.4.2'
+        classpath 'com.android.tools.build:gradle:0.4.3'
     }
 }
 
@@ -18,6 +18,22 @@ android {
         minSdkVersion 7
         targetSdkVersion 16
     }
+
+    signingConfigs {
+        mySignConfig {
+
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.mySignConfig
+        }
+
+        release {
+            signingConfig signingConfigs.mySignConfig
+        }
+    }
 }
 
 repositories {
@@ -30,5 +46,18 @@ dependencies {
     compile project(':contrib:MultiChoiceAdapter:library')
     compile 'com.google.android:support-v4:r13'
     compile 'de.keyboardsurfer.android.widget:crouton:1.8.1'
-    compile 'com.jakewharton:butterknife:1.3.2'
+    compile 'com.jakewharton:butterknife:1.4.0'
+    compile 'com.nineoldandroids:library:2.4.0'
+}
+
+if (project.hasProperty('keyAlias')
+        && project.hasProperty('storeFile')
+        && project.hasProperty('storePassword')
+        && project.hasProperty('keyPassword')) {
+    android.signingConfigs.mySignConfig.storeFile = file(storeFile)
+    android.signingConfigs.mySignConfig.storePassword = storePassword
+    android.signingConfigs.mySignConfig.keyAlias = keyAlias
+    android.signingConfigs.mySignConfig.keyPassword = keyPassword
+} else {
+    buildTypes.release.signingConfig = null
 }
