@@ -131,4 +131,6 @@
   <string name="empty_folder">Folder doesn\'t have subdirectories</string>
   <string name="dialog_new_folder_title">Folder name</string>
   <string name="dialog_new_folder_msg">Select the folder name.</string>
+  <string name="menu_copy">Copy to clipboard</string>
+  <string name="list_copied">List copied to clipboard</string>
 </resources>

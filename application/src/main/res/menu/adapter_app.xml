@@ -6,6 +6,12 @@
         android:icon="@drawable/ic_menu_save"
         android:showAsAction="ifRoom"
         android:title="@string/menu_save"/>
+
+    <item
+        android:id="@+id/menu_copy"
+        android:icon="@drawable/ic_menu_copy"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_copy"/>
     <item
         android:id="@+id/menu_share"
         android:icon="@drawable/ic_menu_share"

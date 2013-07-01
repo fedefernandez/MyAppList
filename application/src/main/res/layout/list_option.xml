@@ -5,4 +5,4 @@
     android:layout_height="wrap_content"
     android:textSize="@dimen/share_options_size"
     android:padding="10dp"
-    style="?itemStyle"/>
+    android:background="?listBackground"/>

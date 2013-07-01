@@ -233,7 +233,7 @@ public class IconManager {
             case TASK_COMPLETE:
 
                 // Puts the image into cache
-                if (iconTask.isCacheEnabled()) {
+                if (iconTask.isCacheEnabled() && iconTask.getPackageName() != null && iconTask.getDrawable() != null) {
                     // If the task is set to cache the results, put the buffer
                     // that was
                     // successfully decoded into the cache

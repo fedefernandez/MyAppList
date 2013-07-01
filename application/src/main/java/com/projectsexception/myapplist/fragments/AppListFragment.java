@@ -21,7 +21,7 @@ public class AppListFragment extends AbstractAppListFragment {
         void loadFile();
         void settings();
         void saveAppList(List<AppInfo> appList);
-        void shareAppList(ArrayList<AppInfo> appList);
+        void shareAppList(ArrayList<AppInfo> appList, boolean copyToClipboard);
         void showAppInfo(String name, String packageName);
     }
 
@@ -96,7 +96,9 @@ public class AppListFragment extends AbstractAppListFragment {
             } else if (id == R.id.menu_save) {
                 mCallBack.saveAppList(appList);
             } else if (id == R.id.menu_share) {
-                mCallBack.shareAppList(appList);
+                mCallBack.shareAppList(appList, false);
+            } else if (id == R.id.menu_copy) {
+                mCallBack.shareAppList(appList, true);
             }
         }
     }

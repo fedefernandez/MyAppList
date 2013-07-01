@@ -37,7 +37,7 @@ public class TypefaceProvider {
     }
 
     public static void setTypeFace(Context context, TextView textView, String font) {
-        if (textView.getVisibility() == View.VISIBLE) {
+        if (textView != null && textView.getVisibility() == View.VISIBLE) {
             Typeface typeface = getTypeFace(context, font);
             if (typeface != null) {
                 textView.setTypeface(typeface);

@@ -5,7 +5,7 @@
 
     <groupId>com.projectsexception</groupId>
     <artifactId>myapplist</artifactId>
-    <version>0.7</version>
+    <version>0.7.1</version>
     <packaging>apk</packaging>
 
     <name>My App List</name>
