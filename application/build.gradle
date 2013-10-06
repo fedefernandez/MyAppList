@@ -2,26 +2,28 @@ buildscript {
     repositories {
         mavenCentral()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.4.3'
+        classpath 'com.android.tools.build:gradle:0.5.+'
     }
 }
 
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "17.0.0"
+    compileSdkVersion 18
+    buildToolsVersion "18.1"
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 16
+        targetSdkVersion 18
     }
 
     signingConfigs {
         mySignConfig {
-
+            storeFile = file(project.property('storeFile'))
+            storePassword = project.property('storePassword')
+            keyAlias = project.property('keyAlias')
+            keyPassword = project.property('keyPassword')
         }
     }
 
@@ -36,28 +38,13 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
-
 dependencies {
+    compile "com.android.support:support-v4:18.0.+"
     compile project(':contrib:ActionBarSherlock:actionbarsherlock')
     compile project(':contrib:MultiChoiceAdapter:library')
-    compile 'com.google.android:support-v4:r13'
-    compile 'de.keyboardsurfer.android.widget:crouton:1.8.1'
+    compile ('de.keyboardsurfer.android.widget:crouton:1.8.1') {
+        exclude group: 'com.google.android'
+    }
     compile 'com.jakewharton:butterknife:1.4.0'
     compile 'com.nineoldandroids:library:2.4.0'
-}
-
-if (project.hasProperty('keyAlias')
-        && project.hasProperty('storeFile')
-        && project.hasProperty('storePassword')
-        && project.hasProperty('keyPassword')) {
-    android.signingConfigs.mySignConfig.storeFile = file(storeFile)
-    android.signingConfigs.mySignConfig.storePassword = storePassword
-    android.signingConfigs.mySignConfig.keyAlias = keyAlias
-    android.signingConfigs.mySignConfig.keyPassword = keyPassword
-} else {
-    buildTypes.release.signingConfig = null
 }

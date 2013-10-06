@@ -3,7 +3,7 @@ buildscript {
         maven { url 'http://repo1.maven.org/maven2' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.4.3'
+        classpath 'com.android.tools.build:gradle:0.5.+'
     }
 }
 apply plugin: 'android-library'
@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.google.android:support-v4:r13'
+    compile "com.android.support:support-v4:18.0.+"
 }
 
 android {
