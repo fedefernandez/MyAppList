@@ -78,7 +78,7 @@
                 <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.xml" />
             </intent-filter>
         </activity>
-        <activity android:name="com.projectsexception.myapplist.PreferenceActivity" />
+        <activity android:name=".MyAppListPreferenceActivity" />
         <activity android:name=".ListIgnoredActivity" />
         <activity android:name=".ShareActivity"
                   android:uiOptions="splitActionBarWhenNarrow" />

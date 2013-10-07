@@ -3,18 +3,18 @@ package com.projectsexception.myapplist.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.MenuItem;
-import com.projectsexception.myapplist.PreferenceActivity;
+import com.projectsexception.myapplist.MyAppListPreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import butterknife.InjectView;
 import butterknife.Views;
 
-public abstract class AbstractAppListFragment extends SherlockListFragment implements
+public abstract class AbstractAppListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>,
         AdapterView.OnItemClickListener,
         AppListAdapter.ActionListener {
@@ -59,9 +59,9 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
-        mAnimations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
-        mAdapter = new AppListAdapter(getSherlockActivity(), savedInstanceState, getMenuAdapter(), mAnimations);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mAnimations = prefs.getBoolean(MyAppListPreferenceActivity.KEY_ANIMATIONS, true);
+        mAdapter = new AppListAdapter(getActivity(), savedInstanceState, getMenuAdapter(), mAnimations);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setAdapterView(mListView);
         mAdapter.setListener(this);
@@ -84,13 +84,13 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     @Override
     public void onResume() {
         super.onResume();
-        if (ApplicationsReceiver.getInstance(getSherlockActivity()).isContextChanged(KEY_LISTENER)) {
+        if (ApplicationsReceiver.getInstance(getActivity()).isContextChanged(KEY_LISTENER)) {
             Bundle args = new Bundle();
             args.putBoolean(ARG_RELOAD, true);
             getLoaderManager().restartLoader(0, args, this);
         }
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
-        boolean animations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean animations = prefs.getBoolean(MyAppListPreferenceActivity.KEY_ANIMATIONS, true);
         if (mAnimations != animations) {
             mAnimations = animations;
             mAdapter.setAnimations(animations);
@@ -112,7 +112,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ApplicationsReceiver.unregisterListener(getSherlockActivity());
+        ApplicationsReceiver.unregisterListener(getActivity());
     }
     
     @Override
@@ -141,7 +141,7 @@ public abstract class AbstractAppListFragment extends SherlockListFragment imple
     public void onLoadFinished(Loader<ArrayList<AppInfo>> loader, ArrayList<AppInfo> data) {
         loading(false);
         
-        ApplicationsReceiver.getInstance(getSherlockActivity()).registerListener(KEY_LISTENER);
+        ApplicationsReceiver.getInstance(getActivity()).registerListener(KEY_LISTENER);
         
         // Set the new data in the adapter.
         mAdapter.setData(data);

@@ -1,11 +1,13 @@
 package com.projectsexception.myapplist.fragments;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.work.AppListLoader;
@@ -62,8 +64,8 @@ public class AppListFragment extends AbstractAppListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (getSherlockActivity() != null) {
-            getSherlockActivity().getSupportActionBar().setTitle(R.string.app_name);
+        if (getActivity() != null) {
+            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         }
     }
 
@@ -92,7 +94,7 @@ public class AppListFragment extends AbstractAppListFragment {
         if (mCallBack != null) {
             ArrayList<AppInfo> appList = mAdapter.getSelectedItems();
             if (appList == null || appList.isEmpty()) {
-                Crouton.makeText(getSherlockActivity(), R.string.empty_list_error, Style.ALERT).show();
+                Crouton.makeText(getActivity(), R.string.empty_list_error, Style.ALERT).show();
             } else if (id == R.id.menu_save) {
                 mCallBack.saveAppList(appList);
             } else if (id == R.id.menu_share) {
@@ -105,7 +107,7 @@ public class AppListFragment extends AbstractAppListFragment {
 
     @Override 
     public Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args) {
-        return new AppListLoader(getSherlockActivity());
+        return new AppListLoader(getActivity());
     }
 
     @Override

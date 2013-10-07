@@ -3,8 +3,9 @@ package com.projectsexception.myapplist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
+import android.support.v7.app.ActionBar;
+
+import android.view.MenuItem;
 import com.projectsexception.myapplist.fragments.IgnoredListFragment;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
 
@@ -16,7 +17,7 @@ public class ListIgnoredActivity extends BaseActivity implements IgnoredListFrag
     protected void onCreate(Bundle args) {
         super.onCreate(args);
         
-        final ActionBar ab = getSupportActionBar();        
+        final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.ab_title_ignored_list);
         ab.setDisplayHomeAsUpEnabled(true);
         FragmentManager fm = getSupportFragmentManager();

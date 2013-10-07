@@ -6,12 +6,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.text.format.Time;
 import android.widget.EditText;
-import com.actionbarsherlock.app.SherlockDialogFragment;
+
 import com.projectsexception.myapplist.R;
 
-public class FileDialogFragment extends SherlockDialogFragment {
+public class FileDialogFragment extends DialogFragment {
 
     public static interface CallBack {
         void nameAccepted(String name);
@@ -37,7 +38,7 @@ public class FileDialogFragment extends SherlockDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Context context = getSherlockActivity();
+        final Context context = getActivity();
         if (context != null) {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
             alert.setTitle(R.string.new_file_dialog_title);

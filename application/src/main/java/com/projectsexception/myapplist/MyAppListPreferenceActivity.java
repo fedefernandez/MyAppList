@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.MenuItem;
 import com.projectsexception.myapplist.util.BackupReceiver;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.work.SaveListService;
@@ -23,7 +23,7 @@ import java.io.File;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class PreferenceActivity extends SherlockPreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+public class MyAppListPreferenceActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     static final String KEY_EMAIL = "mail";
     public static final String KEY_HIDE_SYSTEM_APPS = "hide_system_apps";
@@ -48,8 +48,6 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
         setTheme(ThemeManager.getTheme(this));
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mThemePreference = (ListPreference) findPreference(KEY_THEME);
         mThemePreference.setSummary(ThemeManager.getThemeName(mThemePreference.getValue()));
@@ -166,7 +164,7 @@ public class PreferenceActivity extends SherlockPreferenceActivity implements Pr
             File folder = new File(path);
             if (folder.canWrite()) {
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-                editor.putString(PreferenceActivity.PREF_FOLDER, path);
+                editor.putString(MyAppListPreferenceActivity.PREF_FOLDER, path);
                 editor.commit();
                 mSdcardPreference.setSummary(path);
             }

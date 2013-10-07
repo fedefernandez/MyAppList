@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.util.SparseBooleanArray;
@@ -14,11 +15,10 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.projectsexception.myapplist.PreferenceActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import com.projectsexception.myapplist.MyAppListPreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
@@ -31,7 +31,7 @@ import java.util.List;
 import butterknife.InjectView;
 import butterknife.Views;
 
-public class IgnoredListFragment extends SherlockListFragment implements
+public class IgnoredListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>,
         AdapterView.OnItemClickListener {
 
@@ -72,9 +72,9 @@ public class IgnoredListFragment extends SherlockListFragment implements
 
         mCheckItems = new SparseBooleanArray();
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
-        mAnimations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
-        mAdapter = new AppListIgnoredAdapter(getSherlockActivity(), mAnimations);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mAnimations = prefs.getBoolean(MyAppListPreferenceActivity.KEY_ANIMATIONS, true);
+        mAdapter = new AppListIgnoredAdapter(getActivity(), mAnimations);
         mListView = getListView();
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setAdapter(mAdapter);
@@ -90,8 +90,8 @@ public class IgnoredListFragment extends SherlockListFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getSherlockActivity());
-        boolean animations = prefs.getBoolean(PreferenceActivity.KEY_ANIMATIONS, true);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean animations = prefs.getBoolean(MyAppListPreferenceActivity.KEY_ANIMATIONS, true);
         if (mAnimations != animations) {
             mAnimations = animations;
             mAdapter.setAnimations(animations);
@@ -126,7 +126,7 @@ public class IgnoredListFragment extends SherlockListFragment implements
             return true;
         } else if (item.getItemId() == R.id.menu_save) {
             saveSelectedItems(getSelectedItems());
-            getSherlockActivity().finish(); return true;
+            getActivity().finish(); return true;
         }
         return super.onOptionsItemSelected(item);
     }

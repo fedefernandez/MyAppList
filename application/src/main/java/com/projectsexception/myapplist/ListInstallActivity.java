@@ -10,19 +10,18 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockListActivity;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
-import com.projectsexception.myapplist.view.ThemeManager;
 
 import java.util.ArrayList;
 
@@ -30,7 +29,7 @@ import butterknife.InjectView;
 import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
-public class ListInstallActivity extends SherlockListActivity implements View.OnClickListener {
+public class ListInstallActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String ARG_APP_INFO_LIST = "appInfoList";
 
@@ -50,8 +49,6 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
 
     @Override
     protected void onCreate(Bundle savedInstance) {
-        mTheme = ThemeManager.getTheme(this);
-        setTheme(mTheme);
         super.onCreate(savedInstance);
 
         setContentView(R.layout.activity_install);
@@ -59,7 +56,7 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
 
         mCancelButton.setOnClickListener(this);
 
-        final ActionBar ab = getSupportActionBar();        
+        final ActionBar ab = getSupportActionBar();
         ab.setTitle(R.string.ab_title_install_list);
 
         mStatus = STATE_INIT;
@@ -71,7 +68,8 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
         }
 
         mAdapter = new AppInstallAdapter(this, mAppInfoList);
-        setListAdapter(mAdapter);
+        ListView listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(mAdapter);
 
         if (mStatus == STATE_INIT) {
             mCancelButtonLayout.setVisibility(View.GONE);
@@ -98,14 +96,6 @@ public class ListInstallActivity extends SherlockListActivity implements View.On
         } else {
             // mStatus == STATE_INSTALLING;
             sendMessage();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mTheme != ThemeManager.getTheme(this)) {
-            ThemeManager.restartActivity(this);
         }
     }
 

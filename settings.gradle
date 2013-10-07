@@ -1,1 +1,1 @@
-include 'contrib:ActionBarSherlock:actionbarsherlock', 'contrib:MultiChoiceAdapter:library', 'application'
+include 'contrib:MultiChoiceAdapter-Compat:library', 'application'

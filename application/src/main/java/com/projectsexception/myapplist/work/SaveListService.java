@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.projectsexception.myapplist.PreferenceActivity;
+import com.projectsexception.myapplist.MyAppListPreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
@@ -44,7 +44,7 @@ public class SaveListService extends IntentService {
         File file = FileUtil.loadFile(this, fileName);
         if (file != null && file.exists()) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            boolean uninstalledApps = prefs.getBoolean(PreferenceActivity.KEY_BACKUP_UNINSTALLED_APPS, false);
+            boolean uninstalledApps = prefs.getBoolean(MyAppListPreferenceActivity.KEY_BACKUP_UNINSTALLED_APPS, false);
             if (uninstalledApps) {
                 // Get app list from backup file
                 AppXMLHandler xmlHandler = new AppXMLHandler();

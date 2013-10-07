@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.projectsexception.myapplist.PreferenceActivity;
+import com.projectsexception.myapplist.MyAppListPreferenceActivity;
 import com.projectsexception.myapplist.R;
 
 public class ThemeManager {
@@ -30,7 +30,7 @@ public class ThemeManager {
     public static int getTheme(Context context) {
         if (THEME == 0) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            changeTheme(prefs.getString(PreferenceActivity.KEY_THEME, "0"));
+            changeTheme(prefs.getString(MyAppListPreferenceActivity.KEY_THEME, "0"));
         }
         return THEME;
     }

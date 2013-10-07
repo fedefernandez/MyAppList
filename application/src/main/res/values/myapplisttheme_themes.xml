@@ -2,7 +2,7 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="MyAppListBaseTheme" parent="Theme.Sherlock">
+    <style name="MyAppListBaseTheme" parent="@style/Theme.AppCompat">
         <item name="itemStyle">@style/ItemMyAppListTheme</item>
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListTheme</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListTheme</item>
@@ -14,7 +14,7 @@
         <item name="separatorColor">@color/separator_dark</item>
     </style>
 
-    <style name="MyAppListBaseThemeLight" parent="Theme.Sherlock.Light">
+    <style name="MyAppListBaseThemeLight" parent="@style/Theme.AppCompat.Light">
         <item name="itemStyle">@style/ItemMyAppListThemeLight</item>
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListThemeLight</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListThemeLight</item>

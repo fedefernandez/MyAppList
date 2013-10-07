@@ -6,9 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.SpannableString;
+import android.support.v4.app.ListFragment;
 import android.text.SpannableStringBuilder;
-import android.text.format.Time;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +19,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.xml.FileUtil;
 
@@ -37,7 +35,7 @@ import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class FolderPickerFragment extends SherlockListFragment implements View.OnClickListener {
+public class FolderPickerFragment extends ListFragment implements View.OnClickListener {
 
     public static final String ARG_PATH = "path";
 
@@ -115,10 +113,10 @@ public class FolderPickerFragment extends SherlockListFragment implements View.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_new_folder) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(getSherlockActivity());
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle(R.string.dialog_new_folder_title);
             alert.setMessage(R.string.dialog_new_folder_msg);
-            final EditText input = new EditText(getSherlockActivity());
+            final EditText input = new EditText(getActivity());
             alert.setView(input);
             alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -153,7 +151,7 @@ public class FolderPickerFragment extends SherlockListFragment implements View.O
             mFolder = file;
             buildView();
         } else {
-            Crouton.makeText(getSherlockActivity(), R.string.folder_inaccessible, Style.ALERT).show();
+            Crouton.makeText(getActivity(), R.string.folder_inaccessible, Style.ALERT).show();
         }
     }
 
@@ -164,7 +162,7 @@ public class FolderPickerFragment extends SherlockListFragment implements View.O
                 mFolder = mFolder.getParentFile();
                 buildView();
             } else {
-                Crouton.makeText(getSherlockActivity(), R.string.parent_folder_inaccessible, Style.ALERT).show();
+                Crouton.makeText(getActivity(), R.string.parent_folder_inaccessible, Style.ALERT).show();
             }
         } else if (v == mCancelButton) {
             mCallBack.cancel();
@@ -172,7 +170,7 @@ public class FolderPickerFragment extends SherlockListFragment implements View.O
             if (isValidFolder(mFolder, true)) {
                 mCallBack.selectedFolder(mFolder);
             } else {
-                Crouton.makeText(getSherlockActivity(), R.string.folder_not_writable, Style.ALERT).show();
+                Crouton.makeText(getActivity(), R.string.folder_not_writable, Style.ALERT).show();
             }
         }
     }
@@ -190,7 +188,7 @@ public class FolderPickerFragment extends SherlockListFragment implements View.O
         }
 
         if (!isValidFolder(mFolder, false)) {
-            mFolder = FileUtil.prepareApplicationDir(getSherlockActivity(), true);
+            mFolder = FileUtil.prepareApplicationDir(getActivity(), true);
         }
     }
 
@@ -212,7 +210,7 @@ public class FolderPickerFragment extends SherlockListFragment implements View.O
             Collections.sort(fileList);
         }
         if (mAdapter == null) {
-            mAdapter = new FolderAdapter(getSherlockActivity(), fileList);
+            mAdapter = new FolderAdapter(getActivity(), fileList);
             setListAdapter(mAdapter);
         } else {
             mAdapter.setFileList(fileList);
@@ -227,15 +225,15 @@ public class FolderPickerFragment extends SherlockListFragment implements View.O
         if (isValidFolder(mFolder, true)) {
             File file = new File(mFolder, folderName);
             if (file.exists()) {
-                Crouton.makeText(getSherlockActivity(), R.string.file_exists, Style.ALERT).show();
+                Crouton.makeText(getActivity(), R.string.file_exists, Style.ALERT).show();
             } else if (file.mkdir()) {
                 mFolder = file;
                 buildView();
             } else {
-                Crouton.makeText(getSherlockActivity(), R.string.cant_create_folder, Style.ALERT).show();
+                Crouton.makeText(getActivity(), R.string.cant_create_folder, Style.ALERT).show();
             }
         } else {
-            Crouton.makeText(getSherlockActivity(), R.string.folder_not_writable, Style.ALERT).show();
+            Crouton.makeText(getActivity(), R.string.folder_not_writable, Style.ALERT).show();
         }
     }
 

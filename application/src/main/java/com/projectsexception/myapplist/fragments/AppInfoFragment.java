@@ -12,14 +12,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
@@ -35,7 +35,7 @@ import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class AppInfoFragment extends SherlockFragment implements View.OnClickListener {
+public class AppInfoFragment extends Fragment implements View.OnClickListener {
     
     public static interface CallBack {
         void removeAppInfoFragment();
@@ -92,7 +92,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ApplicationsReceiver.getInstance(getSherlockActivity()).registerListener(KEY_LISTENER);
+        ApplicationsReceiver.getInstance(getActivity()).registerListener(KEY_LISTENER);
         mName = getArguments().getString(NAME_ARG);
         mPackage = getArguments().getString(PACKAGE_ARG);
         if (mPackage != null) {
@@ -117,7 +117,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        final SherlockFragmentActivity activity = getSherlockActivity();
+        final FragmentActivity activity = getActivity();
         final ApplicationsReceiver receiver = ApplicationsReceiver.getInstance(activity);
         if (receiver.isContextChanged(KEY_LISTENER)) {
             mName = null;
@@ -175,7 +175,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                 mUninstallApplication.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Activity activity = getSherlockActivity();
+                        final Activity activity = getActivity();
                         if (activity != null) {
                             try {
                                 Uri packageUri = Uri.parse("package:" + packageName);
@@ -197,7 +197,7 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
                 mStartApplication.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Activity activity = getSherlockActivity();
+                        final Activity activity = getActivity();
                         if (activity != null) {
                             try {
                                 activity.startActivity(launchIntent);
@@ -239,17 +239,17 @@ public class AppInfoFragment extends SherlockFragment implements View.OnClickLis
             }
         }
 
-        if (ThemeManager.isFlavoredTheme(getSherlockActivity())) {
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mTitle, TypefaceProvider.FONT_BOLD);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mPackageName, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mStatus, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mVersion, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mPlayLinked, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mStopApplication, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mUninstallApplication, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mStartApplication, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mApplicationDate, TypefaceProvider.FONT_REGULAR);
-            TypefaceProvider.setTypeFace(getSherlockActivity(), mApplicationPermissions, TypefaceProvider.FONT_REGULAR);
+        if (ThemeManager.isFlavoredTheme(getActivity())) {
+            TypefaceProvider.setTypeFace(getActivity(), mTitle, TypefaceProvider.FONT_BOLD);
+            TypefaceProvider.setTypeFace(getActivity(), mPackageName, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mStatus, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mVersion, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mPlayLinked, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mStopApplication, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mUninstallApplication, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mStartApplication, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mApplicationDate, TypefaceProvider.FONT_REGULAR);
+            TypefaceProvider.setTypeFace(getActivity(), mApplicationPermissions, TypefaceProvider.FONT_REGULAR);
         }
     }
 

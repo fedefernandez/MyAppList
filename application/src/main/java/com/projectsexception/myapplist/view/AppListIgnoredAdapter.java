@@ -1,10 +1,8 @@
 package com.projectsexception.myapplist.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.projectsexception.myapplist.PreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.iconloader.IconView;
 import com.projectsexception.myapplist.model.AppInfo;

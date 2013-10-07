@@ -1,11 +1,11 @@
 package com.projectsexception.myapplist;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.projectsexception.myapplist.view.ThemeManager;
 
-public class BaseActivity extends SherlockFragmentActivity {
+public class BaseActivity extends ActionBarActivity {
     
     private int mTheme;
 

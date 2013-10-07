@@ -15,7 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.MenuItem;
 import com.projectsexception.myapplist.fragments.*;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -154,7 +154,7 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public void settings() {
-        startActivity(new Intent(this, PreferenceActivity.class));
+        startActivity(new Intent(this, MyAppListPreferenceActivity.class));
     }
 
     @Override

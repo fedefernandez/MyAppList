@@ -11,7 +11,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.1"
+    buildToolsVersion '18.1'
 
     defaultConfig {
         minSdkVersion 7
@@ -39,9 +39,9 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:18.0.+"
-    compile project(':contrib:ActionBarSherlock:actionbarsherlock')
-    compile project(':contrib:MultiChoiceAdapter:library')
+    compile 'com.android.support:support-v4:18.0.+'
+    compile 'com.android.support:appcompat-v7:18.0.+'
+    compile project(':contrib:MultiChoiceAdapter-Compat:library')
     compile ('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         exclude group: 'com.google.android'
     }

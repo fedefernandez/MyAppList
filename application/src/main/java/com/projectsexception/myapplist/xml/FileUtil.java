@@ -5,7 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Xml;
-import com.projectsexception.myapplist.PreferenceActivity;
+
+import com.projectsexception.myapplist.MyAppListPreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
@@ -39,7 +40,7 @@ public class FileUtil {
         File applicationFolder = null;
         if (checkPreferences) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            String prefPath = prefs.getString(PreferenceActivity.PREF_FOLDER, null);
+            String prefPath = prefs.getString(MyAppListPreferenceActivity.PREF_FOLDER, null);
             if (prefPath != null) {
                 applicationFolder = new File(prefPath);
             }
