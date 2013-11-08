@@ -3,19 +3,19 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
+        classpath 'com.android.tools.build:gradle:0.6.3'
     }
 }
 
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion '18.1'
+    compileSdkVersion 19
+    buildToolsVersion '19'
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 18
+        targetSdkVersion 19
     }
 
     signingConfigs {
@@ -41,10 +41,10 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:18.0.+'
     compile 'com.android.support:appcompat-v7:18.0.+'
-    compile project(':contrib:MultiChoiceAdapter-Compat:library')
+    compile 'com.github.manuelpeinado.multichoiceadapter:multichoiceadapter-abc:3.0.0'
     compile ('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         exclude group: 'com.google.android'
     }
-    compile 'com.jakewharton:butterknife:1.4.0'
+    compile 'com.jakewharton:butterknife:3.0.0'
     compile 'com.nineoldandroids:library:2.4.0'
 }
