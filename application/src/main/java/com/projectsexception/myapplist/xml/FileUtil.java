@@ -10,7 +10,7 @@ import com.projectsexception.myapplist.MyAppListPreferenceActivity;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.*;
@@ -22,7 +22,7 @@ public class FileUtil {
     
     public static final int FILE_TEXT = 1;
     public static final int FILE_HTML = 2;
-    
+
     private static final String PATTERN_PACKAGE_NAME = "<app\\s+package=\"([^\"]+)\"\\s+name=\"([^\"]+)\"\\s*\\/>";
     private static final String PATTERN_NAME_PACKAGE = "<app\\s+name=\"([^\"]+)\"\\s+package=\"([^\"]+)\"\\s*\\/>";
 
@@ -31,6 +31,8 @@ public class FileUtil {
     private static final String ERROR_CREATING_FILE = "Error creating file";
 
     public static final String APPLICATION_DIR = "MyAppList";
+
+    private static final String TAG = "FileUtil";
 
     private static File prepareApplicationDir(Context context) {
         return prepareApplicationDir(context, true);
@@ -133,9 +135,9 @@ public class FileUtil {
             output.flush();
             return null;
         } catch (FileNotFoundException e) {
-            CustomLog.error("FileUtil", e);
+            CustomLog.getInstance().error(TAG, e);
         } catch (IOException e) {
-            CustomLog.error("FileUtil", e);
+            CustomLog.getInstance().error(TAG, e);
         } finally {
             try {
                 if (stream != null) {
@@ -145,7 +147,7 @@ public class FileUtil {
                     output.close();
                 }
             } catch (IOException e) {
-                CustomLog.error("FileUtil", e);
+                CustomLog.getInstance().error(TAG, e);
             }
         }
         return context == null ? ERROR_CREATING_FILE : context.getString(R.string.error_creating_file, file.getAbsolutePath());
@@ -157,7 +159,7 @@ public class FileUtil {
         if (file.exists()) {
             backupFile = new File(file.getAbsolutePath() + ".bak");
             if (!file.renameTo(backupFile)) {
-                CustomLog.warn("FileUtil", "Error renaming " + file.getAbsolutePath() + " to " + backupFile.getAbsolutePath());
+                CustomLog.getInstance().warn(TAG, "Error renaming " + file.getAbsolutePath() + " to " + backupFile.getAbsolutePath());
             }
         } else {
             backupFile = null;
@@ -168,7 +170,7 @@ public class FileUtil {
             try {
                 serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
             } catch (Exception e) {
-                CustomLog.error("FileUtil", "Indent not supported", e);
+                CustomLog.getInstance().error(TAG, "Indent not supported", e);
             }
             serializer.startDocument("UTF-8", true);
             serializer.startTag("", "app-list");
@@ -185,7 +187,7 @@ public class FileUtil {
             writer.close();
             if (backupFile != null && backupFile.exists()) {
                 if (!backupFile.delete()) {
-                    CustomLog.warn("FileUtil", "Error deleting file " + backupFile.getAbsolutePath());
+                    CustomLog.getInstance().warn(TAG, "Error deleting file " + backupFile.getAbsolutePath());
                 }
             }
             return null;
@@ -193,11 +195,11 @@ public class FileUtil {
             if (backupFile != null && backupFile.exists()) {
                 if (file.exists()) {
                     if (!file.delete()) {
-                        CustomLog.warn("FileUtil", "Error deleting file " + file.getAbsolutePath());
+                        CustomLog.getInstance().warn(TAG, "Error deleting file " + file.getAbsolutePath());
                     }
                 }
                 if (!backupFile.renameTo(file)) {
-                    CustomLog.warn("FileUtil", "Error renaming " + backupFile.getAbsolutePath() + " to " + file.getAbsolutePath());
+                    CustomLog.getInstance().warn(TAG, "Error renaming " + backupFile.getAbsolutePath() + " to " + file.getAbsolutePath());
                 }
             }
             if (context != null) {
@@ -222,7 +224,7 @@ public class FileUtil {
             writer.close();
             success = true;
         } catch (Exception e) {
-            CustomLog.error("FileUtil", e);
+            CustomLog.getInstance().error(TAG, e);
         }
         return success;
     }
@@ -267,7 +269,7 @@ public class FileUtil {
             
             return lst;
         } catch (IOException e) {
-            CustomLog.error("FileUtil", e);
+            CustomLog.getInstance().error(TAG, e);
         } finally {
             try {
                 if (br != null) {

@@ -1,1 +1,1 @@
-include 'contrib:MultiChoiceAdapter-Compat:library', 'application'
+include ':dependencies:android-utils', ':application'

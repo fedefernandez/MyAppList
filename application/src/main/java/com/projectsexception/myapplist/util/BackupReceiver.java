@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import com.projectsexception.myapplist.MyAppListApplication;
 import com.projectsexception.myapplist.work.SaveListService;
+import com.projectsexception.util.CustomLog;
 
 public class BackupReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        CustomLog.debug("BackupReceiver", "Receiver package changes, program the service");
+        CustomLog.initLog(MyAppListApplication.LOG_TAG, MyAppListApplication.LOG_LEVEL);
+        CustomLog.getInstance().debug("BackupReceiver", "Receiver package changes, program the service");
         SaveListService.updateService(context);
     }
 

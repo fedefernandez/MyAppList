@@ -12,10 +12,12 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 
 public class ParserUtil {
-    
+
+    private static final String TAG = "ParserUtil";
+
     public static void launchParser(File file, ContentHandler handler) throws ParserException {
         if (file != null && file.exists()) {
             FileInputStream stream = null;
@@ -38,7 +40,7 @@ public class ParserUtil {
                         stream.close();
                     }
                 } catch (IOException e) {
-                    CustomLog.error("ParserUtil", "Error closing stream");
+                    CustomLog.getInstance().error(TAG, "Error closing stream");
                 }                
             }
         }

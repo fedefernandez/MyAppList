@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.projectsexception.myapplist.MyAppListApplication;
+import com.projectsexception.util.CustomLog;
+
 public class ApplicationsReceiver extends BroadcastReceiver {
     
     private static ApplicationsReceiver instance;
@@ -29,7 +32,8 @@ public class ApplicationsReceiver extends BroadcastReceiver {
             try {
                 context.unregisterReceiver(instance);                
             } catch (IllegalArgumentException e) {
-                CustomLog.error("ApplicationsReceiver", e);
+                CustomLog.initLog(MyAppListApplication.LOG_TAG, MyAppListApplication.LOG_LEVEL);
+                CustomLog.getInstance().error("ApplicationsReceiver", e);
             }
             instance = null;
         }

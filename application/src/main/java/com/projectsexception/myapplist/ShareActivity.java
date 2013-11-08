@@ -20,7 +20,7 @@ import android.view.MenuItem;
 import com.projectsexception.myapplist.fragments.ShareTaskFragment;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.view.TypefaceProvider;
 
@@ -35,7 +35,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class ShareActivity extends BaseActivity implements ShareTaskFragment.CallBack, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
-    
+
     private static final String TAG_TASK_FRAGMENT = "task_fragment";
 
     private static final int[] OPTIONS = {
@@ -65,6 +65,8 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
 
     public static final String APP_LIST = "app_list";
     public static final String FILE_PATH = "file_path";
+
+    private static final String TAG = "ShareActivity";
 
     /**
      * Store the selected value
@@ -245,7 +247,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             try {
                 startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));
             } catch (Exception e) {
-                CustomLog.error("ShareActivity", e);
+                CustomLog.getInstance().error(TAG, e);
                 Toast.makeText(this, getString(R.string.share_file_send_failed, file.getAbsolutePath()), Toast.LENGTH_LONG).show();                    
             }
             finish();
@@ -274,7 +276,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             try {
                 startActivity(Intent.createChooser(intent, getString(R.string.share_chooser)));                
             } catch (Exception e) {
-                CustomLog.error("ShareActivity", e);
+                CustomLog.getInstance().error(TAG, e);
                 Toast.makeText(this, getString(R.string.share_text_send_failed), Toast.LENGTH_SHORT).show();
             }
             finish();

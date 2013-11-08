@@ -16,7 +16,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyAppListTheme" >
+        android:theme="@style/MyAppListTheme"
+        android:name=".MyAppListApplication">
         <activity
             android:name=".MainActivity"
             android:uiOptions="splitActionBarWhenNarrow">

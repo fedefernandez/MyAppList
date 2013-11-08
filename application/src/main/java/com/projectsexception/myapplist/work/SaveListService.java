@@ -13,7 +13,7 @@ import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.model.MyAppListDbHelper;
 import com.projectsexception.myapplist.util.AppUtil;
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 import com.projectsexception.myapplist.xml.AppXMLHandler;
 import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.myapplist.xml.ParserException;
@@ -28,7 +28,8 @@ import java.util.Set;
 
 public class SaveListService extends IntentService {
 
-    private static final String SERVICE_NAME = "SaveListService";
+    private static final String TAG = "SaveListService";
+    private static final String SERVICE_NAME = TAG;
 
     public SaveListService() {
         super(SERVICE_NAME);
@@ -36,7 +37,7 @@ public class SaveListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        CustomLog.info("SaveListService", "Running service");
+        CustomLog.getInstance().info(TAG, "Running service");
         // Filename
         String fileName = getString(R.string.backup_filename);
         // Get app list from system
@@ -63,7 +64,7 @@ public class SaveListService extends IntentService {
                         }
                     }
                 } catch (ParserException e) {
-                    CustomLog.error("SaveListService", e);
+                    CustomLog.getInstance().error(TAG, e);
                 }
             }
         }

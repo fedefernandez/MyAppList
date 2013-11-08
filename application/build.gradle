@@ -47,4 +47,5 @@ dependencies {
     }
     compile 'com.jakewharton:butterknife:3.0.0'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile project (':dependencies:android-utils')
 }

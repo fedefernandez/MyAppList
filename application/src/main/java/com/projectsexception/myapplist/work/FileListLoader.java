@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 import com.projectsexception.myapplist.xml.AppXMLHandler;
 import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.myapplist.xml.ParserException;
@@ -35,7 +35,7 @@ public class FileListLoader extends AbstractListLoader {
                 ParserUtil.launchParser(file, xmlHandler);
                 fileAppList = xmlHandler.getAppInfoList();
             } catch (ParserException e) {
-                CustomLog.error("FileListLoader", "Error loading file", e);
+                CustomLog.getInstance().error("FileListLoader", "Error loading file", e);
                 if (e.getMessage() != null && e.getMessage().contains("invalid token")) {
                     String filePath = file.getAbsolutePath();
                     File backup = new File(filePath + "_backup");

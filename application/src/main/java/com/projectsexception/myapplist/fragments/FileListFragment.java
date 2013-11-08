@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 import com.projectsexception.myapplist.work.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -180,7 +180,7 @@ public class FileListFragment extends AbstractAppListFragment {
                 try {
                     mFile = new File(new URI(fileName));
                 } catch (URISyntaxException e) {
-                    CustomLog.error("FileListFragment", e);
+                    CustomLog.getInstance().error("FileListFragment", e);
                 }
             } else {
                 mFile = FileUtil.loadFile(getActivity(), fileName);

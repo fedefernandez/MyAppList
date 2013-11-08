@@ -23,7 +23,7 @@ import com.projectsexception.myapplist.fragments.FileDialogFragment;
 import com.projectsexception.myapplist.fragments.FileListFragment;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.xml.FileUtil;
 
@@ -51,6 +51,7 @@ public class MainActivity extends BaseActivity implements
 
     private static final String NUM_EXECUTIONS = "num_executions";
     private static final int MAX_EXECUTIONS = 20;
+    private static final String TAG = "MainActivity";
 
     private List<AppInfo> mAppList;
     private String mFileStream;
@@ -63,7 +64,10 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
-        
+
+        CustomLog.getInstance().debug(TAG, "Prueba debug");
+        CustomLog.getInstance().info(TAG, "Prueba info");
+
         setContentView(R.layout.activity_list);
         Views.inject(this);
 
@@ -293,7 +297,7 @@ public class MainActivity extends BaseActivity implements
                 InputStream inputStream = getContentResolver().openInputStream(Uri.parse(mFileStream));
                 new AppSaveTask(MainActivity.this, inputStream, null).execute(name);
             } catch (FileNotFoundException e) {
-                CustomLog.error("MainActivity", e);
+                CustomLog.getInstance().error(TAG, e);
             }
         }
 
@@ -369,7 +373,7 @@ public class MainActivity extends BaseActivity implements
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
                 } catch (Exception e) {
-                    CustomLog.error("MainActivity", e);
+                    CustomLog.getInstance().error(TAG, e);
                 }
             }
         }

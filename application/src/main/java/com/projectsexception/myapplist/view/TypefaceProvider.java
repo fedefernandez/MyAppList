@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
 
-import com.projectsexception.myapplist.util.CustomLog;
+import com.projectsexception.util.CustomLog;
 
 import java.util.WeakHashMap;
 
@@ -29,7 +29,7 @@ public class TypefaceProvider {
                 tempTypeface = Typeface.createFromAsset(context.getAssets(), fontPath);
                 sTypeFaces.put(font, tempTypeface);
             } catch (java.lang.RuntimeException e) {
-                CustomLog.warn("TypefaceProvider", "Cannot load custom typeface " + fontPath, e);
+                CustomLog.getInstance().warn("TypefaceProvider", "Cannot load custom typeface " + fontPath, e);
             }
         }
 
