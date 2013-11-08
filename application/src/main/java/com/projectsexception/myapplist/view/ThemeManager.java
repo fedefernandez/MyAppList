@@ -12,12 +12,20 @@ import com.projectsexception.myapplist.R;
 public class ThemeManager {
     
     private static int THEME = 0;
+    private static int PREF_THEME = 0;
 
     private static final int[] THEMES = {
             R.style.MyAppListTheme,
             R.style.MyAppListThemeLight,
             R.style.MyAppListThemeFlavored,
             R.style.MyAppListThemeLightFlavored
+    };
+
+    private static final int[] PREF_THEMES = {
+            R.style.MyAppListTheme,
+            R.style.MyAppListThemeLight,
+            R.style.MyAppListTheme,
+            R.style.MyAppListThemeLight
     };
 
     private static final int[] THEME_NAMES = {
@@ -30,13 +38,22 @@ public class ThemeManager {
     public static int getTheme(Context context) {
         if (THEME == 0) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            changeTheme(prefs.getString(MyAppListPreferenceActivity.KEY_THEME, "0"));
+            THEME = THEMES[parseThemeValue(prefs.getString(MyAppListPreferenceActivity.KEY_THEME, "0"))];
         }
         return THEME;
     }
 
+    public static int getPreferenceTheme(Context context) {
+        if (PREF_THEME == 0) {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            PREF_THEME = PREF_THEMES[parseThemeValue(prefs.getString(MyAppListPreferenceActivity.KEY_THEME, "0"))];
+        }
+        return PREF_THEME;
+    }
+
     public static void changeTheme(String themeString) {
         THEME = THEMES[parseThemeValue(themeString)];
+        PREF_THEME = PREF_THEMES[parseThemeValue(themeString)];
     }
 
     public static void restartActivity(Activity activity) {

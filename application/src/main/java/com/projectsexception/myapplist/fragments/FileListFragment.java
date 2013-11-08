@@ -19,6 +19,7 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -131,6 +132,26 @@ public class FileListFragment extends AbstractAppListFragment {
                     pos++;
                 }
                 mAdapter.notifyDataSetChanged();
+            }
+        } else if (id == R.id.menu_install) {
+            ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>(mAdapter.getData());
+            Set<Long> selection = mAdapter.getCheckedItems();
+            if (selection == null) {
+                selection = new HashSet<Long>(0);
+            }
+            long pos = 0;
+            Iterator<AppInfo> it = appInfoList.iterator();
+            while (it.hasNext()) {
+                it.next();
+                if (!selection.contains(pos)) {
+                    it.remove();
+                }
+                pos++;
+            }
+            if (appInfoList.isEmpty()) {
+                Crouton.makeText(getActivity(), R.string.empty_list_error, Style.ALERT).show();
+            } else {
+                mCallBack.installAppList(appInfoList);
             }
         }
     }

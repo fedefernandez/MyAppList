@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
+import butterknife.Optional;
 import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -43,6 +44,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             R.string.share_text_file,
             R.string.share_html,
             R.string.share_html_file,
+            R.string.share_forum,
     };
 
     private static final int[] OPTIONS_MSG = {
@@ -51,6 +53,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             R.string.share_text_file_message,
             R.string.share_html_message,
             R.string.share_html_file_message,
+            R.string.share_forum_message,
     };
     
     public static final int SECTION_XML = 0;
@@ -58,6 +61,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     public static final int SECTION_TEXT_FILE = 2;
     public static final int SECTION_HTML = 3;
     public static final int SECTION_HTML_FILE = 4;
+    public static final int SECTION_FORUM = 5;
 
     public static final String APP_LIST = "app_list";
     public static final String FILE_PATH = "file_path";
@@ -100,7 +104,9 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     /**
      * Store the list with the share types (only in big screens)
      */
-    @InjectView(R.id.list) ListView mListView;
+    @InjectView(R.id.list)
+    @Optional
+    ListView mListView;
 
     /**
      * Store the share button
@@ -170,7 +176,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
                     } else {
                         saveFinished(SECTION_XML, mFile);
                     }
-                } else if (mSelection == SECTION_TEXT || mSelection == SECTION_HTML) {
+                } else if (mSelection == SECTION_TEXT || mSelection == SECTION_HTML || mSelection == SECTION_FORUM) {
                     shareAppListText(mSelection, true);
                 } else if (mSelection == SECTION_TEXT_FILE || mSelection == SECTION_HTML_FILE) {
                     FragmentManager fm = getSupportFragmentManager();
@@ -255,6 +261,9 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
             if (section == SECTION_HTML) {
                 intent.setType("text/html");
                 text = Html.fromHtml(AppUtil.appInfoToHTML(this, mAppList, footer, false));
+            } else if (section == SECTION_FORUM) {
+                intent.setType("text/plain");
+                text = AppUtil.appInfoToFroum(this, mAppList, footer);
             } else {
                 intent.setType("text/plain");
                 text = AppUtil.appInfoToText(this, mAppList, footer);

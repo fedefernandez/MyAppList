@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_menu_info_details"
+            android:drawableLeft="?menuInfo"
             style="?appInfoButtonStyle"
             android:text="@string/application_information" />
 
@@ -134,7 +134,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
-                    android:drawableTop="@drawable/ic_menu_play_clip"
+                    android:drawableTop="?menuStart"
                     android:text="@string/start_application"
                     android:singleLine="true"
                     style="?android:buttonStyle"/>
@@ -145,7 +145,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
-                    android:drawableTop="@drawable/ic_menu_delete"
+                    android:drawableTop="?menuDelete"
                     android:text="@string/uninstall_application"
                     android:singleLine="true"
                     style="?android:buttonStyle"/>
@@ -156,7 +156,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_margin="10dp"
-                    android:drawableTop="@drawable/ic_menu_stop"
+                    android:drawableTop="?menuStop"
                     android:text="@string/stop_application"
                     android:singleLine="true"
                     style="?android:buttonStyle"/>

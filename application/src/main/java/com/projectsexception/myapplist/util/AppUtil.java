@@ -202,4 +202,24 @@ public class AppUtil {
         return sb.toString();
     }
 
+    public static String appInfoToFroum(Context ctx, List<AppInfo> lst, boolean footer) {
+        final StringBuilder sb = new StringBuilder();
+        if (lst != null) {
+            boolean first = true;
+            for (AppInfo appInfo : lst) {
+                if (first) {
+                    first = false;
+                } else {
+                    sb.append("\n");
+                }
+                sb.append(ctx.getString(R.string.play_google_web_forum, appInfo.getPackageName(), appInfo.getName()));
+            }
+        }
+        if (footer) {
+            sb.append("\n\n");
+            sb.append(ctx.getString(R.string.share_file_forum, ctx.getPackageName()));
+        }
+        return sb.toString();
+    }
+
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="ActionBar.Solid.Flavored" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@drawable/ab_solid_flavored</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_flavored</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_flavored</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Flavored</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Flavored" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:background">@drawable/ab_transparent_flavored</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Flavored</item>
+    </style>
+
+</resources>

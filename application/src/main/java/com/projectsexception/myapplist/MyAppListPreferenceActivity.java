@@ -45,7 +45,7 @@ public class MyAppListPreferenceActivity extends PreferenceActivity implements P
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(ThemeManager.getTheme(this));
+        setTheme(ThemeManager.getPreferenceTheme(this));
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 

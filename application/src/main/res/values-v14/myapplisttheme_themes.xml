@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="MyAppListThemeFlavored" parent="MyAppListTheme">
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="itemStyle">@style/ItemFlavoredMyAppListTheme</item>
+        <item name="listViewStyle">@style/ListFlavoredMyAppListTheme</item>
+        <item name="iconViewStyle">@style/IconViewFlavoredMyAppListTheme</item>
+        <item name="checkBoxItemStyle">@style/CheckBoxItemFlavoredMyAppListTheme</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_flavored</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Flavored</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Flavored</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Flavored</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Flavored</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Flavored</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_flavored</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_flavored</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Flavored</item>
+    </style>
+
+</resources>

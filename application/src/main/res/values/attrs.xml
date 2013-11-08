@@ -11,4 +11,18 @@
     <attr name="shareButtonStyle" format="reference" />
     <attr name="navigationUpButtonStyle" format="reference" />
     <attr name="separatorColor" format="reference" />
+
+    <attr name="menuCopy" format="reference" />
+    <attr name="menuDelete" format="reference" />
+    <attr name="menuInfo" format="reference" />
+    <attr name="menuInstall" format="reference" />
+    <attr name="menuStart" format="reference" />
+    <attr name="menuSettings" format="reference" />
+    <attr name="menuRefresh" format="reference" />
+    <attr name="menuSave" format="reference" />
+    <attr name="menuSelectAll" format="reference" />
+    <attr name="menuShare" format="reference" />
+    <attr name="menuStop" format="reference" />
+    <attr name="menuUpload" format="reference" />
+
 </resources>

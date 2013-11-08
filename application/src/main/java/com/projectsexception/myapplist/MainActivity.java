@@ -16,7 +16,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 import android.view.MenuItem;
-import com.projectsexception.myapplist.fragments.*;
+
+import com.projectsexception.myapplist.fragments.AppInfoFragment;
+import com.projectsexception.myapplist.fragments.AppListFragment;
+import com.projectsexception.myapplist.fragments.FileDialogFragment;
+import com.projectsexception.myapplist.fragments.FileListFragment;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.CustomLog;
@@ -24,6 +28,7 @@ import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.xml.FileUtil;
 
 import butterknife.InjectView;
+import butterknife.Optional;
 import butterknife.Views;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -51,7 +56,9 @@ public class MainActivity extends BaseActivity implements
     private String mFileStream;
     private boolean mDualPane;
     private Crouton mCroutonRate;
-    @InjectView(R.id.app_info) View mDetailsFrame;
+    @InjectView(R.id.app_info)
+    @Optional
+    View mDetailsFrame;
 
     @Override
     protected void onCreate(Bundle args) {
@@ -61,7 +68,7 @@ public class MainActivity extends BaseActivity implements
         Views.inject(this);
 
         checkRateApp();
-        
+
         String fileName = getIntent().getStringExtra(ARG_FILE);
 
         mDualPane = mDetailsFrame != null && mDetailsFrame.getVisibility() == View.VISIBLE;

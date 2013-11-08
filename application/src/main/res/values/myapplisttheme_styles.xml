@@ -168,7 +168,7 @@
 
     <style name="ItemFlavoredMyAppListTheme">
         <item name="android:foreground">@drawable/list_selector_holo_dark</item>
-        <item name="android:background">@drawable/background_list_item_dark</item>
+        <item name="android:background">@drawable/card_dark</item>
     </style>
 
     <style name="ListFlavoredMyAppListTheme" parent="ListViewMyAppListTheme">
@@ -181,11 +181,49 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="ActionBar.Solid.Flavored" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_flavored</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_flavored</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_flavored</item>
+        <item name="progressBarStyle">@style/ProgressBar.Flavored</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Flavored" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/ab_transparent_flavored</item>
+        <item name="progressBarStyle">@style/ProgressBar.Flavored</item>
+    </style>
+
+    <style name="PopupMenu.Flavored" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_flavored</item>
+    </style>
+
+    <style name="DropDownListView.Flavored" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_flavored</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Flavored" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_flavored</item>
+    </style>
+
+    <style name="DropDownNav.Flavored" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_flavored</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_flavored</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_flavored</item>
+    </style>
+
+    <style name="ProgressBar.Flavored" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_flavored</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Flavored" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_flavored</item>
+    </style>
+
     <!-- Flavored Light Theme -->
 
     <style name="ItemFlavoredMyAppListThemeLight">
         <item name="android:foreground">@drawable/list_selector_holo_light</item>
-        <item name="android:background">@drawable/background_list_item_light</item>
+        <item name="android:background">@drawable/card_light</item>
     </style>
 
     <style name="ListFlavoredMyAppListThemeLight" parent="ListViewMyAppListThemeLight">

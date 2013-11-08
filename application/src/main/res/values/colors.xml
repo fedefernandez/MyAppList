@@ -5,4 +5,6 @@
     <color name="install_success_button">#99CC00</color>
     <color name="separator_dark">#33B5E5</color>
     <color name="separator_light">#0099CC</color>
+    <color name="background_dark">#313131</color>
+    <color name="pressed_flavored">#CC33B5E5</color>
 </resources>
