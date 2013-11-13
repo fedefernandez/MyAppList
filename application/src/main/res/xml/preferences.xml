@@ -25,6 +25,12 @@
             android:key="sdcard"
             android:defaultValue=""
             android:title="@string/configuration_sdcard" />
+
+        <CheckBoxPreference
+            android:key="tracking"
+            android:defaultValue="false"
+            android:summary="@string/configuration_statistics_msg"
+            android:title="@string/configuration_statistics" />
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/backup_title" >

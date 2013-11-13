@@ -34,6 +34,7 @@ public class MyAppListPreferenceActivity extends PreferenceActivity implements P
     public static final String KEY_BACKUP_IGNORED_APPS = "backup_ignored";
     public static final String KEY_BACKUP_UNINSTALLED_APPS = "backup_uninstalled";
     public static final String KEY_ANIMATIONS = "animations";
+    public static final String TRACKING_PREF_KEY = "tracking";
     public static final int REQUEST_CODE_FOLDER = 1;
 
     private ListPreference mThemePreference;

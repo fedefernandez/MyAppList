@@ -40,3 +40,5 @@ proguard/
 *.iws
 .idea/
 
+/application/libs/
+

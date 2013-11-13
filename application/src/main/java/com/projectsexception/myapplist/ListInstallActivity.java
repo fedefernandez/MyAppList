@@ -100,13 +100,13 @@ public class ListInstallActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         handler.removeMessages(WHAT);
         super.onStop();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         Crouton.cancelAllCroutons();
         super.onDestroy();
     }

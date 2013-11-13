@@ -14,6 +14,8 @@ android {
     buildToolsVersion '19'
 
     defaultConfig {
+        versionCode 13
+        versionName '0.7.1'
         minSdkVersion 7
         targetSdkVersion 19
     }
@@ -29,10 +31,12 @@ android {
 
     buildTypes {
         debug {
+            buildConfig 'public static final String TRACKING_ID = "' + project.property('myapplist.ga_tracking_id') + '";'
             signingConfig signingConfigs.mySignConfig
         }
 
         release {
+            buildConfig 'public static final String TRACKING_ID = "' + project.property('myapplist.ga_tracking_id') + '";'
             signingConfig signingConfigs.mySignConfig
         }
     }
@@ -48,4 +52,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:3.0.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile project (':dependencies:android-utils')
+    compile files('libs/libGoogleAnalyticsServices.jar')
 }
