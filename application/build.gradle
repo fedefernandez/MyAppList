@@ -14,8 +14,8 @@ android {
     buildToolsVersion '19'
 
     defaultConfig {
-        versionCode 13
-        versionName '0.7.1'
+        versionCode 14
+        versionName '0.7.2'
         minSdkVersion 7
         targetSdkVersion 19
     }
@@ -45,7 +45,7 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:18.0.+'
     compile 'com.android.support:appcompat-v7:18.0.+'
-    compile 'com.github.manuelpeinado.multichoiceadapter:multichoiceadapter-abc:3.0.0'
+    compile 'com.github.manuelpeinado.multichoiceadapter:multichoiceadapter-abc:3.0.1'
     compile ('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         exclude group: 'com.google.android'
     }

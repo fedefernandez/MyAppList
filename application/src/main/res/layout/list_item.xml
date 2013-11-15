@@ -7,17 +7,18 @@
     android:minHeight="@dimen/item_min_height"
     style="?itemStyle">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical">
+        android:layout_gravity="center_vertical">
 
         <CheckBox
             android:id="@android:id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:focusable="false"
             android:layout_margin="@dimen/item_checkbox_margin"
             style="?checkBoxItemStyle"/>
@@ -25,16 +26,36 @@
         <com.projectsexception.myapplist.iconloader.IconView
             android:id="@android:id/icon1"
             android:src="@drawable/ic_default_launcher"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@android:id/checkbox"
             android:contentDescription="@string/content_desc_application_icon"
             style="?iconViewStyle"/>
 
-        <TextView
-            android:id="@android:id/text1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="@string/app_name"/>
+            android:layout_toRightOf="@android:id/icon1"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@android:id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_text_margin"
+                android:textSize="@dimen/item_text_size"
+                android:singleLine="true"/>
+
+            <TextView
+                android:id="@android:id/text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_text_margin"
+                android:textSize="@dimen/item_package_size"
+                android:singleLine="true"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </com.projectsexception.myapplist.view.CheckedLayout>

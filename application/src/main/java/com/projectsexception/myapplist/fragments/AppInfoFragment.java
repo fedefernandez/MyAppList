@@ -25,6 +25,7 @@ import com.projectsexception.myapplist.util.AppUtil;
 import com.projectsexception.myapplist.util.ApplicationsReceiver;
 import com.projectsexception.myapplist.view.ThemeManager;
 import com.projectsexception.myapplist.view.TypefaceProvider;
+import com.projectsexception.util.AndroidUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -141,7 +142,7 @@ public class AppInfoFragment extends Fragment implements View.OnClickListener {
             mApplicationData.setVisibility(View.GONE);
             mPlayLinked.setVisibility(View.GONE);
             mStopApplication.setEnabled(false);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            if (AndroidUtils.isICSOrHigher()) {
                 mUninstallApplication.setEnabled(false);
             } else {
                 mUninstallApplication.setVisibility(View.GONE);
@@ -171,7 +172,7 @@ public class AppInfoFragment extends Fragment implements View.OnClickListener {
             
             checkStopButton();
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            if (AndroidUtils.isICSOrHigher()) {
                 mUninstallApplication.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -209,7 +210,7 @@ public class AppInfoFragment extends Fragment implements View.OnClickListener {
                 });
             }
             
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            if (AndroidUtils.isGingerbreadOrHigher()) {
                 final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault());
                 mApplicationDate.setText(getString(R.string.app_info_date,
                         dateFormat.format(new Date(packageInfo.firstInstallTime)),
@@ -265,7 +266,7 @@ public class AppInfoFragment extends Fragment implements View.OnClickListener {
                     public void onClick(View v) {
                         ActivityManager manager = getActivityManager();
                         if (manager != null) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+                            if (AndroidUtils.isFroyoOrHigher()) {
                                 manager.killBackgroundProcesses(mPackage);
                             } else {
                                 manager.restartPackage(mPackage);

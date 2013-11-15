@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -183,10 +184,10 @@ public abstract class AbstractAppListFragment extends ListFragment implements
         if (mRefreshItem != null) {
             if(loading) {
                 mRefreshItem.setEnabled(false);
-                mRefreshItem.setActionView(R.layout.refresh_loading);
+                MenuItemCompat.setActionView(mRefreshItem, R.layout.refresh_loading);
             } else {
                 mRefreshItem.setEnabled(true);
-                mRefreshItem.setActionView(null);
+                MenuItemCompat.setActionView(mRefreshItem, null);
             }           
         }
     }

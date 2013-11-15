@@ -7,7 +7,9 @@
     <dimen name="item_icon_margin">10dp</dimen>
     <dimen name="item_big_icon_size">48dp</dimen>
     <dimen name="item_big_icon_margin">12dp</dimen>
-    <dimen name="item_text_margin">50dp</dimen>
+    <dimen name="item_text_margin">10dp</dimen>
+    <dimen name="item_text_size">15sp</dimen>
+    <dimen name="item_package_size">12sp</dimen>
     <dimen name="item_checkbox_margin">10dp</dimen>
     <dimen name="app_icon_size">48dp</dimen>
     <dimen name="share_form_margin">10dp</dimen>

@@ -139,7 +139,8 @@ class IconDownloadRunnable implements Runnable {
              * ImageView background to indicate that the image is being
              * decoded.
              */
-            mPhotoTask.handleDownloadState(STATE_COMPLETED);
+            int state = drawable == null ? STATE_FAILED : STATE_COMPLETED;
+            mPhotoTask.handleDownloadState(state);
       
         // Catches exceptions thrown in response to a queued interrupt
         } catch (InterruptedException e1) {

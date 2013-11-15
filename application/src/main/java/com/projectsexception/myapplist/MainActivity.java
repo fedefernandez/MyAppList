@@ -23,6 +23,7 @@ import com.projectsexception.myapplist.fragments.FileDialogFragment;
 import com.projectsexception.myapplist.fragments.FileListFragment;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.util.AppUtil;
+import com.projectsexception.util.AndroidUtils;
 import com.projectsexception.util.CustomLog;
 import com.projectsexception.myapplist.work.AppSaveTask;
 import com.projectsexception.myapplist.xml.FileUtil;
@@ -219,15 +220,9 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void shareAppList(ArrayList<AppInfo> appList, boolean copyToClipboard) {
         if (copyToClipboard) {
+            final String label = getString(R.string.app_name);
             final String text = AppUtil.appInfoToText(this, appList, false);
-            if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-                android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setText(text);
-            } else {
-                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                android.content.ClipData clip = android.content.ClipData.newPlainText(getString(R.string.app_name), text);
-                clipboard.setPrimaryClip(clip);
-            }
+            AndroidUtils.copyToClipboard(this, label, text);
             Crouton.makeText(this, R.string.list_copied, Style.CONFIRM).show();
         } else {
             shareAppList(null, appList);

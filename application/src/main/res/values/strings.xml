@@ -113,9 +113,9 @@
   <string name="dialog_new_folder_msg">Select the folder name.</string>
   <string name="menu_copy">Copy to clipboard</string>
   <string name="list_copied">List copied to clipboard</string>
-<string name="share_file_forum">[url=https://play.google.com/store/apps/details?id=%s]Shared by \'My App List\'[/url]</string>
+  <string name="share_file_forum">[url=https://play.google.com/store/apps/details?id=%s]Shared by \'My App List\'[/url]</string>
   <string name="share_forum">Forum</string>
   <string name="share_forum_message">Sharing the applications in forum format allows you to write the list in a forum with clickable links to Google Play Store.</string>
-    <string name="configuration_statistics">Disable statistics</string>
-    <string name="configuration_statistics_msg">Check for disable statistics</string>
+  <string name="configuration_statistics">Disable statistics</string>
+  <string name="configuration_statistics_msg">Check for disable statistics</string>
 </resources>

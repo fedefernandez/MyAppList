@@ -16,6 +16,7 @@ import android.provider.Settings;
 
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.util.AndroidUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,13 +130,17 @@ public class AppUtil {
     
     public static void showInstalledAppDetails(Context context, String packageName) {
         Intent intent = new Intent();
-        final int apiLevel = Build.VERSION.SDK_INT;
-        if (apiLevel >= 9) { // above 2.3
+        if (AndroidUtils.isGingerbreadOrHigher()) {
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.fromParts(SCHEME, packageName, null);
             intent.setData(uri);
-        } else { // below 2.3
-            final String appPkgName = (apiLevel == 8 ? APP_PKG_NAME_22 : APP_PKG_NAME_21);
+        } else {
+            final String appPkgName;
+            if (AndroidUtils.isFroyoOrHigher()) {
+                appPkgName = APP_PKG_NAME_22;
+            } else {
+                appPkgName = APP_PKG_NAME_21;
+            }
             intent.setAction(Intent.ACTION_VIEW);
             intent.setClassName(APP_DETAILS_PACKAGE_NAME, APP_DETAILS_CLASS_NAME);
             intent.putExtra(appPkgName, packageName);

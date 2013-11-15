@@ -5,9 +5,10 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.analytics.tracking.android.ExceptionParser;
+import com.google.analytics.tracking.android.ExceptionReporter;
 import com.google.analytics.tracking.android.GAServiceManager;
 import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Logger;
 import com.google.analytics.tracking.android.Tracker;
 import com.projectsexception.util.CustomLog;
 
@@ -37,6 +38,7 @@ public class MyAppListApplication extends Application {
     private void initializeGa() {
         mGa = GoogleAnalytics.getInstance(this);
         mTracker = mGa.getTracker(BuildConfig.TRACKING_ID);
+        checkExceptionHandler(mTracker);
 
         // Set dryRun flag.
         // When dry run is set, hits will not be dispatched, but will still be logged as
@@ -79,5 +81,57 @@ public class MyAppListApplication extends Application {
         super.onCreate();
         CustomLog.initLog(LOG_TAG, LOG_LEVEL);
         initializeGa();
+    }
+
+    private void checkExceptionHandler(Tracker tracker) {
+        Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+        ExceptionParser exceptionParser = null;
+        if (exceptionHandler instanceof ExceptionReporter) {
+            exceptionParser = ((ExceptionReporter) exceptionHandler).getExceptionParser();
+        }
+        if (!(exceptionParser instanceof AnalyticsExceptionParser)) {
+            GAServiceManager serviceManager = GAServiceManager.getInstance();
+            ExceptionReporter myHandler = new ExceptionReporter(tracker, serviceManager, exceptionHandler, this);
+            myHandler.setExceptionParser(new AnalyticsExceptionParser());
+            Thread.setDefaultUncaughtExceptionHandler(myHandler);
+        }
+    }
+
+    static class AnalyticsExceptionParser implements ExceptionParser {
+        /*
+         * (non-Javadoc)
+         * @see com.google.analytics.tracking.android.ExceptionParser#getDescription(java.lang.String, java.lang.Throwable)
+         */
+        public String getDescription(String thread, Throwable throwable) {
+            return getDescription(thread, throwable, 0);
+        }
+
+        public String getDescription(String thread, Throwable throwable, int recursivity) {
+            StringBuilder sb = new StringBuilder();
+            if (thread == null) {
+                sb.append("\nCaused By:");
+            } else {
+                sb.append("Thread: ").append(thread);
+            }
+            sb.append(" - ").append(throwable.getClass().getName());
+            if (throwable.getMessage() == null) {
+                sb.append(": <Null message>");
+            } else {
+                sb.append(": ").append(throwable.getMessage());
+            }
+            sb.append(" ");
+            StackTraceElement[] stackTrace = throwable.getStackTrace();
+            if (stackTrace != null) {
+                for (StackTraceElement element : stackTrace) {
+                    sb.append(element.getClassName()).append(".").append(element.getMethodName());
+                    sb.append("(").append(element.getFileName()).append(":").append(element.getLineNumber()).append(") ");
+                }
+            }
+            Throwable cause = throwable.getCause();
+            if (cause != null && recursivity < 10) {
+                sb.append(getDescription(null, cause, recursivity + 1));
+            }
+            return sb.toString();
+        }
     }
 }

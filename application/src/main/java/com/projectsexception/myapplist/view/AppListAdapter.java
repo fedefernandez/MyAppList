@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.manuelpeinado.multichoiceadapter.extras.actionbarcompat.MultiChoiceBaseAdapterFix;
+import com.manuelpeinado.multichoiceadapter.extras.actionbarcompat.MultiChoiceBaseAdapter;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.iconloader.IconView;
 import com.projectsexception.myapplist.model.AppInfo;
@@ -27,10 +27,11 @@ import java.util.Set;
 import butterknife.InjectView;
 import butterknife.Views;
 
-public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.OnClickListener {
+public class AppListAdapter extends MultiChoiceBaseAdapter implements View.OnClickListener {
 
     static class ViewHolder {
         @InjectView(android.R.id.text1) TextView title;
+        @InjectView(android.R.id.text2) TextView packageName;
         @InjectView(android.R.id.icon1) IconView icon;
         @InjectView(android.R.id.checkbox) CheckBox checkBox;
         ViewHolder(View view) {
@@ -106,6 +107,8 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
             viewHolder.title.setTextColor(mNotInstalledColor);
         }
 
+        viewHolder.packageName.setText(item.getPackageName());
+
         viewHolder.icon.setPackageName(mPm, item.getPackageName(), R.drawable.ic_default_launcher, true);
 
         if (viewHolder.checkBox.getVisibility() == View.GONE) {
@@ -115,6 +118,7 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
 
         if (ThemeManager.isFlavoredTheme(mContext)) {
             TypefaceProvider.setTypeFace(mContext, viewHolder.title, TypefaceProvider.FONT_BOLD);
+            TypefaceProvider.setTypeFace(mContext, viewHolder.packageName, TypefaceProvider.FONT_REGULAR);
             if (mAnimations && position > mLastAnimatedPosition) {
                 AnimationUtil.animateIn(view);
                 mLastAnimatedPosition = position;
