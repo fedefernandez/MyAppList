@@ -99,9 +99,11 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
     @InjectView(android.R.id.text1) TextView mMessage;
 
     /**
-     * Store the share type spinner
+     * Store the share type spinner (only in small screens)
      */
-    @InjectView(R.id.spinner) Spinner mSpinner;
+    @InjectView(R.id.spinner)
+    @Optional
+    Spinner mSpinner;
 
     /**
      * Store the list with the share types (only in big screens)

@@ -3,6 +3,7 @@ package com.projectsexception.myapplist.work;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,6 +14,8 @@ import android.support.v4.content.AsyncTaskLoader;
 import com.projectsexception.myapplist.model.AppInfo;
 
 public abstract class AbstractListLoader extends AsyncTaskLoader<ArrayList<AppInfo>> {
+
+    private static final Object KEY = new Object();
     
     private ArrayList<AppInfo> mApps;
     private PackageIntentReceiver mPackageObserver;
@@ -32,7 +35,10 @@ public abstract class AbstractListLoader extends AsyncTaskLoader<ArrayList<AppIn
     @Override
     public ArrayList<AppInfo> loadInBackground() {
         // Retrieve all known applications.
-        ArrayList<AppInfo> entries = loadAppInfoList();
+        ArrayList<AppInfo> entries;
+        synchronized (KEY) {
+            entries = loadAppInfoList();
+        }
         
         if (entries != null) {
             // Sort the list.

@@ -16,8 +16,13 @@ import android.provider.Settings;
 
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
+import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.util.AndroidUtils;
+import com.projectsexception.util.CustomLog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,23 +30,23 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class AppUtil {
-    
+
     private static final String SCHEME = "package";
     private static final String APP_PKG_NAME_21 = "com.android.settings.ApplicationPkgName";
     private static final String APP_PKG_NAME_22 = "pkg";
     private static final String APP_DETAILS_PACKAGE_NAME = "com.android.settings";
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
-    
+
     public static ArrayList<AppInfo> loadAppInfoList(PackageManager packageManager, boolean hideSystemApps) {
-        List<ApplicationInfo> apps = packageManager.getInstalledApplications(0);
-        if (apps == null) {
-            apps = new ArrayList<ApplicationInfo>();
+        List<ApplicationInfo> applicationInfoList = packageManager.getInstalledApplications(0);
+        if (applicationInfoList == null) {
+            applicationInfoList = new ArrayList<ApplicationInfo>();
         }
 
         // Create corresponding array of entries and load their labels.
         ArrayList<AppInfo> entries = new ArrayList<AppInfo>();
         AppInfo entry;
-        for (ApplicationInfo applicationInfo : apps) {
+        for (ApplicationInfo applicationInfo : applicationInfoList) {
             if (!hideSystemApps || !isSystemPackage(applicationInfo)) {
                 entry = createAppInfo(packageManager, applicationInfo);
                 entries.add(entry);
@@ -49,7 +54,31 @@ public class AppUtil {
         }
         return entries;
     }
-    
+
+    public static ArrayList<AppInfo> loadAppInfoListSecure(PackageManager packageManager, boolean hideSystemApps) {
+        List<PackageInfo> packageInfoList = packageManager.getInstalledPackages(0);
+        if (packageInfoList == null) {
+            packageInfoList = new ArrayList<PackageInfo>();
+        }
+        ArrayList<AppInfo> entries = new ArrayList<AppInfo>();
+        AppInfo entry;
+        for (PackageInfo packageInfo : packageInfoList) {
+            if (packageInfo.versionName == null) {
+                continue;
+            }
+            try {
+                ApplicationInfo appInfo = packageManager.getApplicationInfo(packageInfo.packageName, 0);
+                if (!hideSystemApps || !isSystemPackage(appInfo)) {
+                    entry = createAppInfo(packageManager, appInfo);
+                    entries.add(entry);
+                }
+            } catch (NameNotFoundException e) {
+                CustomLog.getInstance().warn("AppUtil", e);
+            }
+        }
+        return entries;
+    }
+
     public static AppInfo loadAppInfo(PackageManager mPm, String packageName) {
         ApplicationInfo applicationInfo = loadApplicationInfo(mPm, packageName);
         AppInfo appInfo = null;
@@ -58,36 +87,40 @@ public class AppUtil {
         }
         return appInfo;
     }
-    
+
     public static ApplicationInfo loadApplicationInfo(PackageManager mPm, String packageName) {
         try {
-            return mPm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);            
+            return mPm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
         } catch (NameNotFoundException e) {
             return null;
         }
     }
-    
+
     public static Drawable loadApplicationIcon(PackageManager mPm, String packageName) {
         ApplicationInfo applicationInfo = loadApplicationInfo(mPm, packageName);
+        Drawable icon = null;
         if (applicationInfo != null) {
-            return applicationInfo.loadIcon(mPm);
-        } else {
-            return null;
+            try {
+                icon = applicationInfo.loadIcon(mPm);
+            } catch (OutOfMemoryError error) {
+                CustomLog.getInstance().warn("AppUtil", "Unable to load application icon");
+            }
         }
+        return icon;
     }
-    
+
     public static PackageInfo loadPackageInfo(PackageManager mPm, String packageName) {
         try {
-            return mPm.getPackageInfo(packageName, 
+            return mPm.getPackageInfo(packageName,
                     PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
         } catch (NameNotFoundException e) {
             return null;
         }
     }
-    
+
     public static boolean isFromGooglePlay(PackageManager mPm, String packageName) {
         String installPM = mPm.getInstallerPackageName(packageName);
-        if ( installPM == null ) {
+        if (installPM == null) {
             // Definitely not from Google Play
             return false;
         } else if (installPM.equals("com.google.android.feedback") || installPM.equals("com.android.vending")) {
@@ -96,10 +129,10 @@ public class AppUtil {
         }
         return false;
     }
-    
+
     public static boolean isRunning(Context context, String packageName) {
         boolean running = false;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);        
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<RunningAppProcessInfo> procInfos = am.getRunningAppProcesses();
         if (procInfos != null) {
             for (RunningAppProcessInfo procInfo : procInfos) {
@@ -111,11 +144,11 @@ public class AppUtil {
         }
         return running;
     }
-    
+
     private static boolean isSystemPackage(ApplicationInfo pkgInfo) {
         return ((pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM);
     }
-    
+
     private static AppInfo createAppInfo(PackageManager mPm, ApplicationInfo applicationInfo) {
         AppInfo entry = new AppInfo();
         entry.setPackageName(applicationInfo.packageName);
@@ -127,7 +160,7 @@ public class AppUtil {
         entry.setInstalled(true);
         return entry;
     }
-    
+
     public static void showInstalledAppDetails(Context context, String packageName) {
         Intent intent = new Intent();
         if (AndroidUtils.isGingerbreadOrHigher()) {
@@ -147,20 +180,20 @@ public class AppUtil {
         }
         context.startActivity(intent);
     }
-    
+
     public static void showPlayGoogleApp(Activity activity, String packageName, boolean isForResult) {
         String url = activity.getString(R.string.play_google, packageName);
         try {
             if (isForResult) {
                 activity.startActivityForResult(new Intent(Intent.ACTION_VIEW, Uri.parse(url)), 1);
             } else {
-        	    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
-		} catch (Exception e) {
-			Crouton.makeText(activity, R.string.problem_no_google_play, Style.ALERT).show();
-		}
+        } catch (Exception e) {
+            Crouton.makeText(activity, R.string.problem_no_google_play, Style.ALERT).show();
+        }
     }
-    
+
     public static String appInfoToHTML(Context ctx, List<AppInfo> lst, boolean footer, boolean htmlTags) {
         final StringBuilder sb = new StringBuilder();
         if (htmlTags) {
@@ -172,13 +205,13 @@ public class AppUtil {
                 if (first) {
                     first = false;
                 } else {
-                    sb.append("<br/>\n");                    
+                    sb.append("<br/>\n");
                 }
                 sb.append(ctx.getString(R.string.play_google_web_html, appInfo.getPackageName(), appInfo.getName()));
             }
         }
         if (footer) {
-            sb.append("<br/>\n<br/>\n"); 
+            sb.append("<br/>\n<br/>\n");
             sb.append(ctx.getString(R.string.share_file_html, ctx.getPackageName()));
         }
         if (htmlTags) {
@@ -186,7 +219,7 @@ public class AppUtil {
         }
         return sb.toString();
     }
-    
+
     public static String appInfoToText(Context ctx, List<AppInfo> lst, boolean footer) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
@@ -195,13 +228,13 @@ public class AppUtil {
                 if (first) {
                     first = false;
                 } else {
-                    sb.append("\n");                    
+                    sb.append("\n");
                 }
-                sb.append(ctx.getString(R.string.play_google_web_text, appInfo.getPackageName(), appInfo.getName())); 
+                sb.append(ctx.getString(R.string.play_google_web_text, appInfo.getPackageName(), appInfo.getName()));
             }
         }
         if (footer) {
-            sb.append("\n\n"); 
+            sb.append("\n\n");
             sb.append(ctx.getString(R.string.share_file_text, ctx.getPackageName()));
         }
         return sb.toString();

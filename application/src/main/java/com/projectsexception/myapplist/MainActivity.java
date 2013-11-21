@@ -66,9 +66,6 @@ public class MainActivity extends BaseActivity implements
     protected void onCreate(Bundle args) {
         super.onCreate(args);
 
-        CustomLog.getInstance().debug(TAG, "Prueba debug");
-        CustomLog.getInstance().info(TAG, "Prueba info");
-
         setContentView(R.layout.activity_list);
         Views.inject(this);
 

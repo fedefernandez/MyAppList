@@ -181,6 +181,8 @@ public class AppListAdapter extends MultiChoiceBaseAdapter implements View.OnCli
         }
     }
 
+
+
     public ArrayList<AppInfo> getSelectedItems() {
         ArrayList<AppInfo> selectedApps = new ArrayList<AppInfo>();
         Set<Long> selection = getCheckedItems();
