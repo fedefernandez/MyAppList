@@ -15,8 +15,8 @@ android {
 
     defaultConfig {
         packageName 'com.projectsexception.myapplist'
-        versionCode 14
-        versionName '0.7.2'
+        versionCode 15
+        versionName '0.7.3'
         minSdkVersion 7
         targetSdkVersion 19
     }
@@ -44,13 +44,13 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.+'
-    compile 'com.android.support:appcompat-v7:18.0.+'
+    compile 'com.android.support:support-v4:19.0.0'
+    compile 'com.android.support:appcompat-v7:19.0.0'
     compile 'com.github.manuelpeinado.multichoiceadapter:multichoiceadapter-abc:3.0.1'
     compile ('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         exclude group: 'com.google.android'
     }
-    compile 'com.jakewharton:butterknife:3.0.0'
+    compile 'com.jakewharton:butterknife:3.0.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile project (':dependencies:android-utils')
     compile files('libs/libGoogleAnalyticsServices.jar')

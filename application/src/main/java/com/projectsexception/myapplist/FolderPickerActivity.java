@@ -18,15 +18,15 @@ public class FolderPickerActivity extends BaseActivity implements FolderPickerFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_picker_folder);
+
         FragmentManager fm = getSupportFragmentManager();
-        Fragment frg = fm.findFragmentById(android.R.id.content);
-        if (frg == null) {
+        if (savedInstanceState == null) {
             File file = FileUtil.prepareApplicationDir(this, true);
             if (file == null) {
                 cancel();
             } else {
-                frg = FolderPickerFragment.newInstance(file.getAbsolutePath());
-                fm.beginTransaction().add(android.R.id.content, frg).commit();
+                fm.beginTransaction().replace(R.id.content, FolderPickerFragment.newInstance(file.getAbsolutePath())).commit();
             }
         }
     }

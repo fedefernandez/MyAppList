@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.manuelpeinado.multichoiceadapter.MultiChoiceBaseAdapterFix;
 import com.manuelpeinado.multichoiceadapter.extras.actionbarcompat.MultiChoiceBaseAdapter;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.iconloader.IconView;
@@ -27,7 +28,7 @@ import java.util.Set;
 import butterknife.InjectView;
 import butterknife.Views;
 
-public class AppListAdapter extends MultiChoiceBaseAdapter implements View.OnClickListener {
+public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.OnClickListener {
 
     static class ViewHolder {
         @InjectView(android.R.id.text1) TextView title;
