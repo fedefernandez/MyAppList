@@ -5,17 +5,20 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
-import com.manuelpeinado.multichoiceadapter.MultiChoiceBaseAdapterFix;
 import com.manuelpeinado.multichoiceadapter.extras.actionbarcompat.MultiChoiceBaseAdapter;
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.iconloader.IconView;
@@ -25,10 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.Views;
 
-public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.OnClickListener {
+public class AppListAdapter extends MultiChoiceBaseAdapter implements View.OnClickListener {
 
     static class ViewHolder {
         @InjectView(android.R.id.text1) TextView title;
@@ -36,7 +39,7 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
         @InjectView(android.R.id.icon1) IconView icon;
         @InjectView(android.R.id.checkbox) CheckBox checkBox;
         ViewHolder(View view) {
-            Views.inject(this, view);
+            ButterKnife.inject(this, view);
         }
     }
 
@@ -48,8 +51,12 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
     private final LayoutInflater mInflater;
     private final PackageManager mPm;
     private ArrayList<AppInfo> mAppList;
+    private ArrayList<AppInfo> mAppListSearch;
+    private String mSearchTerm;
     private int mNotInstalledColor;
     private int mInstalledColor;
+    private int mNotInstalledMatchesColor;
+    private int mMatchesColor;
     private int mMenu;
     private ActionListener mListener;
     private boolean mAnimations;
@@ -60,11 +67,13 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
         this.mContext = context;
         this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mPm = context.getPackageManager();
-        this.mAppList = new ArrayList<AppInfo>();
         this.mNotInstalledColor = context.getResources().getColor(R.color.app_not_installed);
+        this.mNotInstalledMatchesColor = context.getResources().getColor(R.color.app_not_installed_matches);
+        this.mMatchesColor = context.getResources().getColor(R.color.app_matches);
         this.mMenu = menu;
         this.mAnimations = animations;
         this.mLastAnimatedPosition = -1;
+        setData(new ArrayList<AppInfo>());
     }
 
     public void setListener(ActionListener mListener) {
@@ -73,11 +82,33 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
 
     public void setData(ArrayList<AppInfo> data) {
         this.mAppList = data;
-        notifyDataSetChanged();
+        refreshAppList();
     }
-    
-    public ArrayList<AppInfo> getData() {
-        return mAppList;
+
+    private void refreshAppList() {
+        mAppListSearch = new ArrayList<AppInfo>();
+        if (mAppList != null) {
+            for (AppInfo appInfo : mAppList) {
+                if (filter(appInfo)) {
+                    mAppListSearch.add(appInfo);
+                }
+            }
+        }
+    }
+
+    private boolean filter(AppInfo appInfo) {
+        return TextUtils.isEmpty(mSearchTerm)
+                || (appInfo.getName() != null && appInfo.getName().toUpperCase().contains(mSearchTerm))
+                || (appInfo.getPackageName() != null && appInfo.getPackageName().toUpperCase().contains(mSearchTerm));
+    }
+
+    public ArrayList<AppInfo> getActualItems() {
+        return mAppListSearch;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        mSearchTerm = searchTerm == null ? null : searchTerm.toUpperCase();
+        refreshAppList();
     }
 
     public void setAnimations(boolean animations) {
@@ -99,16 +130,19 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
         }
 
         AppInfo item = (AppInfo) getItem(position);
-        viewHolder.title.setText(item.getName());
-        if (item.isInstalled()) {
-            viewHolder.title.setTypeface(Typeface.DEFAULT_BOLD);
-            viewHolder.title.setTextColor(mInstalledColor);
+        if (item.getName() == null) {
+            viewHolder.title.setText(null);
+        } else if (item.isInstalled()) {
+            applyMatches(item.getName(), viewHolder.title, mInstalledColor, mMatchesColor, true);
         } else {
-            viewHolder.title.setTypeface(Typeface.DEFAULT);
-            viewHolder.title.setTextColor(mNotInstalledColor);
+            applyMatches(item.getName(), viewHolder.title, mNotInstalledColor, mNotInstalledMatchesColor, false);
         }
 
-        viewHolder.packageName.setText(item.getPackageName());
+        if (item.getName() == null) {
+            viewHolder.packageName.setText(null);
+        } else {
+            applyMatches(item.getPackageName(), viewHolder.packageName, mInstalledColor, mMatchesColor, false);
+        }
 
         viewHolder.icon.setPackageName(mPm, item.getPackageName(), R.drawable.ic_default_launcher, true);
 
@@ -131,19 +165,19 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
 
     @Override
     public int getCount() {
-        if (mAppList == null) {
+        if (mAppListSearch == null) {
             return 0;
         } else {
-            return mAppList.size();
+            return mAppListSearch.size();
         }
     }
 
     @Override
     public Object getItem(int position) {
-        if (mAppList == null || position >= mAppList.size()) {
+        if (mAppListSearch == null || position >= mAppListSearch.size()) {
             return null;
         } else {
-            return mAppList.get(position);
+            return mAppListSearch.get(position);
         }
     }
 
@@ -182,13 +216,11 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
         }
     }
 
-
-
     public ArrayList<AppInfo> getSelectedItems() {
         ArrayList<AppInfo> selectedApps = new ArrayList<AppInfo>();
         Set<Long> selection = getCheckedItems();
         if (selection != null) {
-            List<AppInfo> allApps = getData();
+            List<AppInfo> allApps = getActualItems();
             int size = getCount();
             for (int i = 0 ; i < size ; i++) {
                 if (selection.contains(Long.valueOf(i))) {
@@ -197,5 +229,38 @@ public class AppListAdapter extends MultiChoiceBaseAdapterFix implements View.On
             }
         }
         return selectedApps;
+    }
+
+    void applyMatches(String value, TextView textView, int color, int colorMatches, boolean bold) {
+        final Spannable spannable = new SpannableString(value);
+        if (TextUtils.isEmpty(mSearchTerm)) {
+            spannable.setSpan(new ForegroundColorSpan(color), 0, value.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            if (bold) {
+                spannable.setSpan(new StyleSpan(Typeface.BOLD), 0, value.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+        } else {
+            final int searchSize = mSearchTerm.length();
+            final String valueUpper = value.toUpperCase();
+            int pos = 0;
+            int startMatches = valueUpper.indexOf(mSearchTerm, pos);
+            while (startMatches >= 0) {
+                if (startMatches > pos) {
+                    spannable.setSpan(new ForegroundColorSpan(color), pos, startMatches, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+                if (startMatches + searchSize <= value.length()) {
+                    // "Always" in theory
+                    spannable.setSpan(new ForegroundColorSpan(colorMatches), startMatches, startMatches + searchSize, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+                pos = startMatches + searchSize;
+                startMatches = valueUpper.indexOf(mSearchTerm, pos);
+            }
+            if (pos <= value.length()) {
+                spannable.setSpan(new ForegroundColorSpan(color), pos, value.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+            if (bold) {
+                spannable.setSpan(new StyleSpan(Typeface.BOLD), 0, value.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+        }
+        textView.setText(spannable);
     }
 }

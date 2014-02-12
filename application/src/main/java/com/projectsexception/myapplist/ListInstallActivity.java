@@ -26,7 +26,7 @@ import com.projectsexception.myapplist.util.AppUtil;
 import java.util.ArrayList;
 
 import butterknife.InjectView;
-import butterknife.Views;
+import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class ListInstallActivity extends BaseActivity implements View.OnClickListener {
@@ -52,7 +52,7 @@ public class ListInstallActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstance);
 
         setContentView(R.layout.activity_install);
-        Views.inject(this);
+        ButterKnife.inject(this);
 
         mCancelButton.setOnClickListener(this);
 
@@ -172,7 +172,7 @@ public class ListInstallActivity extends BaseActivity implements View.OnClickLis
         @InjectView(android.R.id.icon1) ImageView icon;
         @InjectView(android.R.id.checkbox) CheckBox checkBox;
         ViewHolder(View view) {
-            Views.inject(this, view);
+            ButterKnife.inject(this, view);
         }
     }
 

@@ -1,21 +1,20 @@
 package com.projectsexception.myapplist.fragments;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
 import com.projectsexception.myapplist.work.AppListLoader;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class AppListFragment extends AbstractAppListFragment {
 
@@ -51,6 +50,23 @@ public class AppListFragment extends AbstractAppListFragment {
     }
 
     @Override
+    int getMenuResource() {
+        return R.menu.fragment_app;
+    }
+
+    @Override
+    Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args) {
+        return new AppListLoader(getActivity());
+    }
+
+    @Override
+    void showAppInfo(String name, String packageName) {
+        if (mCallBack != null) {
+            mCallBack.showAppInfo(name, packageName);
+        }
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
@@ -70,12 +86,6 @@ public class AppListFragment extends AbstractAppListFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_app, menu);
-        mRefreshItem = menu.findItem(R.id.menu_refresh);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mCallBack != null) {
             if (item.getItemId() == R.id.menu_load_file) {
@@ -91,8 +101,8 @@ public class AppListFragment extends AbstractAppListFragment {
 
     @Override
     public void actionItemClicked(int id) {
-        if (mCallBack != null) {
-            ArrayList<AppInfo> appList = mAdapter.getSelectedItems();
+        if (mCallBack != null && getAdapter() != null) {
+            ArrayList<AppInfo> appList = getAdapter().getSelectedItems();
             if (appList == null || appList.isEmpty()) {
                 Crouton.makeText(getActivity(), R.string.empty_list_error, Style.ALERT).show();
             } else if (id == R.id.menu_save) {
@@ -102,18 +112,6 @@ public class AppListFragment extends AbstractAppListFragment {
             } else if (id == R.id.menu_copy) {
                 mCallBack.shareAppList(appList, true);
             }
-        }
-    }
-
-    @Override 
-    public Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args) {
-        return new AppListLoader(getActivity());
-    }
-
-    @Override
-    void showAppInfo(String name, String packageName) {
-        if (mCallBack != null) {
-            mCallBack.showAppInfo(name, packageName);
         }
     }
 

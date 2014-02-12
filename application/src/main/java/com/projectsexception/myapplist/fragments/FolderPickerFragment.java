@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.InjectView;
-import butterknife.Views;
+import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -87,7 +87,7 @@ public class FolderPickerFragment extends ListFragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_picker_folder, container, false);
-        Views.inject(this, view);
+        ButterKnife.inject(this, view);
         mNavigationUpButton.setOnClickListener(this);
         mCancelButton.setOnClickListener(this);
         mOkButton.setOnClickListener(this);

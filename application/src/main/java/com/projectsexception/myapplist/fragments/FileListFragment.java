@@ -4,16 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.util.CustomLog;
 import com.projectsexception.myapplist.work.FileListLoader;
 import com.projectsexception.myapplist.xml.FileUtil;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
+import com.projectsexception.util.CustomLog;
 
 import java.io.File;
 import java.net.URI;
@@ -23,6 +20,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class FileListFragment extends AbstractAppListFragment {
 
@@ -66,6 +66,29 @@ public class FileListFragment extends AbstractAppListFragment {
     }
 
     @Override
+    int getMenuResource() {
+        return R.menu.fragment_file;
+    }
+
+    @Override
+    Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args) {
+        ArrayList<AppInfo> lst;
+        if (args == null || args.getBoolean(ARG_RELOAD, false) || getAdapter() == null) {
+            lst = null;
+        } else {
+            lst = getAdapter().getActualItems();
+        }
+        return new FileListLoader(getActivity(), mFile, lst);
+    }
+
+    @Override
+    void showAppInfo(String name, String packageName) {
+        if (mCallBack != null) {
+            mCallBack.showAppInfo(name, packageName);
+        }
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
@@ -83,24 +106,18 @@ public class FileListFragment extends AbstractAppListFragment {
             ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_title_file_list);
         }
     }
-    
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_file, menu);
-        mRefreshItem = menu.findItem(R.id.menu_refresh);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mCallBack != null) {
+        if (mCallBack != null && getAdapter() != null) {
             if (item.getItemId() == R.id.menu_save) {
-                mCallBack.updateAppList(mFile.getName(), mAdapter.getData());
+                mCallBack.updateAppList(mFile.getName(), getAdapter().getActualItems());
                 return true;
             } else if (item.getItemId() == R.id.menu_share) {
-                mCallBack.shareAppList(mFile.getAbsolutePath(), mAdapter.getData());
+                mCallBack.shareAppList(mFile.getAbsolutePath(), getAdapter().getActualItems());
                 return true;
             } else if (item.getItemId() == R.id.menu_install) {
-                ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>(mAdapter.getData());
+                ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>(getAdapter().getActualItems());
                 for (Iterator<AppInfo> it = appInfoList.iterator(); it.hasNext(); ) {
                     if (it.next().isInstalled()) {
                         it.remove();
@@ -119,10 +136,13 @@ public class FileListFragment extends AbstractAppListFragment {
 
     @Override
     public void actionItemClicked(int id) {
+        if (getAdapter() == null) {
+            return;
+        }
         if (id == R.id.menu_delete) {
-            Set<Long> selection = mAdapter.getCheckedItems();
+            Set<Long> selection = getAdapter().getCheckedItems();
             if (selection != null) {
-                Iterator<AppInfo> it = mAdapter.getData().iterator();
+                Iterator<AppInfo> it = getAdapter().getActualItems().iterator();
                 long pos = 0;
                 while (it.hasNext()) {
                     it.next();
@@ -131,11 +151,11 @@ public class FileListFragment extends AbstractAppListFragment {
                     }
                     pos++;
                 }
-                mAdapter.notifyDataSetChanged();
+                getAdapter().notifyDataSetChanged();
             }
         } else if (id == R.id.menu_install) {
-            ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>(mAdapter.getData());
-            Set<Long> selection = mAdapter.getCheckedItems();
+            ArrayList<AppInfo> appInfoList = new ArrayList<AppInfo>(getAdapter().getActualItems());
+            Set<Long> selection = getAdapter().getCheckedItems();
             if (selection == null) {
                 selection = new HashSet<Long>(0);
             }
@@ -153,24 +173,6 @@ public class FileListFragment extends AbstractAppListFragment {
             } else {
                 mCallBack.installAppList(appInfoList);
             }
-        }
-    }
-    
-    @Override 
-    public Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args) {
-        ArrayList<AppInfo> lst;
-        if (args == null || args.getBoolean(ARG_RELOAD, false)) {
-            lst = null;
-        } else {
-            lst = mAdapter.getData();
-        }
-        return new FileListLoader(getActivity(), mFile, lst);
-    }
-
-    @Override
-    void showAppInfo(String name, String packageName) {
-        if (mCallBack != null) {
-            mCallBack.showAppInfo(name, packageName);
         }
     }
 
@@ -191,8 +193,6 @@ public class FileListFragment extends AbstractAppListFragment {
             }
         }
 
-        // Prepare the loader.  Either re-connect with an existing one,
-        // or start a new one.
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().restartLoader(0, null, this);
     }
 }

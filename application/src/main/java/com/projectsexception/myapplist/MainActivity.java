@@ -30,7 +30,7 @@ import com.projectsexception.myapplist.xml.FileUtil;
 
 import butterknife.InjectView;
 import butterknife.Optional;
-import butterknife.Views;
+import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements
         super.onCreate(args);
 
         setContentView(R.layout.activity_list);
-        Views.inject(this);
+        ButterKnife.inject(this);
 
         checkRateApp();
 

@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import butterknife.InjectView;
-import butterknife.Views;
+import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -109,7 +109,7 @@ public class AppInfoFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_info, container, false);
-        Views.inject(this, view);
+        ButterKnife.inject(this, view);
         mInfo.setOnClickListener(this);
         mPlay.setOnClickListener(this);
         return view;

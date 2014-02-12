@@ -24,6 +24,7 @@
         <item name="menuShare">@drawable/ic_menu_share_dark</item>
         <item name="menuStop">@drawable/ic_menu_stop_dark</item>
         <item name="menuUpload">@drawable/ic_menu_upload_dark</item>
+        <item name="menuSearch">@drawable/ic_menu_search_dark</item>
     </style>
 
     <style name="MyAppListBaseThemeLight" parent="@style/Theme.AppCompat.Light">
@@ -48,6 +49,7 @@
         <item name="menuShare">@drawable/ic_menu_share_light</item>
         <item name="menuStop">@drawable/ic_menu_stop_light</item>
         <item name="menuUpload">@drawable/ic_menu_upload_light</item>
+        <item name="menuSearch">@drawable/ic_menu_search_light</item>
     </style>
 
     <style name="MyAppListTheme" parent="MyAppListBaseTheme">

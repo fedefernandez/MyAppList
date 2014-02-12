@@ -30,7 +30,7 @@ import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.Optional;
-import butterknife.Views;
+import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -122,7 +122,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_share);
-        Views.inject(this);
+        ButterKnife.inject(this);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();

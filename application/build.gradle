@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.3'
+        classpath 'com.android.tools.build:gradle:0.8.+'
     }
 }
 
@@ -11,14 +11,14 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19'
+    buildToolsVersion '19.0.1'
 
     defaultConfig {
-        packageName 'com.projectsexception.myapplist'
         versionCode 15
         versionName '0.7.3'
         minSdkVersion 7
         targetSdkVersion 19
+        buildConfigField 'String', 'TRACKING_ID', '"' + project.property('myapplist.ga_tracking_id') + '"'
     }
 
     signingConfigs {
@@ -32,25 +32,23 @@ android {
 
     buildTypes {
         debug {
-            buildConfig 'public static final String TRACKING_ID = "' + project.property('myapplist.ga_tracking_id') + '";'
             signingConfig signingConfigs.mySignConfig
         }
 
         release {
-            buildConfig 'public static final String TRACKING_ID = "' + project.property('myapplist.ga_tracking_id') + '";'
             signingConfig signingConfigs.mySignConfig
         }
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.0'
-    compile 'com.android.support:appcompat-v7:19.0.0'
+    compile 'com.android.support:support-v4:19.0.1'
+    compile 'com.android.support:appcompat-v7:19.0.1'
     compile 'com.github.manuelpeinado.multichoiceadapter:multichoiceadapter-abc:3.0.1'
     compile ('de.keyboardsurfer.android.widget:crouton:1.8.1') {
         exclude group: 'com.google.android'
     }
-    compile 'com.jakewharton:butterknife:3.0.1'
+    compile 'com.jakewharton:butterknife:4.0.1'
     compile 'com.nineoldandroids:library:2.4.0'
     compile project (':dependencies:android-utils')
     compile files('libs/libGoogleAnalyticsServices.jar')

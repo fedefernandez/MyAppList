@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
-import butterknife.Views;
+import butterknife.ButterKnife;
 
 public class IgnoredListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>,
@@ -62,7 +62,7 @@ public class IgnoredListFragment extends ListFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        Views.inject(this, view);
+        ButterKnife.inject(this, view);
         return view;
     }
 

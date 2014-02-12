@@ -17,7 +17,7 @@ import com.projectsexception.myapplist.model.AppInfo;
 import java.util.ArrayList;
 
 import butterknife.InjectView;
-import butterknife.Views;
+import butterknife.ButterKnife;
 
 public class AppListIgnoredAdapter extends BaseAdapter {
 
@@ -26,7 +26,7 @@ public class AppListIgnoredAdapter extends BaseAdapter {
         @InjectView(android.R.id.icon1) IconView icon;
         @InjectView(android.R.id.checkbox) CheckBox checkBox;
         ViewHolder(View view) {
-            Views.inject(this, view);
+            ButterKnife.inject(this, view);
         }
     }
 

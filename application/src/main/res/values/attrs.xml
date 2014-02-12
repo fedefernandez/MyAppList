@@ -24,5 +24,6 @@
     <attr name="menuShare" format="reference" />
     <attr name="menuStop" format="reference" />
     <attr name="menuUpload" format="reference" />
+    <attr name="menuSearch" format="reference" />
 
 </resources>

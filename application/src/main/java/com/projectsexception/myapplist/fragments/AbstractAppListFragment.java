@@ -1,14 +1,19 @@
 package com.projectsexception.myapplist.fragments;
 
+import android.app.SearchManager;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,20 +29,22 @@ import com.projectsexception.myapplist.view.AppListAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.Views;
 
 public abstract class AbstractAppListFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<ArrayList<AppInfo>>,
         AdapterView.OnItemClickListener,
-        AppListAdapter.ActionListener {
+        AppListAdapter.ActionListener,
+        SearchView.OnQueryTextListener {
 
     private static final String KEY_LISTENER = "AbstractAppListFragment";
 
     protected static final String ARG_RELOAD = "reload";
     
-    protected MenuItem mRefreshItem;
-    protected AppListAdapter mAdapter;
+    private MenuItem mRefreshItem;
+    private AppListAdapter mAdapter;
+    private String mSearchTerm;
     private boolean mListShown;
     private boolean mAnimations;
     @InjectView(android.R.id.list)
@@ -46,23 +53,33 @@ public abstract class AbstractAppListFragment extends ListFragment implements
     @InjectView(android.R.id.progress) View mProgress;
 
     abstract int getMenuAdapter();
-    abstract void showAppInfo(String name, String packageName);
+    abstract int getMenuResource();
     abstract Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args);
+    abstract void showAppInfo(String name, String packageName);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        Views.inject(this, view);
+        ButterKnife.inject(this, view);
         return view;
     }
-    
-    @Override 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mSearchTerm = savedInstanceState.getString(SearchManager.QUERY);
+        }
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mAnimations = prefs.getBoolean(MyAppListPreferenceActivity.KEY_ANIMATIONS, true);
         mAdapter = new AppListAdapter(getActivity(), savedInstanceState, getMenuAdapter(), mAnimations);
+        mAdapter.setSearchTerm(mSearchTerm);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setAdapterView(mListView);
         mAdapter.setListener(this);
@@ -79,6 +96,9 @@ public abstract class AbstractAppListFragment extends ListFragment implements
         super.onSaveInstanceState(outState);
         if (mAdapter != null) {
             mAdapter.save(outState);
+        }
+        if (!TextUtils.isEmpty(mSearchTerm)) {
+            outState.putString(SearchManager.QUERY, mSearchTerm);
         }
     }
 
@@ -100,7 +120,7 @@ public abstract class AbstractAppListFragment extends ListFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        AppInfo appInfo = mAdapter.getData().get(position);
+        AppInfo appInfo = mAdapter.getActualItems().get(position);
         if (!TextUtils.isEmpty(appInfo.getPackageName())) {
             if (appInfo.isInstalled()) {
                 showAppInfo(appInfo.getName(), appInfo.getPackageName());
@@ -114,6 +134,24 @@ public abstract class AbstractAppListFragment extends ListFragment implements
     public void onDestroy() {
         super.onDestroy();
         ApplicationsReceiver.unregisterListener(getActivity());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(getMenuResource(), menu);
+        mRefreshItem = menu.findItem(R.id.menu_refresh);
+        MenuItem item = menu.findItem(R.id.menu_search);
+        if (item != null) {
+            final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+            searchView.setOnQueryTextListener(this);
+            searchView.setQueryHint(getString(R.string.find_apps));
+            if (mSearchTerm != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    item.expandActionView();
+                }
+                searchView.setQuery(mSearchTerm, false);
+            }
+        }
     }
     
     @Override
@@ -146,6 +184,7 @@ public abstract class AbstractAppListFragment extends ListFragment implements
         
         // Set the new data in the adapter.
         mAdapter.setData(data);
+        mAdapter.notifyDataSetChanged();
 
         // The list should now be shown.
         setListShown(true);
@@ -156,6 +195,33 @@ public abstract class AbstractAppListFragment extends ListFragment implements
         loading(false);
         // Clear the data in the adapter.
         mAdapter.setData(null);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
+
+        // Don't do anything if the filter is empty
+        if (mSearchTerm == null && newFilter == null) {
+            return true;
+        }
+
+        // Don't do anything if the new filter is the same as the current filter
+        if (mSearchTerm != null && mSearchTerm.equals(newFilter)) {
+            return true;
+        }
+
+        // Updates current filter to new filter
+        mSearchTerm = newFilter;
+        mAdapter.setSearchTerm(mSearchTerm);
+        mAdapter.notifyDataSetChanged();
+        return false;
     }
 
     public void setListShown(boolean shown) {
@@ -190,5 +256,17 @@ public abstract class AbstractAppListFragment extends ListFragment implements
                 MenuItemCompat.setActionView(mRefreshItem, null);
             }           
         }
+    }
+
+    protected String getSearchTerm() {
+        return mSearchTerm;
+    }
+
+    protected AppListAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    protected void setRefreshItem(MenuItem refreshItem) {
+        mRefreshItem = refreshItem;
     }
 }
