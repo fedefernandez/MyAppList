@@ -3,23 +3,23 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="MyAppListTheme" parent="MyAppListBaseTheme">
+        <item name="android:listChoiceIndicatorMultiple">@drawable/myapplisttheme_btn_check_holo_dark</item>
         <item name="android:buttonStyle">@style/ButtonMyAppListTheme</item>
         <item name="android:imageButtonStyle">@style/ImageButtonMyAppListTheme</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark</item>
-        <item name="android:buttonStyleToggle">@style/ToggleMyAppListTheme</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
-        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppList</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/myapplisttheme_list_selector_holo_dark</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/myapplisttheme_activated_background_holo_dark</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppListTheme</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/myapplisttheme_fastscroll_thumb_holo</item>
     </style>
 
     <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
+        <item name="android:listChoiceIndicatorMultiple">@drawable/myapplistthemelight_btn_check_holo_light</item>
         <item name="android:buttonStyle">@style/ButtonMyAppListThemeLight</item>
         <item name="android:imageButtonStyle">@style/ImageButtonMyAppListThemeLight</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_light</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
-        <item name="android:buttonStyleToggle">@style/ToggleMyAppListThemeLight</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
-        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppListLight</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/myapplistthemelight_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/myapplistthemelight_activated_background_holo_light</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppListThemeLight</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/myapplistthemelight_fastscroll_thumb_holo</item>
     </style>
 
 </resources>

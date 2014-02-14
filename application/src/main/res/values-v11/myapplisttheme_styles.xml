@@ -4,37 +4,29 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
   <style name="ButtonMyAppListTheme" parent="android:Widget.Holo.Button">
-	  <item name="android:background">@drawable/btn_default_holo_dark</item>
+	  <item name="android:background">@drawable/myapplisttheme_btn_default_holo_dark</item>
   </style>
 
   <style name="ImageButtonMyAppListTheme" parent="android:Widget.Holo.ImageButton">
-	  <item name="android:background">@drawable/btn_default_holo_dark</item>
-  </style>
-  
-  <style name="ToggleMyAppListTheme" parent="android:Widget.Holo.Button.Toggle">
-      <item name="android:background">@drawable/btn_toggle_holo_dark</item>
+	  <item name="android:background">@drawable/myapplisttheme_btn_default_holo_dark</item>
   </style>
 
-  <style name="SpinnerMyAppList" parent="android:Widget.Holo.Spinner">
-      <item name="android:background">@drawable/spinner_background_holo_dark</item>
-      <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
+  <style name="SpinnerMyAppListTheme" parent="android:Widget.Holo.Spinner">
+      <item name="android:background">@drawable/myapplisttheme_spinner_background_holo_dark</item>
+      <item name="android:dropDownSelector">@drawable/myapplisttheme_list_selector_holo_dark</item>
   </style>
 
   <style name="ButtonMyAppListThemeLight" parent="android:Widget.Holo.Light.Button">
-	  <item name="android:background">@drawable/btn_default_holo_light</item>
+	  <item name="android:background">@drawable/myapplistthemelight_btn_default_holo_light</item>
   </style>
 
   <style name="ImageButtonMyAppListThemeLight" parent="android:Widget.Holo.Light.ImageButton">
-	  <item name="android:background">@drawable/btn_default_holo_light</item>
-  </style>
-  
-  <style name="ToggleMyAppListThemeLight" parent="android:Widget.Holo.Light.Button.Toggle">
-      <item name="android:background">@drawable/btn_toggle_holo_light</item>
+	  <item name="android:background">@drawable/myapplistthemelight_btn_default_holo_light</item>
   </style>
 
-  <style name="SpinnerMyAppListLight" parent="android:Widget.Holo.Light.Spinner">
-      <item name="android:background">@drawable/spinner_background_holo_light</item>
-      <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item>
+  <style name="SpinnerMyAppListThemeLight" parent="android:Widget.Holo.Light.Spinner">
+      <item name="android:background">@drawable/myapplistthemelight_spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/myapplistthemelight_list_selector_holo_light</item>
   </style>
 
 </resources>

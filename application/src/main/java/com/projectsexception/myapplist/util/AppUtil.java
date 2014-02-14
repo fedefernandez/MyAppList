@@ -38,7 +38,12 @@ public class AppUtil {
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
 
     public static ArrayList<AppInfo> loadAppInfoList(PackageManager packageManager, boolean hideSystemApps) {
-        List<ApplicationInfo> applicationInfoList = packageManager.getInstalledApplications(0);
+        List<ApplicationInfo> applicationInfoList = null;
+        try {
+            applicationInfoList = packageManager.getInstalledApplications(0);
+        } catch (Exception e) {
+            CustomLog.getInstance().error("AppUtil", "Error loagind applications", e);
+        }
         if (applicationInfoList == null) {
             applicationInfoList = new ArrayList<ApplicationInfo>();
         }

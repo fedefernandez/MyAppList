@@ -115,6 +115,7 @@ public abstract class AbstractAppListFragment extends ListFragment implements
         if (mAnimations != animations) {
             mAnimations = animations;
             mAdapter.setAnimations(animations);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

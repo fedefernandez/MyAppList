@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -199,10 +200,10 @@ public class IgnoredListFragment extends ListFragment implements
         if (mRefreshItem != null) {
             if(loading) {
                 mRefreshItem.setEnabled(false);
-                mRefreshItem.setActionView(R.layout.refresh_loading);
+                MenuItemCompat.setActionView(mRefreshItem, R.layout.refresh_loading);
             } else {
                 mRefreshItem.setEnabled(true);
-                mRefreshItem.setActionView(null);
+                MenuItemCompat.setActionView(mRefreshItem, null);
             }
         }
     }

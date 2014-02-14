@@ -7,7 +7,7 @@
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListTheme</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListTheme</item>
         <item name="underlineStyle">@style/UnderlineMyAppListTheme</item>
-        <item name="listBackground">@drawable/list_selector_holo_dark</item>
+        <item name="listBackground">@drawable/myapplisttheme_list_selector_holo_dark</item>
         <item name="iconViewStyle">@style/IconViewMyAppListTheme</item>
         <item name="shareButtonStyle">@style/ShareButtonMyAppListTheme</item>
         <item name="navigationUpButtonStyle">@style/NavigationUpButtonMyAppListTheme</item>
@@ -32,11 +32,11 @@
         <item name="cancelButtonStyle">@style/CancelButtonMyAppListThemeLight</item>
         <item name="appInfoButtonStyle">@style/AppInfoButtonMyAppListThemeLight</item>
         <item name="underlineStyle">@style/UnderlineMyAppListThemeLight</item>
-        <item name="listBackground">@drawable/list_selector_holo_light</item>
+        <item name="listBackground">@drawable/myapplistthemelight_list_selector_holo_light</item>
         <item name="iconViewStyle">@style/IconViewMyAppListTheme</item>
         <item name="shareButtonStyle">@style/ShareButtonMyAppListThemeLight</item>
         <item name="navigationUpButtonStyle">@style/NavigationUpButtonMyAppListThemeLight</item>
-        <item name="separatorColor">@color/separator_dark</item>
+        <item name="separatorColor">@color/separator_light</item>
         <item name="menuCopy">@drawable/ic_menu_copy_light</item>
         <item name="menuDelete">@drawable/ic_menu_delete_light</item>
         <item name="menuInfo">@drawable/ic_menu_info_details_light</item>
@@ -53,16 +53,14 @@
     </style>
 
     <style name="MyAppListTheme" parent="MyAppListBaseTheme">
+        <item name="android:checkboxStyle">@style/CheckBoxMyAppListTheme</item>
         <item name="android:buttonStyle">@style/ButtonMyAppListTheme</item>
         <item name="android:imageButtonStyle">@style/ImageButtonMyAppListTheme</item>
+        <item name="android:spinnerStyle">@style/SpinnerMyAppListTheme</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppListTheme</item>
         <item name="android:listViewStyle">@style/ListViewMyAppListTheme</item>
         <item name="android:listViewWhiteStyle">@style/ListViewMyAppListTheme.White</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListTheme</item>
-        <item name="android:buttonStyleToggle">@style/ToggleMyAppListTheme</item>
-        <item name="android:checkboxStyle">@style/CheckBoxMyAppListTheme</item>
-        <item name="android:spinnerStyle">@style/SpinnerMyAppList</item>
-        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppList.DropDown</item>
-        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppList</item>
     </style>
 
     <style name="MyAppListThemeFlavored" parent="MyAppListTheme">
@@ -84,19 +82,18 @@
     </style>
 
     <style name="MyAppListThemeLight" parent="MyAppListBaseThemeLight">
+        <item name="android:checkboxStyle">@style/CheckBoxMyAppListThemeLight</item>
         <item name="android:buttonStyle">@style/ButtonMyAppListThemeLight</item>
         <item name="android:imageButtonStyle">@style/ImageButtonMyAppListThemeLight</item>
+        <item name="android:spinnerStyle">@style/SpinnerMyAppListThemeLight</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppListThemeLight</item>
         <item name="android:listViewStyle">@style/ListViewMyAppListThemeLight</item>
         <item name="android:listViewWhiteStyle">@style/ListViewMyAppListThemeLight.White</item>
         <item name="android:spinnerItemStyle">@style/SpinnerItemMyAppListThemeLight</item>
-        <item name="android:buttonStyleToggle">@style/ToggleMyAppListThemeLight</item>
-        <item name="android:checkboxStyle">@style/CheckBoxMyAppListThemeLight</item>
-        <item name="android:spinnerStyle">@style/SpinnerMyAppListLight</item>
-        <item name="android:dropDownSpinnerStyle">@style/SpinnerMyAppListLight.DropDown</item>
-        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemMyAppListLight</item>
     </style>
 
     <style name="MyAppListThemeLightFlavored" parent="MyAppListThemeLight">
+        <item name="android:windowBackground">@color/background_light</item>
         <item name="itemStyle">@style/ItemFlavoredMyAppListThemeLight</item>
         <item name="listViewStyle">@style/ListFlavoredMyAppListThemeLight</item>
         <item name="iconViewStyle">@style/IconViewFlavoredMyAppListTheme</item>

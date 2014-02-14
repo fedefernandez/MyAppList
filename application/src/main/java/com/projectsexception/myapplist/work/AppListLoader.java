@@ -23,7 +23,7 @@ public class AppListLoader extends AbstractListLoader {
 
     public AppListLoader(Context context) {
         super(context);
-
+        
         // Retrieve the package manager for later use; note we don't
         // use 'context' directly but instead the save global application
         // context returned by getContext().
