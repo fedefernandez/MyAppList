@@ -151,7 +151,7 @@
     </style>
 
     <style name="ListFlavoredMyAppListTheme" parent="ListViewMyAppListTheme">
-        <item name="android:dividerHeight">8dp</item>
+        <item name="android:dividerHeight">4dp</item>
         <item name="android:divider">@android:color/transparent</item>
         <item name="android:padding">10dp</item>
     </style>
@@ -206,7 +206,7 @@
     </style>
 
     <style name="ListFlavoredMyAppListThemeLight" parent="ListViewMyAppListThemeLight">
-        <item name="android:dividerHeight">8dp</item>
+        <item name="android:dividerHeight">4dp</item>
         <item name="android:divider">@android:color/transparent</item>
         <item name="android:padding">10dp</item>
     </style>

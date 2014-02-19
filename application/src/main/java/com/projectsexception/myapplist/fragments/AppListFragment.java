@@ -67,6 +67,11 @@ public class AppListFragment extends AbstractAppListFragment {
     }
 
     @Override
+    int getTitle() {
+        return R.string.app_name;
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
@@ -75,14 +80,6 @@ public class AppListFragment extends AbstractAppListFragment {
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
         getLoaderManager().initLoader(0, null, this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getActivity() != null) {
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
-        }
     }
 
     @Override

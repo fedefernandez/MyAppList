@@ -253,6 +253,22 @@ public class MainActivity extends BaseActivity implements
         startActivity(intent);
     }
 
+    @Override
+    public void fileDeleted() {
+        FragmentManager fm = getSupportFragmentManager();
+        if (mDualPane) {
+            AppInfoFragment infoFragment = (AppInfoFragment) fm.findFragmentById(R.id.app_info);
+            if (infoFragment != null) {
+                fm.beginTransaction().remove(infoFragment).commit();
+            }
+        }
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            loadAppListFragment();
+        }
+    }
+
     /*
      * ----------------------------
      * AppInfoFragment.CallBack method

@@ -120,4 +120,5 @@
   <string name="configuration_statistics_msg">Check for disable statistics</string>
     <string name="menu_search">Search</string>
     <string name="find_apps">Find apps</string>
+    <string name="ab_title_num">(%d in total)</string>
 </resources>

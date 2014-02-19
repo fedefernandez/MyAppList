@@ -9,6 +9,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -56,6 +57,7 @@ public abstract class AbstractAppListFragment extends ListFragment implements
     abstract int getMenuResource();
     abstract Loader<ArrayList<AppInfo>> createLoader(int id, Bundle args);
     abstract void showAppInfo(String name, String packageName);
+    abstract int getTitle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,6 +111,8 @@ public abstract class AbstractAppListFragment extends ListFragment implements
             Bundle args = new Bundle();
             args.putBoolean(ARG_RELOAD, true);
             getLoaderManager().restartLoader(0, args, this);
+        } else {
+            setActionBarTitle();
         }
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean animations = prefs.getBoolean(MyAppListPreferenceActivity.KEY_ANIMATIONS, true);
@@ -116,6 +120,16 @@ public abstract class AbstractAppListFragment extends ListFragment implements
             mAnimations = animations;
             mAdapter.setAnimations(animations);
             mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setActionBarTitle() {
+        if (getActivity() != null) {
+            String title = getString(getTitle());
+            if (mAdapter != null) {
+                title += " " + getString(R.string.ab_title_num, mAdapter.getCount());
+            }
+            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(title);
         }
     }
 
@@ -189,6 +203,8 @@ public abstract class AbstractAppListFragment extends ListFragment implements
 
         // The list should now be shown.
         setListShown(true);
+
+        setActionBarTitle();
     }
 
     @Override 
@@ -197,6 +213,8 @@ public abstract class AbstractAppListFragment extends ListFragment implements
         // Clear the data in the adapter.
         mAdapter.setData(null);
         mAdapter.notifyDataSetChanged();
+
+        setActionBarTitle();
     }
 
     @Override

@@ -34,5 +34,10 @@
         android:icon="?menuInstall"
         app:showAsAction="ifRoom"
         android:title="@string/menu_install"/>
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="?menuDelete"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_delete"/>
 
 </menu>

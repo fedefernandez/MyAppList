@@ -1,6 +1,8 @@
 package com.projectsexception.myapplist.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
@@ -39,6 +41,7 @@ public class FileListFragment extends AbstractAppListFragment {
         void shareAppList(String filePath, ArrayList<AppInfo> appList);
         void installAppList(ArrayList<AppInfo> appList);
         void showAppInfo(String name, String packageName);
+        void fileDeleted();
     }
 
     private CallBack mCallBack;
@@ -89,6 +92,11 @@ public class FileListFragment extends AbstractAppListFragment {
     }
 
     @Override
+    int getTitle() {
+        return R.string.ab_title_file_list;
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
@@ -96,14 +104,6 @@ public class FileListFragment extends AbstractAppListFragment {
         
         if (getArguments() != null) {
             reloadFile(getArguments().getString("fileName"));
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getActivity() != null) {
-            ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_title_file_list);
         }
     }
 
@@ -129,6 +129,19 @@ public class FileListFragment extends AbstractAppListFragment {
                     mCallBack.installAppList(appInfoList);
                 }
                 return true;
+            } else if (item.getItemId() == R.id.menu_delete) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Warning!");
+                builder.setMessage("Are you sure do you want to delete this file?");
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mFile.delete();
+                        mCallBack.fileDeleted();
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.show();
             }
         }
         return super.onOptionsItemSelected(item);
