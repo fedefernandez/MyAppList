@@ -11,18 +11,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.Settings;
 
 import com.projectsexception.myapplist.R;
 import com.projectsexception.myapplist.model.AppInfo;
-import com.projectsexception.myapplist.xml.FileUtil;
 import com.projectsexception.util.AndroidUtils;
 import com.projectsexception.util.CustomLog;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +37,7 @@ public class AppUtil {
         try {
             applicationInfoList = packageManager.getInstalledApplications(0);
         } catch (Exception e) {
-            CustomLog.getInstance().error("AppUtil", "Error loagind applications", e);
+            CustomLog.getInstance().error("AppUtil", "Error loading applications", e);
         }
         if (applicationInfoList == null) {
             applicationInfoList = new ArrayList<ApplicationInfo>();
@@ -154,7 +149,7 @@ public class AppUtil {
         return ((pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM);
     }
 
-    private static AppInfo createAppInfo(PackageManager mPm, ApplicationInfo applicationInfo) {
+    public static AppInfo createAppInfo(PackageManager mPm, ApplicationInfo applicationInfo) {
         AppInfo entry = new AppInfo();
         entry.setPackageName(applicationInfo.packageName);
         CharSequence label = applicationInfo.loadLabel(mPm);

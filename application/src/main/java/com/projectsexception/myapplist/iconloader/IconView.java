@@ -228,8 +228,10 @@ public class IconView extends ImageView {
      * If the input URL is the same as the stored URL, then nothing needs to be done.
      * <p>
      * If the stored URL is null, then this method starts a download and decode of the picture
+     * @param packageManager package manager
      * @param packageName Package name
      * @param resourceDrawable The resource drawable to use for this ImageView
+     * @param cacheFlag set the cache flag
      */
     public void setPackageName(PackageManager packageManager, String packageName, int resourceDrawable, boolean cacheFlag) {
         // If the picture URL for this ImageView is already set

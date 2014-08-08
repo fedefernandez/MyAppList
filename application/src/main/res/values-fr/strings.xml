@@ -118,4 +118,7 @@
   <string name="share_forum_message">Sharing the applications in forum format allows you to write the list in a forum with clickable links to Google Play Store.</string>
   <string name="configuration_statistics">Disable statistics</string>
   <string name="configuration_statistics_msg">Check for disable statistics</string>
+  <string name="menu_search">Search</string>
+  <string name="find_apps">Find apps</string>
+  <string name="ab_title_num">(%d in total)</string>
 </resources>

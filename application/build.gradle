@@ -3,22 +3,22 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.1'
+    buildToolsVersion '20'
+    useOldManifestMerger true
 
     defaultConfig {
-        versionCode 15
-        versionName '0.7.3'
-        minSdkVersion 7
+        versionCode 16
+        versionName '0.8-SNAPSHOT'
+        minSdkVersion 10
         targetSdkVersion 19
-        buildConfigField 'String', 'TRACKING_ID', '"' + project.property('myapplist.ga_tracking_id') + '"'
     }
 
     signingConfigs {
@@ -30,8 +30,21 @@ android {
         }
     }
 
+    productFlavors {
+        open {
+            applicationId 'com.projectsexception.myapplist.open'
+        }
+
+        play {
+            applicationId 'com.projectsexception.myapplist'
+            buildConfigField 'String', 'TRACKING_ID', '"' + project.property('myapplist.ga_tracking_id') + '"'
+        }
+    }
+
     buildTypes {
         debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
             signingConfig signingConfigs.mySignConfig
         }
 
@@ -39,17 +52,61 @@ android {
             signingConfig signingConfigs.mySignConfig
         }
     }
+
+    lintOptions {
+//        abortOnError false
+    }
+
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.1'
-    compile 'com.android.support:appcompat-v7:19.0.1'
-    compile 'com.github.manuelpeinado.multichoiceadapter:multichoiceadapter-abc:3.0.1'
-    compile ('de.keyboardsurfer.android.widget:crouton:1.8.1') {
+    compile (project (':dependencies:android-utils')) {
         exclude group: 'com.google.android'
     }
-    compile 'com.jakewharton:butterknife:4.0.1'
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile project (':dependencies:android-utils')
-    compile files('libs/libGoogleAnalyticsServices.jar')
+    // You must install or update the Support Repository through the SDK manager to use this dependency.
+    compile 'com.android.support:support-v4:19.1.+'
+    compile 'com.android.support:appcompat-v7:19.1.+'
+    compile ('com.github.manuelpeinado.multichoiceadapter:multichoiceadapter-abc:3.1.+') {
+        exclude group: 'com.android.support'
+    }
+    compile 'de.keyboardsurfer.android.widget:crouton:1.8.+@aar'
+    compile 'com.jakewharton:butterknife:5.1.+'
+    compile 'com.nineoldandroids:library:2.4.+'
+
+    playCompile 'com.google.android.gms:play-services:5.0.+'
+}
+
+afterEvaluate { project ->
+    android.applicationVariants.each { variant ->
+        variant.javaCompile.dependsOn stripPlayServices
+    }
+}
+
+task stripPlayServices << {
+    def playServiceRootFolder = new File(rootProject.buildDir, "intermediates/exploded-aar/com.google.android.gms/play-services/")
+    playServiceRootFolder.list().each { versionName ->
+        def versionFolder = new File(playServiceRootFolder, versionName)
+        copy {
+            from(file(new File(versionFolder, "classes.jar")))
+            into(file(versionFolder))
+            rename { fileName ->
+                fileName = "classes_orig.jar"
+            }
+        }
+        tasks.create(name: "strip" + versionName, type: Jar) {
+            destinationDir = versionFolder
+            archiveName = "classes.jar"
+            from(zipTree(new File(versionFolder, "classes_orig.jar"))) {
+                exclude "com/google/ads/**"
+                //exclude "com/google/android/gms/analytics/**"
+                exclude "com/google/android/gms/games/**"
+                exclude "com/google/android/gms/plus/**"
+                exclude "com/google/android/gms/drive/**"
+                //exclude "com/google/android/gms/ads/**"
+            }
+        }.execute()
+        delete {
+            delete(file(new File(versionFolder, "classes_orig.jar")))
+        }
+    }
 }

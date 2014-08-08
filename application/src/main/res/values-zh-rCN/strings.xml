@@ -39,7 +39,7 @@
   <string name="menu_delete">删除</string>
   <string name="menu_install">安装</string>
   <string name="menu_load_file">加载文件</string>
-  <string name="share_chooser">用……共享</string>
+  <string name="share_chooser">用&#8230;&#8230;共享</string>
   <string name="share_file_text">由“我的应用列表” 共享 https://play.google.com/store/apps/details?id=%s </string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;由“我的应用列表”共享 &lt;/a&gt;</string>
   <string name="share_text_send_failed">没有找到要共享内容的项目</string>
@@ -116,4 +116,7 @@
   <string name="share_forum_message">以论坛格式共享应用程序允许您发布带有可点击跳转至谷歌Play商店的链接的列表。</string>
   <string name="configuration_statistics">禁用统计</string>
   <string name="configuration_statistics_msg">禁用统计检查</string>
+  <string name="menu_search">Search</string>
+  <string name="find_apps">Find apps</string>
+  <string name="ab_title_num">(%d in total)</string>
 </resources>

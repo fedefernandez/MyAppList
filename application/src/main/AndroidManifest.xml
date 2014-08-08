@@ -10,14 +10,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".app.MyAppListApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyAppListTheme"
-        android:name=".MyAppListApplication">
+        android:theme="@style/MyAppListTheme" >
         <activity
             android:name=".MainActivity"
-            android:uiOptions="splitActionBarWhenNarrow">
+            android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,8 +78,9 @@
         </activity>
         <activity android:name=".MyAppListPreferenceActivity" />
         <activity android:name=".ListIgnoredActivity" />
-        <activity android:name=".ShareActivity"
-                  android:uiOptions="splitActionBarWhenNarrow" />
+        <activity
+            android:name=".ShareActivity"
+            android:uiOptions="splitActionBarWhenNarrow" />
         <activity android:name=".ListInstallActivity" />
         <activity android:name=".FolderPickerActivity" />
 

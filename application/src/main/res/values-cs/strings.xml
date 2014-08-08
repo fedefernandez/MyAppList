@@ -39,7 +39,7 @@
   <string name="menu_delete">Delete</string>
   <string name="menu_install">Install</string>
   <string name="menu_load_file">Load file</string>
-  <string name="share_chooser">Share with…</string>
+  <string name="share_chooser">Share with&#8230;</string>
   <string name="share_file_text">Shared by \'My App List\' https://play.google.com/store/apps/details?id=%s</string>
   <string name="share_file_html">&lt;a href=\"https://play.google.com/store/apps/details?id=%s\"&gt;Shared by \'My App List\'&lt;/a&gt;</string>
   <string name="share_text_send_failed">No activity was found to share the content</string>
@@ -118,4 +118,7 @@
   <string name="share_forum_message">Sharing the applications in forum format allows you to write the list in a forum with clickable links to Google Play Store.</string>
   <string name="configuration_statistics">Disable statistics</string>
   <string name="configuration_statistics_msg">Check for disable statistics</string>
+  <string name="menu_search">Search</string>
+  <string name="find_apps">Find apps</string>
+  <string name="ab_title_num">(%d in total)</string>
 </resources>

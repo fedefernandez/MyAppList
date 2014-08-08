@@ -111,9 +111,12 @@
   <string name="dialog_new_folder_msg">Seleziona il nome della cartella.</string>
   <string name="menu_copy">Copia negli appunti</string>
   <string name="list_copied">Elenco copiato negli appunti</string>
-  <string name="share_file_forum">[url=https://play.google.com/store/apps/details?id=%s]Shared by \'My App List\'[/url]</string>
+  <string name="share_file_forum">[url=https://play.google.com/store/apps/details?id=%s]Condiviso da \'My App List\'[/url]</string>
   <string name="share_forum">Forum</string>
   <string name="share_forum_message">Sharing the applications in forum format allows you to write the list in a forum with clickable links to Google Play Store.</string>
-  <string name="configuration_statistics">Disable statistics</string>
+  <string name="configuration_statistics">Disabilita statistiche</string>
   <string name="configuration_statistics_msg">Check for disable statistics</string>
+  <string name="menu_search">Search</string>
+  <string name="find_apps">Find apps</string>
+  <string name="ab_title_num">(%d in total)</string>
 </resources>

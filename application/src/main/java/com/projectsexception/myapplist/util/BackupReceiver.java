@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
-import com.projectsexception.myapplist.MyAppListApplication;
+import com.projectsexception.myapplist.app.MyAppListApplication;
 import com.projectsexception.myapplist.work.SaveListService;
 import com.projectsexception.util.CustomLog;
 

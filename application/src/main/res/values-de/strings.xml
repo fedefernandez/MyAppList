@@ -74,8 +74,8 @@
   <string name="app_info_play_not_linked">Diese App wurde nicht von GooglePlay installiert</string>
   <string name="app_info_permissions">Berechtigungen</string>
   <string name="app_info_no_permissions">Keine erlaubte Berechtigungen</string>
-  <string name="app_info_version">Version %1$s (%2$d)</string>
-  <string name="app_info_date">Installiert am %1$s. Letztes Update am %2$s</string>
+  <string name="app_info_version">Version %1$ s (%2$ d)</string>
+  <string name="app_info_date">Installiert am %1$ s. Letztes Update am %2$ s</string>
   <string name="configuration_theme">Theme</string>
   <string name="rate_dialog_title">\'Meine App-Liste\' bewerten</string>
   <string name="fragment_list_empty">Leere Liste</string>
@@ -118,4 +118,7 @@
   <string name="share_forum_message">Sharing the applications in forum format allows you to write the list in a forum with clickable links to Google Play Store.</string>
   <string name="configuration_statistics">Disable statistics</string>
   <string name="configuration_statistics_msg">Check for disable statistics</string>
+  <string name="menu_search">Search</string>
+  <string name="find_apps">Find apps</string>
+  <string name="ab_title_num">(%d in total)</string>
 </resources>

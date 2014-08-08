@@ -116,4 +116,7 @@
   <string name="share_forum_message">Compartir las aplicaciones en formato Foro permite publicar la lista en un foro con enlaces cliqueables para el Google Play Store.</string>
   <string name="configuration_statistics">Desactivar las estadísticas</string>
   <string name="configuration_statistics_msg">Marque esta opción para desactivar las estadísticas</string>
+  <string name="menu_search">Buscar</string>
+  <string name="find_apps">Buscar aplicaciones</string>
+  <string name="ab_title_num">(%d en total)</string>
 </resources>

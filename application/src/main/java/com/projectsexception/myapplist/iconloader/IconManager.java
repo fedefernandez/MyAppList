@@ -323,6 +323,7 @@ public class IconManager {
      * Starts an image download and decode
      *
      * @param imageView The ImageView that will get the resulting Bitmap
+     * @param cacheEnabled indicates if cache is enabled
      * @return The task instance that will handle the work
      */
     static public IconTask startDownload(IconView imageView, boolean cacheEnabled) {

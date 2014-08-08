@@ -5,6 +5,22 @@ This GitHub repository hosts the code for the Android app My App List
 
 Download from: https://play.google.com/store/apps/details?id=com.projectsexception.myapplist
 
+Building
+------------
+
+1.Add the next sign properties to your gradle distribution (for example in ~/.gradle/gradle.properties)
+
+    storeFile=/home/user/keystore
+    storePassword=keystorepassword
+    keyAlias=keyalias
+    keyPassword=keypassword
+
+2.Build the desired distribution
+
+2.1. Play Store: `gradle clean assemblePlayRelease`
+
+2.2. Open source: `gradle clean assembleOpenRelease`
+
 Contributing
 ------------
 

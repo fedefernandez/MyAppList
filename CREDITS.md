@@ -2,7 +2,7 @@
 
 ## Code acknowledgments
 
-* Jake Wharton for his work [ActionBarSherlock](http://actionbarsherlock.com) and [NineOldsAndroid](http://nineoldandroids.com/)
+* Jake Wharton for his work [ButterKnife](http://jakewharton.github.io/butterknife/) and [NineOldsAndroid](http://nineoldandroids.com/)
 * Manuel Peinado for [MultiChoiceAdapter](https://github.com/ManuelPeinado/MultiChoiceAdapter)
 * Benjamin Weiss for [Crouton](https://github.com/keyboardsurfer/Crouton/)
 * AnderWeb and [Androcode](http://androcode.es) for his [selectable elements tutorial](http://androcode.es/2012/03/seleccion-individualmultiple-de-elementos-en-un-listview/)
