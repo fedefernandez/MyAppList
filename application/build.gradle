@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         versionCode 16
-        versionName '0.8-SNAPSHOT'
+        versionName '0.8'
         minSdkVersion 10
         targetSdkVersion 19
     }
