@@ -1,3 +1,0 @@
-[submodule "dependencies/android-utils"]
-	path = dependencies/android-utils
-	url = https://github.com/projectsexception/android-utils.git
