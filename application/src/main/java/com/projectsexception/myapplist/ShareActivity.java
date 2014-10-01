@@ -267,7 +267,7 @@ public class ShareActivity extends BaseActivity implements ShareTaskFragment.Cal
                 text = Html.fromHtml(AppUtil.appInfoToHTML(this, mAppList, footer, false));
             } else if (section == SECTION_FORUM) {
                 intent.setType("text/plain");
-                text = AppUtil.appInfoToFroum(this, mAppList, footer);
+                text = AppUtil.appInfoToForum(this, mAppList, footer);
             } else {
                 intent.setType("text/plain");
                 text = AppUtil.appInfoToText(this, mAppList, footer);

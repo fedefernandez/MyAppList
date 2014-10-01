@@ -238,6 +238,12 @@ public class AppInfoFragment extends Fragment implements View.OnClickListener {
                 }
                 mApplicationPermissions.setText(sb);
             }
+
+            if (AppUtil.isGooglePlayAvailable(pManager)) {
+                mPlay.setVisibility(View.VISIBLE);
+            } else {
+                mPlay.setVisibility(View.GONE);
+            }
         }
 
         if (ThemeManager.isFlavoredTheme(getActivity())) {

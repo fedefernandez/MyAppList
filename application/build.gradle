@@ -37,7 +37,11 @@ android {
 
         play {
             applicationId 'com.projectsexception.myapplist'
-            buildConfigField 'String', 'TRACKING_ID', '"' + project.property('myapplist.ga_tracking_id') + '"'
+            if (project.hasProperty('myapplist.ga_tracking_id')) {
+                buildConfigField 'String', 'TRACKING_ID', '"' + project.property('myapplist.ga_tracking_id') + '"'
+            } else {
+                buildConfigField 'String', 'TRACKING_ID', '"xxx"'
+            }
         }
     }
 

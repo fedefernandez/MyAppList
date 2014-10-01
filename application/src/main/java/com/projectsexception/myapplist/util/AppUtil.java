@@ -31,6 +31,7 @@ public class AppUtil {
     private static final String APP_PKG_NAME_22 = "pkg";
     private static final String APP_DETAILS_PACKAGE_NAME = "com.android.settings";
     private static final String APP_DETAILS_CLASS_NAME = "com.android.settings.InstalledAppDetails";
+    private static final String APP_GOOGLE_PLAY = "com.android.vending";
 
     public static ArrayList<AppInfo> loadAppInfoList(PackageManager packageManager, boolean hideSystemApps) {
         List<ApplicationInfo> applicationInfoList = null;
@@ -116,6 +117,10 @@ public class AppUtil {
         } catch (NameNotFoundException e) {
             return null;
         }
+    }
+
+    public static boolean isGooglePlayAvailable(PackageManager mPm) {
+        return loadPackageInfo(mPm, APP_GOOGLE_PLAY) != null;
     }
 
     public static boolean isFromGooglePlay(PackageManager mPm, String packageName) {
@@ -240,7 +245,7 @@ public class AppUtil {
         return sb.toString();
     }
 
-    public static String appInfoToFroum(Context ctx, List<AppInfo> lst, boolean footer) {
+    public static String appInfoToForum(Context ctx, List<AppInfo> lst, boolean footer) {
         final StringBuilder sb = new StringBuilder();
         if (lst != null) {
             boolean first = true;
